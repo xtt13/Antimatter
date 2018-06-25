@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/css; charset=utf-8" />
+		<title>Fehler 404 - Seite nicht gefunden</title>
+		<link rel="stylesheet" type="text/css" href="/mittwald_system_pages/css/style.css">   
+		<!--[if lte IE 6]>
+			<style type="text/css">
+				div, img{ behavior:url(/mittwald_system_pages/scripts/iepngfix.htc) }
+			</style>
+		<![endif]-->
+	</head>
+	<body>
+		<div id="box">
+			<div id="oben"></div>
+			<div id="textbox">
+				<div id="textboxcontent">
+					<span class="rad">&nbsp;</span>  
+					<h1>Seite nicht gefunden</h1>           
+					<p>Fehler 404 - Seite nicht gefunden<br />
+						Die angeforderte Seite existiert nicht oder steht temporär nicht zur Verfügung.<br />
+						Bitte versuchen Sie es später noch einmal oder rufen Sie die Startseite der gewünschten Domain auf.</p>
+				</div>
+			</div>
+		<div id="unten"></div>
+		</div>
+	</body>
+</html>

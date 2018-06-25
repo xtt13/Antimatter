@@ -1,0 +1,18 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 30.04.2018 11:55:46
+
+newmtl Standard_19
+	Ns 31.000000
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.623529 0.623529 0.623529
+	Kd 0.623529 0.623529 0.623529
+	Ks 0.450000 0.450000 0.450000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka Heavy-JumpGate_JG4_Diffuse1.jpg
+	map_Kd Heavy-JumpGate_JG4_Diffuse1.jpg
+	map_Ke Heavy-JumpGate_JG4_Glow.jpg
+	map_bump -bm 0.750000 Map__1_Normal_Bump.tga
