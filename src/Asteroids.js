@@ -1,5 +1,6 @@
 import * as BABYLON from 'babylonjs';
 import * as GUI from 'babylonjs-gui';
+import config from './config';
 
 export default class {
     constructor(scene, assetsManager) {
@@ -30,6 +31,7 @@ export default class {
             z: 3000
         }
 
+        if(config.disableAsteroids) return;
         this.createAsteroids();
     }
 
@@ -48,7 +50,7 @@ export default class {
 
 
             asteroid.material.backFaceCulling = false;
-            asteroid.material.specularColor = new BABYLON.Color3(0, 0, 0);
+            asteroid.material.specularColor = new BABYLON.Color3(1, 1, 1);
             asteroid.position.x = -10;
             asteroid.isTargetable = true;
 
@@ -113,6 +115,7 @@ export default class {
 
     addLabel(mesh){
             var label = new GUI.Rectangle("label for " + mesh.name);
+
             label.background = "black"
             label.height = "30px";
             // label.alpha = 0.8;
@@ -122,8 +125,10 @@ export default class {
             label.fontSize = '12px';
             // label.thickness = 1;
             label.linkOffsetY = 30;
+            
             this.advancedTexture.addControl(label); 
             label.linkWithMesh(mesh);
+            label.linkOffsetY = -50;
             console.log(label);
             var text = new GUI.TextBlock();
             text.text = mesh.type;

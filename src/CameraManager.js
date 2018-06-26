@@ -8,7 +8,12 @@ export default class {
         this.ship = ship.ship;
 
         // this.cockpitCamera();
-        this.initCamera();
+        if(config.enableVR){
+            this.vrCamera();
+        } else {
+            this.initCamera();
+        }
+        
     }
 
     initCamera(){
@@ -30,13 +35,21 @@ export default class {
     }
 
     cockpitCamera(){
-        if(config.enableVR){
-            this.camera = new BABYLON.WebVRFreeCamera("vrCamera", this.ship.position.add(new BABYLON.Vector3(-50, 40, 0)), scene);
-        } else {
-            this.camera = new BABYLON.UniversalCamera("UniversalCamera", this.ship.position.add(new BABYLON.Vector3(0, 70, 50)), this.scene);
-        }
 
+        this.camera = new BABYLON.UniversalCamera("UniversalCamera", this.ship.position.add(new BABYLON.Vector3(0, 70, 50)), this.scene);
         this.camera.maxZ = 100000;
+
+        this.camera.setTarget(this.ship.position.add(new BABYLON.Vector3(0, 0, -200))); // X: Links/Rechts, Y: Oben/Unten, Z: Vorne/Hinten
+        this.camera.parent = this.ship;
+        this.camera.attachControl(this.canvas, true);
+        this.scene.activeCamera = this.camera;
+        this.camera.checkCollisions = true;
+    }
+
+    vrCamera(){
+        this.camera = new BABYLON.WebVRFreeCamera("vrCamera", this.ship.position.add(new BABYLON.Vector3(-50, 40, 0)), this.scene);
+        // this.camera.maxZ = 9999999999;
+        
         this.camera.setTarget(this.ship.position.add(new BABYLON.Vector3(0, 0, -200))); // X: Links/Rechts, Y: Oben/Unten, Z: Vorne/Hinten
         this.camera.parent = this.ship;
         this.camera.attachControl(this.canvas, true);

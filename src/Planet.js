@@ -1,9 +1,13 @@
 import * as BABYLON from 'babylonjs';
+import config from './config';
 
 export default class {
-    constructor(scene, assetsManager) {
+    constructor(scene, engine, assetsManager) {
         this.scene = scene;
+        this.engine = engine;
         this.assetsManager = assetsManager;
+
+        if(config.disablePlanet) return;
         this.loadPlanet();
     }
 
@@ -72,6 +76,11 @@ export default class {
         // this.atmosphere.infiniteDistance = true;
         this.atmosphere.position = this.planet.position;
         this.atmosphere.material = fresnelMaterial;
+
+        this.engine.runRenderLoop(() => {
+            this.planet.rotate(BABYLON.Axis.Y, -0.00005, BABYLON.Space.LOCAL);
+            this.atmosphere.rotate(BABYLON.Axis.Y, -0.00005, BABYLON.Space.LOCAL);
+        });
 
     }
 

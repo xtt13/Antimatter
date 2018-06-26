@@ -18,6 +18,8 @@ export default class {
         var postProcess0 = new BABYLON.PassPostProcess("Scene copy", 1.0, this.camera);
         postProcess0.samples = 8;
 
+        // var postProcess = new BABYLON.DigitalRainPostProcess("DigitalRain", this.camera, "3px Monospace");
+
         // ADD AMBIENT OCCLUSION
         // if (BABYLON.SSAO2RenderingPipeline.IsSupported) {
                 // // Create SSAO and configure all properties (for the example)

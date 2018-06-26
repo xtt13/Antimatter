@@ -4,6 +4,7 @@ export default class {
     constructor(scene, assetsManager) {
         this.scene = scene;
         this.assetsManager = assetsManager;
+        
 
         this.loadShip();
         
@@ -12,13 +13,14 @@ export default class {
     loadShip() {
         // this.loadFirefly();
         this.loadValcon();
+        // this.loadDummy();
     }
 
     loadFirefly() {
         var loadSpaceship = this.assetsManager.addMeshTask("loadSpaceship", "FireFly", "/assets/models/spaceship/", "firefly.babylon");
 
         loadSpaceship.onSuccess = (task) => {
-
+            this.currentShip = "Firefly";
             this.ship = task.loadedMeshes[0];
             // this.ship.position = new BABYLON.Vector3(5498, 4524, 4423);
             // this.ship.rotation.y = 4.72;
@@ -42,6 +44,7 @@ export default class {
     }
 
     loadValcon() {
+        this.currentShip = "Valcon";
         var loadSpaceship = this.assetsManager.addMeshTask("loadSpaceship", "ship", "/assets/models/spaceship/", "ship.babylon");
 
         loadSpaceship.onSuccess = (task) => {
@@ -70,6 +73,13 @@ export default class {
         loadSpaceship.onError = function (task, message, exception) {
             console.log(message, exception);
         }
+    }
+
+    loadDummy(){
+        // this.ship = BABYLON.MeshBuilder.CreateSphere("mySphere", {diameter: 2, diameterX: 3}, this.scene);
+        // console.log(this.ship);
+        // this.ship.position = new BABYLON.Vector3(5498, 4524, 4423);
+        // this.ship.receiveShadows = true;
     }
 
     addEngines() {

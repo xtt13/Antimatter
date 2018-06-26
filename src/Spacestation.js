@@ -1,10 +1,13 @@
 import * as BABYLON from 'babylonjs';
+import config from './config';
 
 export default class {
-    constructor(scene, assetsManager) {
+    constructor(scene, engine, assetsManager) {
         this.scene = scene;
+        this.engine = engine;
         this.assetsManager = assetsManager;
 
+        if(config.disableSpacestation) return;
         this.loadStation();
     }
 
@@ -13,12 +16,12 @@ export default class {
 
         loadStation.onSuccess = (task) => {
             
-            var StationBottom = this.scene.getMeshByName("StationBottom");
-            var StationTop = this.scene.getMeshByName("StationTop");
-            var StationRing = this.scene.getMeshByName("StationRing");
-            var StationMiddle = this.scene.getMeshByName("StationMiddle");
+            this.StationBottom = this.scene.getMeshByName("StationBottom");
+            this.StationTop = this.scene.getMeshByName("StationTop");
+            this.StationRing = this.scene.getMeshByName("StationRing");
+            this.StationMiddle = this.scene.getMeshByName("StationMiddle");
 
-            this.station = [StationBottom, StationTop, StationRing, StationMiddle];
+            this.station = [this.StationBottom, this.StationTop, this.StationRing, this.StationMiddle];
 
             for (let i = 0; i < this.station.length; i++) {
                 this.station[i].isBlocker = true;  
@@ -35,6 +38,10 @@ export default class {
             //     this.station[i].material.specularColor = new BABYLON.Color3(0.6, 0.5, 0.6);
             //     this.station[i].material.specularPower = 2048;
             }
+
+            this.engine.runRenderLoop(() => {
+                this.StationRing.rotate(BABYLON.Axis.Y, -0.0002, BABYLON.Space.LOCAL);
+            });
 
         }
 
