@@ -9,7 +9,7 @@ export default class {
         this.keys = {};
         this.keysDown = {};
 
-        this.airSpeed = 50;
+        this.airSpeed = 10;
         this.maxSpeed = 200;
         this.turnSpeed = 0.03;
         this.autocoord = false;

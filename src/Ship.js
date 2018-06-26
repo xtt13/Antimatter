@@ -20,8 +20,9 @@ export default class {
         loadSpaceship.onSuccess = (task) => {
 
             this.ship = task.loadedMeshes[0];
-            // this.ship.position = new BABYLON.Vector3(900, 200, -20);
-            this.ship.rotation.y = 4.72;
+            // this.ship.position = new BABYLON.Vector3(5498, 4524, 4423);
+            // this.ship.rotation.y = 4.72;
+
             this.ship.receiveShadows = true;
             // var reflectionTexture = new BABYLON.CubeTexture("assets/textures/stars", scene);
             this.ship.material.albedoColor = new BABYLON.Color3.FromHexString("#f00001");
@@ -46,8 +47,9 @@ export default class {
         loadSpaceship.onSuccess = (task) => {
 
             this.ship = task.loadedMeshes[0];
-            // this.ship.position = new BABYLON.Vector3(900, 200, -20);
-            this.ship.rotation.y = 4.72;
+            this.ship.position = new BABYLON.Vector3(5498, 4524, 4423);
+            this.ship.rotation.y = 7;
+            this.ship.rotation.x = 5.8;
             this.ship.receiveShadows = true;
             // var reflectionTexture = new BABYLON.CubeTexture("assets/textures/stars", scene);
             this.ship.material.albedoColor = new BABYLON.Color3.FromHexString("#f00001");

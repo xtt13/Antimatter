@@ -2,5 +2,6 @@
 import * as BABYLON from 'babylonjs';
 
 export default {
-	enableVR: true
+	enableVR: false,
+	disablePostProgress: false
 };

@@ -1,4 +1,5 @@
 import * as BABYLON from 'babylonjs';
+import * as GUI from 'babylonjs-gui';
 
 export default class {
     constructor(scene, assetsManager) {
@@ -8,10 +9,20 @@ export default class {
         this.asteroids = [];
         this.customOutline = null;
 
+        this.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui1");
+
         this.numberOfAsteroid = 300;
         this.outlineScalingValue = 2;
         this.min = 1;
         this.max = 30;
+
+        this.types = [
+            'Iron 5 t',
+            'Gold 10 t',
+            'Doxtrit 3 t',
+            'Pyresium 12 t',
+            'Perrius 8 t'
+        ];
 
         this.position = {
             x: 3000,
@@ -32,7 +43,7 @@ export default class {
             
 
             loadBumpMap.onSuccess = (task) => {
-                asteroid.material.bumpTexture = task.texture;;
+                asteroid.material.bumpTexture = task.texture;
             }
 
 
@@ -45,10 +56,11 @@ export default class {
             this.customOutline.isVisible = false;
             this.customOutline.scaling = new BABYLON.Vector3(1.1, 1.1, 1.1);
             this.customOutline.material = new BABYLON.StandardMaterial('outlineMaterial', this.scene);
-            this.customOutline.material.diffuseColor = new BABYLON.Color3(1, 0, 0);
-            this.customOutline.material.emissiveColor = new BABYLON.Color3(1, 0, 0);
-            this.customOutline.material.specularColor = new BABYLON.Color3(1, 0, 0);
+            this.customOutline.material.diffuseColor = new BABYLON.Color3(0, 0, 1);
+            this.customOutline.material.emissiveColor = new BABYLON.Color3(0, 0, 1);
+            this.customOutline.material.specularColor = new BABYLON.Color3(0, 0, 1);
             this.customOutline.material.alpha = 0.3;
+
 
 
             asteroid.isTargetable = true;
@@ -58,12 +70,13 @@ export default class {
 
                 var asteroidInstance = asteroid.createInstance('Asteroid-' + i);
 
-                console.log(Math.random(), Math.random() * 3000);
                 asteroidInstance.position = new BABYLON.Vector3(
                     this.position.x + Math.round(Math.random() * 3000) - 0,
                     this.position.y + Math.round(Math.random() * 3000) - 0,
                     this.position.y + Math.round(Math.random() * 3000) - 0
                 );
+
+                asteroidInstance.type = this.types[Math.floor(Math.random() * this.types.length)];
 
                 var rndRotX = Math.floor(Math.random()*(this.max-this.min+1)+this.min);
                 var rndRotY = Math.floor(Math.random()*(this.max-this.min+1)+this.min);
@@ -98,24 +111,53 @@ export default class {
         }
     }
 
+    addLabel(mesh){
+            var label = new GUI.Rectangle("label for " + mesh.name);
+            label.background = "black"
+            label.height = "30px";
+            // label.alpha = 0.8;
+            label.width = "130px";
+            label.cornerRadius = 3;
+            label.fontFamily = "Orbitron";
+            label.fontSize = '12px';
+            // label.thickness = 1;
+            label.linkOffsetY = 30;
+            this.advancedTexture.addControl(label); 
+            label.linkWithMesh(mesh);
+            console.log(label);
+            var text = new GUI.TextBlock();
+            text.text = mesh.type;
+            text.color = "white";
+            label.addControl(text); 
+
+            return label;
+    }
+
+    removeLabel(mesh, label){
+        label.isVisible = false;
+    }
+
     initTargetableActions(target, customOutline) {
         target.actionManager = new BABYLON.ActionManager(this.scene);
+        var label;
 
         target.actionManager.registerAction(
             new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger, (e) => {
-                console.log('touchAsteroid');
                 var mesh = e.meshUnderPointer;
 
+                var ship = this.scene.getMeshByName("ship");
+                var scalingValue = BABYLON.Vector3.Distance(ship.position, mesh.position)/150;
+
                 customOutline.position = mesh.position;
-                console.log(this.outlineScalingValue);
                 customOutline.scaling = new BABYLON.Vector3(
-                    mesh.scaling.x + this.outlineScalingValue,
-                    mesh.scaling.y + this.outlineScalingValue,
-                    mesh.scaling.z + this.outlineScalingValue
+                    mesh.scaling.x + scalingValue,
+                    mesh.scaling.y + scalingValue,
+                    mesh.scaling.z + scalingValue
                 );
 
                 customOutline.rotation = mesh.rotation;
                 customOutline.isVisible = true;
+                label = this.addLabel(target);
 
                 // var ship = this.scene.getMeshByName("ship");
                 // shootLaser(ship, mesh, scene);
@@ -123,8 +165,9 @@ export default class {
         );
 
         target.actionManager.registerAction(
-            new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger, function (e) {
+            new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger,(e) => {
                 customOutline.isVisible = false;
+                this.removeLabel(target, label);
             })
         );
     }

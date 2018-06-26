@@ -1,6 +1,6 @@
 import * as BABYLON from 'babylonjs';
 import 'babylonjs-procedural-textures';
-import * as GUI from 'babylonjs-gui';
+// import * as GUI from 'babylonjs-gui';
 import 'babylonjs-loaders';
 
 import config from './config';
@@ -13,12 +13,15 @@ import InputManager from './InputManager';
 import Helper from './helper/Helper';
 import PostProcesses from './PostProcesses';
 import Asteroids from './Asteroids';
+import GUI from './GUI';
 
 var canvas = document.getElementById("canvasZone");
-var engine = new BABYLON.Engine(canvas, true);
+var engine = new BABYLON.Engine(canvas, true, { stencil: true });
+engine.displayLoadingUI();
 engine.disableManifestCheck = true;
 
 var scene = new BABYLON.Scene(engine);
+scene.clearColor = BABYLON.Color3.Black();
 scene.collisionsEnabled = true;
 scene.checkCollisions = true;
 
@@ -50,12 +53,12 @@ var createScene = function () {
 var setup = function () {
 
 	// Add Skybox
-	var skybox = BABYLON.Mesh.CreateBox("skyBox", 100000.0, scene);
+	var skybox = BABYLON.Mesh.CreateBox("skyBox", 30000, scene);
 	var skyboxMaterial = new BABYLON.StandardMaterial("light", scene);
 
 	skyboxMaterial.backFaceCulling = false;
 	// skybox.infiniteDistance = true;
-	skybox.renderingGroupId = 0;
+	// skybox.renderingGroupId = 0;
 	skyboxMaterial.disableLighting = true;
 	skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/stars", scene);
 	skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
@@ -91,6 +94,7 @@ var setup = function () {
 
 	var inputManager = new InputManager(scene, ship, cameraManager);
 	var PostProgress = new PostProcesses(scene, cameraManager.camera);
+	var GUIClass = new GUI(scene, cameraManager, asteroids);
 
 	if(config.enableVR){
 
@@ -110,10 +114,13 @@ var setup = function () {
 	var stations = [StationBottom, StationTop, StationRing, StationMiddle];
 	var scaleVal = 0.001;
 
+	console.log(cameraManager.camera);
+
 	engine.runRenderLoop(() => {
 		if(config.enableVR){
 			vrCamera.position = ship.ship.position.add(new BABYLON.Vector3(0, 4, -16));
 		}
+
 
 		// console.log(StationBottom.scaling.x);
 		// console.log(BABYLON.Vector3.Distance(ship.ship.position,StationRing.position));
@@ -136,7 +143,7 @@ var setup = function () {
 		// }
 		planet.planet.rotate(BABYLON.Axis.Y, -0.00005, BABYLON.Space.LOCAL);
 		planet.atmosphere.rotate(BABYLON.Axis.Y, -0.00005, BABYLON.Space.LOCAL);
-		StationRing.rotate(BABYLON.Axis.Y, -0.0001, BABYLON.Space.LOCAL);
+		StationRing.rotate(BABYLON.Axis.Y, -0.0002, BABYLON.Space.LOCAL);
 		inputManager.checkKeys(engine);
 	});
 }

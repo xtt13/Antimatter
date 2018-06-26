@@ -7,34 +7,34 @@ export default class {
         this.canvas = canvas;
         this.ship = ship.ship;
 
-        this.cockpitCamera();
-        // this.initCamera();
+        // this.cockpitCamera();
+        this.initCamera();
     }
 
     initCamera(){
-		this.camera = new BABYLON.FollowCamera("FollowCam", new BABYLON.Vector3(0, 10, -10), this.scene);
+		this.camera = new BABYLON.FollowCamera("FollowCam", this.ship.position.add(new BABYLON.Vector3(0, 100, 0)), this.scene);
 		this.camera.radius = 20;
-		this.camera.heightOffset = 5;
+		this.camera.heightOffset = 15;
 		this.camera.rotationOffset = 0;
-		this.camera.cameraAcceleration = 0.1
-        this.camera.maxCameraSpeed = 20
-        // this.camera.maxZ = 100000;
+		this.camera.cameraAcceleration = 0.1;
+        this.camera.maxCameraSpeed = 20;
+        this.camera.maxZ = 100000;
         
         // this.camera.noRotationConstraint = true;
         // this.camera.attachControl(this.canvas, true);
-
 		this.camera.target = this.ship; // version 2.4 and earlier
         this.camera.lockedTarget = this.ship; //version 2.5 onwards
         
-		this.scene.activeCamera = this.camera;
+        this.scene.activeCamera = this.camera;
+        console.log(this.camera);
     }
 
     cockpitCamera(){
-        // if(config.enableVR){
-        //     this.camera = new BABYLON.WebVRFreeCamera("vrCamera", this.ship.position.add(new BABYLON.Vector3(-50, 40, 0)), scene);
-        // } else {
+        if(config.enableVR){
+            this.camera = new BABYLON.WebVRFreeCamera("vrCamera", this.ship.position.add(new BABYLON.Vector3(-50, 40, 0)), scene);
+        } else {
             this.camera = new BABYLON.UniversalCamera("UniversalCamera", this.ship.position.add(new BABYLON.Vector3(0, 70, 50)), this.scene);
-        // }
+        }
 
         this.camera.maxZ = 100000;
         this.camera.setTarget(this.ship.position.add(new BABYLON.Vector3(0, 0, -200))); // X: Links/Rechts, Y: Oben/Unten, Z: Vorne/Hinten
