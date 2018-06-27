@@ -44,7 +44,10 @@ export default class {
             diameterX: 12000
         }, this.scene);
 
-        // this.planet.infiniteDistance = true;
+        if(config.planetInfiniteDistance){
+            this.planet.infiniteDistance = true;
+            this.planet.renderingGroupId = 1;
+        }
         // this.planet.renderingGroupId = 1;
         this.planet.material = this.planetMaterial;
         this.planet.position = new BABYLON.Vector3(10000, 0, 50);
@@ -52,6 +55,7 @@ export default class {
         this.planet.collisionsEnabled = true;
         this.planet.checkCollisions = true;
         this.planet.isPickable = true;
+        this.planet.isBlocker = true;  
 
         var fresnelMaterial = new BABYLON.StandardMaterial('athmosphereMaterial', this.scene);
 
@@ -73,9 +77,14 @@ export default class {
             diameter: 12000,
             diameterX: 12000
         }, this.scene);
-        // this.atmosphere.infiniteDistance = true;
+
+        if(config.planetInfiniteDistance){
+            this.atmosphere.infiniteDistance = true;
+            this.atmosphere.renderingGroupId = 2;
+        }
         this.atmosphere.position = this.planet.position;
         this.atmosphere.material = fresnelMaterial;
+        this.atmosphere.isBlocker = true; 
 
         this.engine.runRenderLoop(() => {
             this.planet.rotate(BABYLON.Axis.Y, -0.00005, BABYLON.Space.LOCAL);

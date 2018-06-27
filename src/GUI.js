@@ -10,7 +10,7 @@ export default class {
         this.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui1");
         this.labels = [];
 
-        // this.markAsteroids();
+        this.createUIBackground();
     }
 
     markAsteroids() {
@@ -19,6 +19,29 @@ export default class {
             
         }
 
+    }
+
+    createUIBackground(){
+        var n = document.createElement('div');
+            n.setAttribute('class', 'scanlines ui-block');
+            // n.setAttribute('style',
+            //     'position:absolute;' +
+            //     'display:block;' +
+            //     'bottom: 0px;' +
+            //     'left: 200px;' +
+            //     'z-index:10001;' +
+            //     'width: 200px;' +
+            //     'height: 100px;' + 
+            //     'font-family:Arial, Helvetica, sans-serif;' +
+            //     'pointer-events:none;' +
+            //     'color: black;' +
+            //     'font-size: 12px;' +
+            //     'padding: 10px;' +
+            //     'background-color: red;');
+
+            n.innerHTML = "Hello this is a Test Message!";
+
+            document.body.appendChild(n);
     }
 
     createLabel(mesh){

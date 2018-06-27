@@ -1,4 +1,5 @@
 import * as BABYLON from 'babylonjs';
+import config from './config';
 
 export default class {
     constructor(scene, ship, cameraManager) {
@@ -9,9 +10,9 @@ export default class {
         this.keys = {};
         this.keysDown = {};
 
-        this.airSpeed = 10;
-        this.maxSpeed = 200;
-        this.turnSpeed = 0.03;
+        this.airSpeed = config.airSpeed;
+        this.maxSpeed = config.airSpeed;
+        this.turnSpeed = config.turnSpeed;
         this.autocoord = false;
 
         this.initControll();
@@ -42,7 +43,7 @@ export default class {
 
             if (code === 50) {
                 // SWITCH TO FOLLOW CAM
-                this.cameraManager.initCamera();
+                this.cameraManager.initCamera(this.ship.ship);
             }
 
             if (code === 51) {

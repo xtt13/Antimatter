@@ -53,15 +53,16 @@ export default class {
             asteroid.material.specularColor = new BABYLON.Color3(1, 1, 1);
             asteroid.position.x = -10;
             asteroid.isTargetable = true;
+            asteroid.receiveShadows = true;
 
             this.customOutline = asteroid.clone('customAsteroidOutline');
             this.customOutline.isVisible = false;
             this.customOutline.scaling = new BABYLON.Vector3(1.1, 1.1, 1.1);
             this.customOutline.material = new BABYLON.StandardMaterial('outlineMaterial', this.scene);
-            this.customOutline.material.diffuseColor = new BABYLON.Color3(0, 0, 1);
-            this.customOutline.material.emissiveColor = new BABYLON.Color3(0, 0, 1);
-            this.customOutline.material.specularColor = new BABYLON.Color3(0, 0, 1);
-            this.customOutline.material.alpha = 0.3;
+            this.customOutline.material.diffuseColor = new BABYLON.Color3(0, 1, 1);
+            this.customOutline.material.emissiveColor = new BABYLON.Color3(0, 1, 1);
+            this.customOutline.material.specularColor = new BABYLON.Color3(0, 1, 1);
+            this.customOutline.material.alpha = 1;
 
 
 
@@ -151,7 +152,7 @@ export default class {
                 var mesh = e.meshUnderPointer;
 
                 var ship = this.scene.getMeshByName("ship");
-                var scalingValue = BABYLON.Vector3.Distance(ship.position, mesh.position)/150;
+                var scalingValue = BABYLON.Vector3.Distance(ship.position, mesh.position)/240;
 
                 customOutline.position = mesh.position;
                 customOutline.scaling = new BABYLON.Vector3(

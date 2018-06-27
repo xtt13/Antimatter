@@ -21,6 +21,11 @@ export default class {
             this.StationRing = this.scene.getMeshByName("StationRing");
             this.StationMiddle = this.scene.getMeshByName("StationMiddle");
 
+            this.StationBottom.scaling = new BABYLON.Vector3(config.spaceStationScaling, config.spaceStationScaling, config.spaceStationScaling);
+            this.StationTop.scaling = new BABYLON.Vector3(config.spaceStationScaling, config.spaceStationScaling, config.spaceStationScaling); 
+            this.StationRing.scaling = new BABYLON.Vector3(config.spaceStationScaling, config.spaceStationScaling, config.spaceStationScaling); 
+            this.StationMiddle.scaling = new BABYLON.Vector3(config.spaceStationScaling, config.spaceStationScaling, config.spaceStationScaling); 
+
             this.station = [this.StationBottom, this.StationTop, this.StationRing, this.StationMiddle];
 
             for (let i = 0; i < this.station.length; i++) {

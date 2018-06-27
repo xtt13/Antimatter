@@ -14,6 +14,8 @@ import Helper from './helper/Helper';
 import PostProcesses from './PostProcesses';
 import Asteroids from './Asteroids';
 import GUI from './GUI';
+import MusicManager from './MusicManager';
+import JumpGate from './JumpGate';
 
 export default class {
     constructor() {
@@ -43,11 +45,13 @@ export default class {
     createScene() {
         this.helper = new Helper(this.scene);
         this.assetsManager = new BABYLON.AssetsManager(this.scene);
-
+        this.MusicManager = new MusicManager(this.scene, this.assetsManager);
+        
         this.ship = new Ship(this.scene, this.assetsManager);
         this.spaceStation = new Spacestation(this.scene, this.engine, this.assetsManager);
         this.planet = new Planet(this.scene, this.engine, this.assetsManager);
         this.asteroids = new Asteroids(this.scene, this.assetsManager);
+        this.jumpGate = new JumpGate(this.scene, this.engine, this.assetsManager)
 
         this.assetsManager.onFinish = (tasks) => {
             this.setup();
@@ -67,12 +71,16 @@ export default class {
     setup(){
 
 	// Add Skybox
-    this.skybox = BABYLON.Mesh.CreateBox("skyBox", 30000, this.scene);
+	this.skybox = BABYLON.Mesh.CreateBox("skyBox", config.skyBoxSize, this.scene);
+	this.skybox.position = new BABYLON.Vector3(0, 0, 0);
     this.skyboxMaterial = new BABYLON.StandardMaterial("light", this.scene);
 
-	this.skyboxMaterial.backFaceCulling = false;
-	// this.skybox.infiniteDistance = true;
-	// this.skybox.renderingGroupId = 0;
+    this.skyboxMaterial.backFaceCulling = false;
+    if(config.skyBoxInfiniteDistance){
+        this.skybox.infiniteDistance = true;
+        this.skybox.renderingGroupId = 0;
+    }
+	
 	this.skyboxMaterial.disableLighting = true;
 	this.skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/stars", this.scene);
 	this.skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
@@ -86,7 +94,9 @@ export default class {
 	this.light.groundColor = new BABYLON.Color3(0.2, 0.2, 0.2);
 	this.light.intensity = 0.3;
 
-	this.sun = new BABYLON.PointLight("sun", new BABYLON.Vector3(-30000, 0, 50), this.scene);
+    this.sun = new BABYLON.PointLight("sun", new BABYLON.Vector3(-30000, 0, 50), this.scene);
+    this.sun.diffuse = new BABYLON.Color3(1, 0.9, 0.9);
+	this.sun.specular = new BABYLON.Color3(0, 0, 0);
 	// this.sun.excludedMeshes = [planet.atmosphere];
 	this.sun.intensity = 100;
 	this.sun.shadowMinZ = 30;
@@ -108,11 +118,18 @@ export default class {
 
 	this.inputManager = new InputManager(this.scene, this.ship, this.cameraManager);
 	this.PostProgress = new PostProcesses(this.scene, this.cameraManager.camera);
-	this.GUIClass = new GUI(this.scene, this.cameraManager, this.asteroids);
+    this.GUIClass = new GUI(this.scene, this.cameraManager, this.asteroids);
+    
+
+    // Shadows
+	// var shadowGenerator = new BABYLON.ShadowGenerator(1024, this.sun);
+	// shadowGenerator.addShadowCaster(this.ship.ship);
+    // shadowGenerator.useExponentialShadowMap = true;
+    // shadowGenerator.usePoissonSampling = true;
 
 	if(config.enableVR){
 
-		var vrHelper = scene.createDefaultVRExperience({
+		var vrHelper = this.scene.createDefaultVRExperience({
 			createDeviceOrientationCamera: false
 		});
 
@@ -122,6 +139,7 @@ export default class {
 	var stations = [this.spaceStation.StationBottom, this.spaceStation.StationTop, this.spaceStation.StationRing, this.spaceStation.StationMiddle];
 	var scaleVal = 0.001;
 
+	// this.cameraManager.initCamera(this.spaceStation.StationRing);
 	// console.log(cameraManager.camera);
 
 	this.engine.runRenderLoop(() => {
