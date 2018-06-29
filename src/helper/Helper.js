@@ -1,4 +1,5 @@
 import * as BABYLON from 'babylonjs';
+import 'babylonjs-inspector';
 
 export default class {
     constructor(scene) {
@@ -7,6 +8,22 @@ export default class {
         this.showFPS();
         this.scene.showFps();
         // this.showWorldAxis(3000);
+        // this.scene.debugLayer.show();
+
+        // this.scene.debugLayer.show({
+        //     popup:false, 
+        //     initialTab : 1, 
+        //     parentElement:null,
+        //     newColors: {
+        //         backgroundColor: '#eee',
+        //         backgroundColorLighter: '#fff',
+        //         backgroundColorLighter2: '#fff',
+        //         backgroundColorLighter3: '#fff',
+        //         color: '#333',
+        //         colorTop:'red', 
+        //         colorBottom:'blue'
+        //     }
+        // });
 
     }
 

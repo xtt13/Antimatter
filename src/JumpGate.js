@@ -7,6 +7,8 @@ export default class {
         this.engine = engine;
         this.assetsManager = assetsManager;
 
+        this.speedVar = 0;
+
         if(config.disableJumpGate) return;
         this.loadJumpGate();
     }
@@ -28,10 +30,17 @@ export default class {
 
             this.jumpGate.position = new BABYLON.Vector3(-8000, 0, 8000);
             this.jumpGateRing.position = new BABYLON.Vector3(-8000, 0, 8000);
+
+            this.jumpGate.material.specularColor = new BABYLON.Color3(0, 0, 0);
+            this.jumpGateRing.material.specularColor = new BABYLON.Color3(0, 0, 0);
+
+            this.jumpGate.material.specularPower = 1024;
+            this.jumpGateRing.material.specularPower = 1024;
             
 
             this.engine.runRenderLoop(() => {
-                this.jumpGateRing.rotate(BABYLON.Axis.Y, -0.02, BABYLON.Space.LOCAL);
+                this.jumpGateRing.rotate(BABYLON.Axis.Y, this.speedVar, BABYLON.Space.LOCAL);
+                this.speedVar += 0.0001;
             });
 
         }

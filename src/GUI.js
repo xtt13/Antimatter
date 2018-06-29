@@ -10,7 +10,7 @@ export default class {
         this.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui1");
         this.labels = [];
 
-        this.createUIBackground();
+        // this.createUIBackground();
     }
 
     markAsteroids() {

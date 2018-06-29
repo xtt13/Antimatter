@@ -3,9 +3,10 @@ import * as GUI from 'babylonjs-gui';
 import config from './config';
 
 export default class {
-    constructor(scene, assetsManager) {
+    constructor(scene, assetsManager, baseObject) {
         this.scene = scene;
         this.assetsManager = assetsManager;
+        this.baseObject = baseObject;
 
         this.asteroids = [];
         this.customOutline = null;
@@ -67,7 +68,7 @@ export default class {
 
 
             asteroid.isTargetable = true;
-            this.initTargetableActions(asteroid, this.customOutline);
+            this.initTargetableActions(asteroid, this.customOutline, baseObject);
 
             for (var i = 0; i < this.numberOfAsteroid; i++) {
 
@@ -101,7 +102,7 @@ export default class {
                 asteroidInstance.rotationDirection = Math.ceil(Math.random() * 6);
                 asteroidInstance.isTargetable = true;
 
-                this.initTargetableActions(asteroidInstance, this.customOutline);
+                this.initTargetableActions(asteroidInstance, this.customOutline, baseObject);
 
                 this.asteroids.push(asteroidInstance);
 
@@ -143,7 +144,7 @@ export default class {
         label.isVisible = false;
     }
 
-    initTargetableActions(target, customOutline) {
+    initTargetableActions(target, customOutline, baseObject) {
         target.actionManager = new BABYLON.ActionManager(this.scene);
         var label;
 
@@ -151,8 +152,7 @@ export default class {
             new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger, (e) => {
                 var mesh = e.meshUnderPointer;
 
-                var ship = this.scene.getMeshByName("ship");
-                var scalingValue = BABYLON.Vector3.Distance(ship.position, mesh.position)/240;
+                var scalingValue = BABYLON.Vector3.Distance(baseObject.position, mesh.position)/240;
 
                 customOutline.position = mesh.position;
                 customOutline.scaling = new BABYLON.Vector3(
@@ -165,7 +165,6 @@ export default class {
                 customOutline.isVisible = true;
                 label = this.addLabel(target);
 
-                // var ship = this.scene.getMeshByName("ship");
                 // shootLaser(ship, mesh, scene);
             })
         );

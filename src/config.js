@@ -24,7 +24,8 @@ export default {
 
 	CameraMaxZ: 100000,
 
-	airSpeed: 10,
-	maxSpeed: 200,
-	turnSpeed: 0.04
+	airSpeed: 0,
+	maxSpeed: 100,
+	turnSpeed: 0.01,
+	accValue: 0.01
 };

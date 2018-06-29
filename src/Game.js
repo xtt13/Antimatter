@@ -2,6 +2,7 @@ import * as BABYLON from 'babylonjs';
 import 'babylonjs-procedural-textures';
 // import * as GUI from 'babylonjs-gui';
 import 'babylonjs-loaders';
+import 'babylonjs-inspector';
 
 import config from './config';
 
@@ -16,6 +17,7 @@ import Asteroids from './Asteroids';
 import GUI from './GUI';
 import MusicManager from './MusicManager';
 import JumpGate from './JumpGate';
+import Cockpit from './Cockpit';
 
 export default class {
     constructor() {
@@ -47,10 +49,12 @@ export default class {
         this.assetsManager = new BABYLON.AssetsManager(this.scene);
         this.MusicManager = new MusicManager(this.scene, this.assetsManager);
         
-        this.ship = new Ship(this.scene, this.assetsManager);
+		this.ship = new Ship(this.scene, this.assetsManager);
+		this.cockpit = new Cockpit(this.scene, this.assetsManager, this.ship.ship, this.engine);
+
         this.spaceStation = new Spacestation(this.scene, this.engine, this.assetsManager);
         this.planet = new Planet(this.scene, this.engine, this.assetsManager);
-        this.asteroids = new Asteroids(this.scene, this.assetsManager);
+        this.asteroids = new Asteroids(this.scene, this.assetsManager, this.ship);
         this.jumpGate = new JumpGate(this.scene, this.engine, this.assetsManager)
 
         this.assetsManager.onFinish = (tasks) => {
@@ -64,7 +68,8 @@ export default class {
             this.engine.resize();
         });
 
-        this.assetsManager.load();
+		this.assetsManager.load();
+		
 
     }
 
@@ -88,11 +93,12 @@ export default class {
 	this.skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
 	this.skybox.material = this.skyboxMaterial;
 
-	this.cameraManager = new CameraManager(this.scene, this.canvas, this.ship);
+	this.cameraManager = new CameraManager(this.scene, this.canvas, this.ship, this.cockpit);
 
 	this.light = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 1, 0), this.scene);
 	this.light.groundColor = new BABYLON.Color3(0.2, 0.2, 0.2);
 	this.light.intensity = 0.3;
+	// this.light.intensity = 10;
 
     this.sun = new BABYLON.PointLight("sun", new BABYLON.Vector3(-30000, 0, 50), this.scene);
     this.sun.diffuse = new BABYLON.Color3(1, 0.9, 0.9);
@@ -116,7 +122,7 @@ export default class {
 
 
 
-	this.inputManager = new InputManager(this.scene, this.ship, this.cameraManager);
+	this.inputManager = new InputManager(this.scene, this.ship, this.cockpit, this.cameraManager);
 	this.PostProgress = new PostProcesses(this.scene, this.cameraManager.camera);
     this.GUIClass = new GUI(this.scene, this.cameraManager, this.asteroids);
     
@@ -134,6 +140,7 @@ export default class {
 		});
 
 		var vrCamera = vrHelper.webVRCamera;
+		this.scene.activeCamera.maxZ = config.CameraMaxZ;
 	}
 
 	var stations = [this.spaceStation.StationBottom, this.spaceStation.StationTop, this.spaceStation.StationRing, this.spaceStation.StationMiddle];
@@ -144,8 +151,15 @@ export default class {
 
 	this.engine.runRenderLoop(() => {
 		if(config.enableVR){
-			vrCamera.position = this.ship.ship.position.add(new BABYLON.Vector3(0, 4, -16));
+			vrCamera.position = this.cockpit.CockpitParts[1].position.add(new BABYLON.Vector3(0, 20, 0));
+			// vrCamera.position = this.cameraManager.camera.position;
+
+			if(vrHelper.webVRCamera.rightController){
+				this.cockpit.CockpitParts[4].rotationQuaternion = vrHelper.webVRCamera.rightController.deviceRotationQuaternion.clone();
+			}
 		}
+
+
 
 
 		// console.log(StationBottom.scaling.x);
