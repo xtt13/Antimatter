@@ -40,8 +40,8 @@ export default class {
         // }
 
         this.planet = BABYLON.MeshBuilder.CreateSphere("planet", {
-            diameter: 12000,
-            diameterX: 12000
+            diameter: 6000,
+            diameterX: 6000
         }, this.scene);
 
         if(config.planetInfiniteDistance){
@@ -56,6 +56,8 @@ export default class {
         this.planet.checkCollisions = true;
         this.planet.isPickable = true;
         this.planet.isBlocker = true;  
+
+        console.log(this.planet);
 
         var fresnelMaterial = new BABYLON.StandardMaterial('athmosphereMaterial', this.scene);
 

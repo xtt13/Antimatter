@@ -5,8 +5,8 @@ export default class {
     constructor(scene) {
         this.scene = scene;
         // scene.showFps();
-        this.showFPS();
-        this.scene.showFps();
+        // this.showFPS();
+        // this.scene.showFps();
         // this.showWorldAxis(3000);
         // this.scene.debugLayer.show();
 

@@ -6,7 +6,7 @@ export default class {
     constructor(scene, assetsManager, baseObject) {
         this.scene = scene;
         this.assetsManager = assetsManager;
-        this.baseObject = baseObject;
+        this.baseObject = baseObject.ship;
 
         this.asteroids = [];
         this.customOutline = null;
@@ -68,7 +68,7 @@ export default class {
 
 
             asteroid.isTargetable = true;
-            this.initTargetableActions(asteroid, this.customOutline, baseObject);
+            this.initTargetableActions(asteroid, this.customOutline, this.baseObject);
 
             for (var i = 0; i < this.numberOfAsteroid; i++) {
 
@@ -102,7 +102,8 @@ export default class {
                 asteroidInstance.rotationDirection = Math.ceil(Math.random() * 6);
                 asteroidInstance.isTargetable = true;
 
-                this.initTargetableActions(asteroidInstance, this.customOutline, baseObject);
+                console.log(this.baseObject);
+                this.initTargetableActions(asteroidInstance, this.customOutline, this.baseObject);
 
                 this.asteroids.push(asteroidInstance);
 
@@ -152,7 +153,7 @@ export default class {
             new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger, (e) => {
                 var mesh = e.meshUnderPointer;
 
-                var scalingValue = BABYLON.Vector3.Distance(baseObject.position, mesh.position)/240;
+                var scalingValue = BABYLON.Vector3.Distance(this.scene.activeCamera.position, mesh.position)/240;
 
                 customOutline.position = mesh.position;
                 customOutline.scaling = new BABYLON.Vector3(

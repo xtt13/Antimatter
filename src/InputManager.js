@@ -97,6 +97,8 @@ export default class {
                 for (let i = 0; i < this.cockpitParts.length; i++) {
                    this.cockpitParts[i].rotate(BABYLON.Axis.X, this.turnSpeed, BABYLON.Space.LOCAL);         
                 }
+
+                this.cameraManager.camera.cameraRotation.x = -0.01;
             }
         
             if (this.keysDown[87]) {
@@ -104,6 +106,11 @@ export default class {
                 for (let i = 0; i < this.cockpitParts.length; i++) {
                     this.cockpitParts[i].rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);         
                  }
+
+                 
+                 console.log(this.cameraManager.camera);
+                 this.cameraManager.camera.cameraRotation.x = 0.01;
+                //  this.cameraManager.camera.rotate(BABYLON.Axis.X, this.turnSpeed, BABYLON.Space.LOCAL);
             }
         
             if (this.keysDown[68]) {
@@ -113,6 +120,8 @@ export default class {
                  for (let i = 0; i < this.cockpitParts.length; i++) {
                     this.cockpitParts[i].rotate(BABYLON.Axis.Y, -this.turnSpeed, BABYLON.Space.LOCAL);
                  }
+
+                //  this.cameraManager.camera.cameraRotation.y = 0.01;
             }
         
             if (this.keysDown[65]) {
@@ -121,6 +130,8 @@ export default class {
                 for (let i = 0; i < this.cockpitParts.length; i++) {
                     this.cockpitParts[i].rotate(BABYLON.Axis.Y, this.turnSpeed, BABYLON.Space.LOCAL);
                  }
+
+                //  this.cameraManager.camera.cameraRotation.y = -0.01;
             }
         
             // OLD
@@ -162,11 +173,14 @@ export default class {
             if (this.keysDown[87]) {
                 // W, rotate in the positive direction about the x axis
                 this.ship.ship.rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
+               
             }
 
             if (this.keysDown[68]) {
                 // D, rotate in the positive direction about the z axis
                 this.ship.ship.rotate(BABYLON.Axis.Z, this.turnSpeed, BABYLON.Space.LOCAL);
+               
+                
             }
 
             if (this.keysDown[65]) {

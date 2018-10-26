@@ -1,4 +1,5 @@
 import * as BABYLON from 'babylonjs';
+
 import 'babylonjs-procedural-textures';
 // import * as GUI from 'babylonjs-gui';
 import 'babylonjs-loaders';
@@ -32,7 +33,9 @@ export default class {
         this.scene = new BABYLON.Scene(this.engine);
         this.scene.clearColor = BABYLON.Color3.Black();
         this.scene.collisionsEnabled = true;
-        this.scene.checkCollisions = true;
+		this.scene.checkCollisions = true;
+
+		
 
         this.ship = null;
         this.spaceStation = null;
@@ -53,7 +56,7 @@ export default class {
 		this.cockpit = new Cockpit(this.scene, this.assetsManager, this.ship.ship, this.engine);
 
         this.spaceStation = new Spacestation(this.scene, this.engine, this.assetsManager);
-        this.planet = new Planet(this.scene, this.engine, this.assetsManager);
+		this.planet = new Planet(this.scene, this.engine, this.assetsManager);
         this.asteroids = new Asteroids(this.scene, this.assetsManager, this.ship);
         this.jumpGate = new JumpGate(this.scene, this.engine, this.assetsManager)
 
@@ -78,7 +81,8 @@ export default class {
 	// Add Skybox
 	this.skybox = BABYLON.Mesh.CreateBox("skyBox", config.skyBoxSize, this.scene);
 	this.skybox.position = new BABYLON.Vector3(0, 0, 0);
-    this.skyboxMaterial = new BABYLON.StandardMaterial("light", this.scene);
+	this.skyboxMaterial = new BABYLON.StandardMaterial("skyboxMaterial", this.scene);
+	
 
     this.skyboxMaterial.backFaceCulling = false;
     if(config.skyBoxInfiniteDistance){
@@ -86,12 +90,16 @@ export default class {
         this.skybox.renderingGroupId = 0;
     }
 	
-	this.skyboxMaterial.disableLighting = true;
+	// this.skyboxMaterial.disableLighting = true;
 	this.skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/stars", this.scene);
 	this.skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
 	this.skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
 	this.skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
 	this.skybox.material = this.skyboxMaterial;
+
+
+
+
 
 	this.cameraManager = new CameraManager(this.scene, this.canvas, this.ship, this.cockpit);
 
@@ -99,6 +107,12 @@ export default class {
 	this.light.groundColor = new BABYLON.Color3(0.2, 0.2, 0.2);
 	this.light.intensity = 0.3;
 	// this.light.intensity = 10;
+
+	this.gateLight = new BABYLON.PointLight("light", new BABYLON.Vector3(0, 1, 0), this.scene);
+	this.gateLight.position = new BABYLON.Vector3(930, 184, 0);
+	this.gateLight.diffuse = new BABYLON.Color3(0, 0, 1);
+	this.gateLight.specular = new BABYLON.Color3(0, 0, 1);
+	this.gateLight.intensity = 0.3;
 
     this.sun = new BABYLON.PointLight("sun", new BABYLON.Vector3(-30000, 0, 50), this.scene);
     this.sun.diffuse = new BABYLON.Color3(1, 0.9, 0.9);
@@ -148,6 +162,10 @@ export default class {
 
 	// this.cameraManager.initCamera(this.spaceStation.StationRing);
 	// console.log(cameraManager.camera);
+
+
+	// this.scene.workerCollisions = true
+	// console.log(this.scene.workerCollisions);
 
 	this.engine.runRenderLoop(() => {
 		if(config.enableVR){

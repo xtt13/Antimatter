@@ -30,6 +30,7 @@ export default class {
             // this.CockpitParts[3].position = new BABYLON.Vector3(800, 800, 800);
 
             for (let i = 0; i < this.CockpitParts.length; i++) {
+                
                 this.CockpitParts[i].position = new BABYLON.Vector3(820, 180, -7);
                 // this.CockpitParts[i].parent = this.ship;
                 // this.CockpitParts[i].rotation.y = 0;
@@ -49,6 +50,7 @@ export default class {
                 this.CockpitParts[i].material.specularColor = new BABYLON.Color3(0, 0, 0);
                 this.CockpitParts[i].material.specularPower = 2048;
 
+                this.CockpitParts[i].checkCollisions = true;
             }
 
 
