@@ -100,7 +100,7 @@ export default class {
                     this.cockpitParts[i].rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
                 }
 
-                this.cameraManager.camera.cameraRotation.x = -0.001;
+                // this.cameraManager.camera.cameraRotation.x = -0.001;
             }
 
             if (this.keysDown[87]) {
@@ -110,9 +110,7 @@ export default class {
                 }
 
 
-                //  console.log(this.cameraManager.camera);
-                this.cameraManager.camera.cameraRotation.x = 0.001;
-                //  this.cameraManager.camera.rotate(BABYLON.Axis.X, this.turnSpeed, BABYLON.Space.LOCAL);
+                // this.cameraManager.camera.cameraRotation.x = 0.001;
             }
 
 

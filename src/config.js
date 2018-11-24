@@ -17,15 +17,15 @@ export default {
 	jumpGateScaling: 0.5,
 
 
-	planetInfiniteDistance: false,
-	skyBoxInfiniteDistance: false,
+	planetInfiniteDistance: true,
+	skyBoxInfiniteDistance: true,
 
 	skyBoxSize: 105000,
 
 	CameraMaxZ: 100000,
 
-	airSpeed: 0.25,
+	airSpeed: 0,
 	maxSpeed: 100,
-	turnSpeed: 0.01,
+	turnSpeed: 0.005,
 	accValue: 0.01
 };

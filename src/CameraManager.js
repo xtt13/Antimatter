@@ -104,7 +104,7 @@ export default class {
         // this.camera.rotation = new BABYLON.Vector3(-1.5, 3.14, 0);
         // this.camera.upVector = new BABYLON.Vector3(1, 0, 0);
 		this.scene.activeCamera = this.camera;
-		this.camera.attachControl(this.canvas, false);
+		this.camera.attachControl(this.canvas, true);
     }
 
     vrCamera(){

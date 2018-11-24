@@ -7,6 +7,8 @@ export default class {
         this.engine = engine;
         this.assetsManager = assetsManager;
 
+        this.planetDiameter = 12000;
+
         if(config.disablePlanet) return;
         this.loadPlanet();
     }
@@ -40,13 +42,13 @@ export default class {
         // }
 
         this.planet = BABYLON.MeshBuilder.CreateSphere("planet", {
-            diameter: 12000,
-            diameterX: 12000
+            diameter: this.planetDiameter,
+            diameterX: this.planetDiameter
         }, this.scene);
 
         if(config.planetInfiniteDistance){
             this.planet.infiniteDistance = true;
-            this.planet.renderingGroupId = 1;
+            // this.planet.renderingGroupId = 1;
         }
         // this.planet.renderingGroupId = 1;
         this.planet.material = this.planetMaterial;
@@ -76,13 +78,13 @@ export default class {
         // fresnelMaterial.opacityFresnelParameters.rightColor = BABYLON.Color3.Black();
     
         this.atmosphere = BABYLON.MeshBuilder.CreateSphere("earth", {
-            diameter: 12000,
-            diameterX: 12000
+            diameter: this.planetDiameter,
+            diameterX: this.planetDiameter
         }, this.scene);
 
         if(config.planetInfiniteDistance){
             this.atmosphere.infiniteDistance = true;
-            this.atmosphere.renderingGroupId = 2;
+            // this.atmosphere.renderingGroupId = 2;
         }
         this.atmosphere.position = this.planet.position;
         this.atmosphere.material = fresnelMaterial;

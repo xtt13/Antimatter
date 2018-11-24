@@ -156,21 +156,21 @@ export default class {
 				createDeviceOrientationCamera: false
 			});
 
-			var vrCamera = vrHelper.webVRCamera;
-			vrHelper.currentVRCamera.maxZ = config.CameraMaxZ;
+			// var vrCamera = vrHelper.webVRCamera;
+			// vrHelper.currentVRCamera.maxZ = config.CameraMaxZ;
 			// this.scene.activeCamera.resetToCurrentRotation();
 			// vrHelper.currentVRCamera.resetToCurrentRotation();
-			console.log(vrHelper)
+			// console.log(vrHelper)
 
-			vrHelper.onEnteringVR.add(function() {
-				console.log(window);
+			// vrHelper.onEnteringVR.add(function() {
+			// 	console.log(window);
 				
-				var attributes = {
-					highRefreshRate: true
-				};
-				var result = window.VRDisplay.requestPresent([{ attributes: attributes }]);
-				console.log(result);
-			});
+			// 	var attributes = {
+			// 		highRefreshRate: true
+			// 	};
+			// 	var result = window.VRDisplay.requestPresent([{ attributes: attributes }]);
+			// 	console.log(result);
+			// });
 
 
 			// console.log(vrHelper.isInVRMode);
@@ -218,12 +218,12 @@ export default class {
 
 		this.engine.runRenderLoop(() => {
 			if (config.enableVR) {
-				vrCamera.position = this.cockpit.CockpitParts[1].position.add(new BABYLON.Vector3(0, 20, 0));
+				// vrCamera.position = this.cockpit.CockpitParts[0].position.add(new BABYLON.Vector3(0, 20, 0));
 				// vrCamera.position = this.cameraManager.camera.position;
 
-				if (vrHelper.webVRCamera.rightController) {
-					this.cockpit.CockpitParts[4].rotationQuaternion = vrHelper.webVRCamera.rightController.deviceRotationQuaternion.clone();
-				}
+				// if (vrHelper.webVRCamera.rightController) {
+				// 	this.cockpit.CockpitParts[4].rotationQuaternion = vrHelper.webVRCamera.rightController.deviceRotationQuaternion.clone();
+				// }
 			}
 
 

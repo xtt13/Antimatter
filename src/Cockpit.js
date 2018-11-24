@@ -33,26 +33,27 @@ export default class {
 
             for (let i = 0; i < this.CockpitParts.length; i++) {
                 
-                this.CockpitParts[i].position = new BABYLON.Vector3(820, 180, -7);
-                // this.CockpitParts[i].parent = this.ship;
-                // this.CockpitParts[i].rotation.y = 0;
-                this.CockpitParts[i].rotation.z = 11;
-                // this.CockpitParts[i].rotation.z = 3;
-                // this.CockpitParts[i].rotate(BABYLON.Axis.Y, Math.PI/4, BABYLON.Space.WORLD);
+                this.CockpitParts[i].position = new BABYLON.Vector3(-900, 180, 0);
+                this.CockpitParts[i].rotation.y = 11;
+                this.CockpitParts[i].rotation.z = 0;
+                this.CockpitParts[i].rotation.x = 0;
 
                 this.CockpitParts[i].isBlocker = true;  
                 this.CockpitParts[i].receiveShadows = true;
+
                 this.CockpitParts[i].material.albedoColor = new BABYLON.Color3.FromHexString("#f00001");
-                // this.CockpitParts[i].material.reflectivityColor = new BABYLON.Color3.FromHexString("#404040");
+                this.CockpitParts[i].material.reflectivityColor = new BABYLON.Color3.FromHexString("#404040");
                 this.CockpitParts[i].material.overloadedAlbedo = new BABYLON.Color3.FromHexString("#a00000");
                 this.CockpitParts[i].material.overloadedAlbedoIntensity = 0.3;
+
                 this.CockpitParts[i].material.microSurface = 0.3;
-                // this.CockpitParts[i].material.metallic = 1.0;
-                // this.CockpitParts[i].material.specularColor = new BABYLON.Color3(0.6, 0.5, 0.6);
+                this.CockpitParts[i].material.metallic = 1.0;
+
+                this.CockpitParts[i].material.specularColor = new BABYLON.Color3(0.6, 0.5, 0.6);
                 this.CockpitParts[i].material.specularColor = new BABYLON.Color3(0, 0, 0);
                 this.CockpitParts[i].material.specularPower = 2048;
 
-                this.CockpitParts[i].checkCollisions = true;
+                // this.CockpitParts[i].checkCollisions = true;
             }
            
 
