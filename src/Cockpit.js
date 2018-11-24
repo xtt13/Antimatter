@@ -12,11 +12,13 @@ export default class {
     }
 
     loadCockpit() {
-        var loadCockpit = this.assetsManager.addMeshTask("loadCockpit", "", "/assets/models/cockpit/", "cockpit.babylon");
+        var loadCockpit = this.assetsManager.addMeshTask("loadCockpit", "", "/assets/models/cockpit/", "Cockpit.glb");
 
         loadCockpit.onSuccess = (task) => {
 
             this.CockpitParts = task.loadedMeshes;
+            console.log(this.CockpitParts);
+            
 
             this.cockpit = task.loadedMeshes[3];
             this.hudA = task.loadedMeshes[2];
@@ -24,7 +26,7 @@ export default class {
             this.joystick = task.loadedMeshes[4];
             this.thrustLever = task.loadedMeshes[0];
 
-            this.CockpitParts = [this.cockpit, this.hudA, this.hudB, this.joystick, this.thrustLever];
+            this.CockpitParts = [this.cockpit, this.hudA, this.hudB];
             // var newMesh = BABYLON.Mesh.MergeMeshes(this.CockpitParts);
 
             // this.CockpitParts[3].position = new BABYLON.Vector3(800, 800, 800);
@@ -52,19 +54,6 @@ export default class {
 
                 this.CockpitParts[i].checkCollisions = true;
             }
-
-
-            // this.CockpitParts[0].parent = this.CockpitParts[3];
-            
-            
-            // this.CockpitParts[4].parent = this.CockpitParts[3];
-            
-
-            // this.CockpitParts[1].parent = this.CockpitParts[3];
-
-
-            // this.CockpitParts[2].parent = this.CockpitParts[3];
-
            
 
         }

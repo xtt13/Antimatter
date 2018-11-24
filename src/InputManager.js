@@ -64,6 +64,8 @@ export default class {
     checkKeys(engine) {
         var elapsed = engine.getDeltaTime() / 1000;
 
+        // return;
+
         // Slow Down Y
         if (this.keysDown[89]) {
             if (this.airSpeed > 0) {
@@ -95,73 +97,73 @@ export default class {
             if (this.keysDown[83]) {
                 // S, rotate in the negative direction about the x axis
                 for (let i = 0; i < this.cockpitParts.length; i++) {
-                   this.cockpitParts[i].rotate(BABYLON.Axis.X, this.turnSpeed, BABYLON.Space.LOCAL);         
+                    this.cockpitParts[i].rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
                 }
 
-                this.cameraManager.camera.cameraRotation.x = -0.01;
+                this.cameraManager.camera.cameraRotation.x = -0.001;
             }
-        
+
             if (this.keysDown[87]) {
                 // W, rotate in the positive direction about the x axis
                 for (let i = 0; i < this.cockpitParts.length; i++) {
-                    this.cockpitParts[i].rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);         
-                 }
+                    this.cockpitParts[i].rotate(BABYLON.Axis.X, this.turnSpeed, BABYLON.Space.LOCAL);
+                }
 
-                 
-                 console.log(this.cameraManager.camera);
-                 this.cameraManager.camera.cameraRotation.x = 0.01;
+
+                //  console.log(this.cameraManager.camera);
+                this.cameraManager.camera.cameraRotation.x = 0.001;
                 //  this.cameraManager.camera.rotate(BABYLON.Axis.X, this.turnSpeed, BABYLON.Space.LOCAL);
             }
-        
+
+
             if (this.keysDown[68]) {
                 // D, rotate in the positive direction about the z axis
 
 
-                 for (let i = 0; i < this.cockpitParts.length; i++) {
-                    this.cockpitParts[i].rotate(BABYLON.Axis.Y, -this.turnSpeed, BABYLON.Space.LOCAL);
-                 }
+                for (let i = 0; i < this.cockpitParts.length; i++) {
+                    this.cockpitParts[i].rotate(BABYLON.Axis.Z, this.turnSpeed, BABYLON.Space.LOCAL);
+                    
+                }
 
                 //  this.cameraManager.camera.cameraRotation.y = 0.01;
             }
-        
+
             if (this.keysDown[65]) {
                 // A, rotate in the negative direction about the z axis
-
                 for (let i = 0; i < this.cockpitParts.length; i++) {
-                    this.cockpitParts[i].rotate(BABYLON.Axis.Y, this.turnSpeed, BABYLON.Space.LOCAL);
-                 }
+                    this.cockpitParts[i].rotate(BABYLON.Axis.Z, -this.turnSpeed, BABYLON.Space.LOCAL);
+                }
 
                 //  this.cameraManager.camera.cameraRotation.y = -0.01;
             }
-        
+
             // OLD
-        
+
             if (this.keysDown[69]) {
-                // Q rotate left
+                // E rotate left
                 for (let i = 0; i < this.cockpitParts.length; i++) {
-                    this.cockpitParts[i].rotate(BABYLON.Axis.Z, this.turnSpeed, BABYLON.Space.LOCAL);       
-                 }
-    
+                    this.cockpitParts[i].rotate(BABYLON.Axis.Y, -this.turnSpeed, BABYLON.Space.LOCAL);
+                }
+
                 // if (autocoord) {
                 //     ship.rotate(BABYLON.Axis.Z, turnSpeed, BABYLON.Space.LOCAL);
                 // }
             }
-        
+
             if (this.keysDown[81]) {
-                // E, rotate right
-
+                // Q, rotate right
                 for (let i = 0; i < this.cockpitParts.length; i++) {
-                    this.cockpitParts[i].rotate(BABYLON.Axis.Z, -this.turnSpeed, BABYLON.Space.LOCAL);    
-                 }
+                    this.cockpitParts[i].rotate(BABYLON.Axis.Y, this.turnSpeed, BABYLON.Space.LOCAL);
+                }
 
-    
+
                 // if (autocoord) {
                 //     ship.rotate(BABYLON.Axis.Z, -turnSpeed, BABYLON.Space.LOCAL);
                 // }
             }
-        
+
             for (let i = 0; i < this.cockpitParts.length; i++) {
-                this.cockpitParts[i].translate(BABYLON.Axis.Y, elapsed + this.airSpeed, BABYLON.Space.GLOBAL);
+                this.cockpitParts[i].translate(BABYLON.Axis.Z, elapsed + this.airSpeed, BABYLON.Space.GLOBAL);
             }
 
         } else {
@@ -173,14 +175,14 @@ export default class {
             if (this.keysDown[87]) {
                 // W, rotate in the positive direction about the x axis
                 this.ship.ship.rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
-               
+
             }
 
             if (this.keysDown[68]) {
                 // D, rotate in the positive direction about the z axis
                 this.ship.ship.rotate(BABYLON.Axis.Z, this.turnSpeed, BABYLON.Space.LOCAL);
-               
-                
+
+
             }
 
             if (this.keysDown[65]) {

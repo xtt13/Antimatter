@@ -36,6 +36,8 @@ export default class {
             //     var reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/stars", this.scene);
             //     this.station[i].material.albedoColor = new BABYLON.Color3.FromHexString("#f00001");
             //     this.station[i].material.reflectionTexture = reflectionTexture;
+            this.station[i].material.reflectionTexture  = new BABYLON.CubeTexture("assets/textures/skybox/stars", this.scene);
+            this.station[i].material.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
             //     this.station[i].material.reflectivityColor = new BABYLON.Color3.FromHexString("#404040");
             //     this.station[i].material.overloadedAlbedo = new BABYLON.Color3.FromHexString("#a00000");
             //     this.station[i].material.overloadedAlbedoIntensity = 0.3;

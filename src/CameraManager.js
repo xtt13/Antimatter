@@ -7,7 +7,7 @@ export default class {
         this.canvas = canvas;
         this.ship = ship.ship;
         console.log(cockpit.CockpitParts);
-        this.cockpit = cockpit.CockpitParts[3];
+        this.cockpit = cockpit.CockpitParts[0];
         console.log(this.cockpit);
 
         this.cockpitCamera();
@@ -91,14 +91,18 @@ export default class {
         // this.scene.activeCamera = this.camera;
 
 
-        this.camera = new BABYLON.FreeCamera("Camera", new BABYLON.Vector3(0, 0, 20), this.scene);
+        // this.camera = new BABYLON.FreeCamera("Camera", new BABYLON.Vector3(0, 0, 20), this.scene);
+        this.camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 20, 0), this.scene);
+        // this.camera = new BABYLON.FlyCamera("Camera", new BABYLON.Vector3(0, 0, 20), this.scene);
+
 		// this.camera.ctype = 2;
         this.camera.maxZ = config.CameraMaxZ;
-		this.camera.setTarget(this.cockpit.position);
+		// this.camera.setTarget(this.cockpit.position);
         this.camera.parent = this.cockpit;
-        this.camera.noRotationConstraint = true;
-        this.camera.rotation = new BABYLON.Vector3(-1.5, 3.14, 0);
-        // this.camera.upVector = new BABYLON.Vector3(1, 0, 1);
+        // this.camera.rotation = this.cockpit.rotation;
+        // this.camera.noRotationConstraint = true;
+        // this.camera.rotation = new BABYLON.Vector3(-1.5, 3.14, 0);
+        // this.camera.upVector = new BABYLON.Vector3(1, 0, 0);
 		this.scene.activeCamera = this.camera;
 		this.camera.attachControl(this.canvas, false);
     }
@@ -106,16 +110,16 @@ export default class {
     vrCamera(){
 
 
-        this.camera = new BABYLON.WebVRFreeCamera("VRCamera", new BABYLON.Vector3(0, 0, 20), this.scene, {controllerMeshes: true, defaultLightningOnControllers: true});
-		// this.camera.ctype = 2;
-        this.camera.maxZ = config.CameraMaxZ;
-		this.camera.setTarget(this.cockpit.position);
-        this.camera.parent = this.cockpit;
-        this.camera.noRotationConstraint = true;
-        this.camera.rotation = new BABYLON.Vector3(-1.9, 3.14, 0);
-        // this.camera.upVector = new BABYLON.Vector3(1, 0, 1);
-		this.scene.activeCamera = this.camera;
-		this.camera.attachControl(this.canvas, false);
+        // this.camera = new BABYLON.WebVRFreeCamera("VRCamera", new BABYLON.Vector3(0, 0, 20), this.scene, {controllerMeshes: true, defaultLightningOnControllers: true});
+		// // this.camera.ctype = 2;
+        // this.camera.maxZ = config.CameraMaxZ;
+		// this.camera.setTarget(this.cockpit.position);
+        // this.camera.parent = this.cockpit;
+        // this.camera.noRotationConstraint = true;
+        // this.camera.rotation = new BABYLON.Vector3(-1.9, 3.14, 0);
+        // // this.camera.upVector = new BABYLON.Vector3(1, 0, 1);
+		// this.scene.activeCamera = this.camera;
+		// this.camera.attachControl(this.canvas, false);
     }
 
 }

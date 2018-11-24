@@ -2,7 +2,7 @@
 import * as BABYLON from 'babylonjs';
 
 export default {
-	enableVR: false,
+	enableVR: true,
 	disableMusic: false,
 
 	disablePostProgress: true,
@@ -24,7 +24,7 @@ export default {
 
 	CameraMaxZ: 100000,
 
-	airSpeed: 0,
+	airSpeed: 0.25,
 	maxSpeed: 100,
 	turnSpeed: 0.01,
 	accValue: 0.01
