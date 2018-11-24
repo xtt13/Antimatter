@@ -2,12 +2,16 @@ import * as BABYLON from 'babylonjs';
 import config from './config';
 
 export default class {
-    constructor(scene, ship, cockpit, cameraManager) {
+    constructor(scene, ship, cockpit, cameraManager, game) {
         this.scene = scene;
         this.ship = ship;
         this.cockpitParts = cockpit.CockpitParts;
         this.cameraManager = cameraManager;
         this.cockpitMode = true;
+        this.game = game;
+        this.engineSound = this.game.SoundManager.engineSound;
+        console.log(this.engineSound);
+        
 
         this.keys = {};
         this.keysDown = {};
@@ -69,7 +73,9 @@ export default class {
         // Slow Down Y
         if (this.keysDown[89]) {
             if (this.airSpeed > 0) {
-                this.airSpeed -= this.accValue;
+                this.airSpeed -= this.accValue + 0.01;
+                let newVal = this.engineSound._playbackRate -= 0.02;
+                this.engineSound.updateOptions({ playbackRate: newVal });
             } else {
                 if (this.ship.engineSystem2 !== undefined) {
                     this.ship.engineSystem2.stop();
@@ -88,6 +94,10 @@ export default class {
                     this.ship.engineSystem1.start();
                 }
                 this.airSpeed += this.accValue;
+                let newVal = this.engineSound._playbackRate += 0.01;
+                this.engineSound.updateOptions({ playbackRate: newVal });
+                console.log(this.engineSound._playbackRate);
+                
             } else {
 
             }

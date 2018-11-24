@@ -139,7 +139,7 @@ export default class {
 
 
 
-		this.inputManager = new InputManager(this.scene, this.ship, this.cockpit, this.cameraManager);
+		this.inputManager = new InputManager(this.scene, this.ship, this.cockpit, this.cameraManager, this);
 		this.PostProgress = new PostProcesses(this.scene, this.cameraManager.camera);
 		this.GUIClass = new GUI(this.scene, this.cameraManager, this.asteroids);
 

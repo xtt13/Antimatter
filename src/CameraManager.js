@@ -8,7 +8,6 @@ export default class {
         this.ship = ship.ship;
         console.log(cockpit.CockpitParts);
         this.cockpit = cockpit.CockpitParts[0];
-        console.log(this.cockpit);
 
         this.cockpitCamera();
 
@@ -91,8 +90,10 @@ export default class {
         // this.scene.activeCamera = this.camera;
 
 
-        // this.camera = new BABYLON.FreeCamera("Camera", new BABYLON.Vector3(0, 0, 20), this.scene);
-        this.camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 20, 0), this.scene);
+        this.camera = new BABYLON.FreeCamera("Camera", new BABYLON.Vector3(0, 20, 0), this.scene);
+        this.camera.inputs.clear();
+        this.camera.inputs.addMouse();
+        // this.camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 20, 0), this.scene);
         // this.camera = new BABYLON.FlyCamera("Camera", new BABYLON.Vector3(0, 0, 20), this.scene);
 
 		// this.camera.ctype = 2;
@@ -104,7 +105,11 @@ export default class {
         // this.camera.rotation = new BABYLON.Vector3(-1.5, 3.14, 0);
         // this.camera.upVector = new BABYLON.Vector3(1, 0, 0);
 		this.scene.activeCamera = this.camera;
-		this.camera.attachControl(this.canvas, true);
+        this.camera.attachControl(this.canvas, true);
+
+        console.log(this.camera);
+        // this.camera.camera.keysUp = [];
+        // this.camera.keysDown = [];
     }
 
     vrCamera(){

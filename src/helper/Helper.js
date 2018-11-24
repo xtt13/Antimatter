@@ -8,7 +8,7 @@ export default class {
         // this.showFPS();
         // this.scene.showFps();
         // this.showWorldAxis(3000);
-        // this.scene.debugLayer.show();
+        this.scene.debugLayer.show();
 
         // this.scene.debugLayer.show({
         //     popup:false, 
