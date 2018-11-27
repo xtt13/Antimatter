@@ -10,7 +10,6 @@ export default class {
         this.cockpitMode = true;
         this.game = game;
         this.engineSound = this.game.SoundManager.engineSound;
-        console.log(this.engineSound);
         
 
         this.keys = {};
@@ -21,6 +20,22 @@ export default class {
         this.turnSpeed = config.turnSpeed;
         this.accValue = config.accValue
         this.autocoord = false;
+
+        this.gamepadManager = new BABYLON.GamepadManager();
+
+        this.gamepadManager.onGamepadConnectedObservable.add((gamepad, state)=>{
+            console.log('Gamepad connected!');
+
+            gamepad.onButtonDownObservable.add((button, state)=>{
+                //Button has been pressed
+                console.log(button)
+            });
+            
+            gamepad.onleftstickchanged((values)=>{
+                //Left stick has been moved
+                console.log(values.x+" "+values.y)
+            });
+        });
 
         this.initControll();
     }
@@ -96,7 +111,10 @@ export default class {
                 this.airSpeed += this.accValue;
                 let newVal = this.engineSound._playbackRate += 0.01;
                 this.engineSound.updateOptions({ playbackRate: newVal });
-                console.log(this.engineSound._playbackRate);
+                // console.log(this.engineSound._playbackRate);
+
+                // console.log(this.airSpeed);        
+                // if(this.airSpeed > 3) this.game.rattling = 77;
                 
             } else {
 

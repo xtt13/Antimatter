@@ -74,7 +74,7 @@ module.exports = {
       host: process.env.IP || 'localhost',
       port: process.env.PORT || 3000,
       files: [{
-        match: ['./assets/maps/*.json', './assets/tilesets/*.png'],
+        // match: ['./assets/maps/*.json', './assets/tilesets/*.png'],
         fn: function (event, file) {
             this.reload()
         }

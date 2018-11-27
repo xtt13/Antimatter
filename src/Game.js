@@ -164,7 +164,7 @@ export default class {
 
 			// vrHelper.onEnteringVR.add(function() {
 			// 	console.log(window);
-				
+
 			// 	var attributes = {
 			// 		highRefreshRate: true
 			// 	};
@@ -174,7 +174,7 @@ export default class {
 
 
 			// console.log(vrHelper.isInVRMode);
-			
+
 			// if(vrHelper.isInVRMode){
 			// 	var attributes = {
 			// 		highRefreshRate: true
@@ -215,6 +215,29 @@ export default class {
 
 		// this.scene.workerCollisions = true
 		// console.log(this.scene.workerCollisions);
+
+		this.rattling = 0;
+		this.RATL = 777;
+		this.CAMERAFOV = this.cameraManager.camera.fov;
+
+		// this.scene.registerBeforeRender(() => {
+		// 	console.log(this.inputManager.airSpeed>3);
+		// 	if(this.inputManager.airSpeed < 3) this.rattling = 50;
+		// 	if (this.rattling > 0) {
+		// 		this.rattling--;
+		// 		if (this.rattling % 6 == 0) {
+		// 			this.cameraManager.camera.fov = this.CAMERAFOV + this.rattling / this.RATL;
+		// 			this.cameraManager.camera.rotation.z = this.rattling / this.RATL;
+		// 		}
+		// 		else if (this.rattling % 6 == 3) {
+		// 			this.cameraManager.camera.fov = this.CAMERAFOV - this.rattling / this.RATL;
+		// 			this.cameraManager.camera.rotation.z = -this.rattling / this.RATL;
+		// 		}
+		// 	} else {y
+		// 		this.cameraManager.camera.fov = this.CAMERAFOV;
+		// 		this.cameraManager.camera.rotation.z = 0;
+		// 	}
+		// })
 
 		this.engine.runRenderLoop(() => {
 			if (config.enableVR) {

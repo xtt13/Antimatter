@@ -1,15 +1,9 @@
-/*eslint-disable */
 var path = require('path');
 var webpack = require('webpack');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
-// Phaser webpack config
-var phaserModule = path.join(__dirname, '/node_modules/phaser-ce/');
-var phaser = path.join(phaserModule, 'build/custom/phaser-split.js');
-var pixi = path.join(phaserModule, 'build/custom/pixi.js');
-var p2 = path.join(phaserModule, 'build/custom/p2.js');
 
 var definePlugin = new webpack.DefinePlugin({
   __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'false'))
@@ -20,8 +14,7 @@ module.exports = {
     app: [
       'babel-polyfill',
       path.resolve(__dirname, 'src/main.js')
-    ],
-    vendor: ['pixi', 'p2', 'phaser', 'webfontloader']
+    ]
 
   },
   output: {
@@ -43,18 +36,6 @@ module.exports = {
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, 'assets/**/*'),
-        to: path.resolve(__dirname, 'deploy')
-      }
-    ]),
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, 'src/ept.webmanifest'),
-        to: path.resolve(__dirname, 'deploy')
-      }
-    ]),
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, 'src/sw.js'),
         to: path.resolve(__dirname, 'deploy')
       }
     ]),
@@ -89,12 +70,5 @@ module.exports = {
     fs: 'empty',
     net: 'empty',
     tls: 'empty'
-  },
-  resolve: {
-    alias: {
-      'phaser': phaser,
-      'pixi': pixi,
-      'p2': p2
-    }
   }
 };

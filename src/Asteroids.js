@@ -102,7 +102,7 @@ export default class {
                 asteroidInstance.rotationDirection = Math.ceil(Math.random() * 6);
                 asteroidInstance.isTargetable = true;
 
-                console.log(this.baseObject);
+                // console.log(this.baseObject);
                 this.initTargetableActions(asteroidInstance, this.customOutline, this.baseObject);
 
                 this.asteroids.push(asteroidInstance);

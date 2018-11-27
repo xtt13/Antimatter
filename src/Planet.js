@@ -7,7 +7,10 @@ export default class {
         this.engine = engine;
         this.assetsManager = assetsManager;
 
-        this.planetDiameter = 12000;
+        this.planetDiameter = 70000;
+        this.x = 50000;
+        this.y = 0;
+        this.z = 50;
 
         if(config.disablePlanet) return;
         this.loadPlanet();
@@ -15,7 +18,7 @@ export default class {
 
     loadPlanet() {
         this.planetMaterial = new BABYLON.StandardMaterial('planetMaterial', this.scene);
-        this.planetMaterial.specularPower = 2048;
+        // this.planetMaterial.specularPower = 2048;
         // Remove Light Reflection
         this.planetMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
         this.planetMaterial.diffuseColor = new BABYLON.Color3(0.8, 1, 0.6);
@@ -52,14 +55,14 @@ export default class {
         }
         // this.planet.renderingGroupId = 1;
         this.planet.material = this.planetMaterial;
-        this.planet.position = new BABYLON.Vector3(10000, 0, 50);
+        this.planet.position = new BABYLON.Vector3(this.x, this.y, this.z);
     
         this.planet.collisionsEnabled = true;
         this.planet.checkCollisions = true;
         this.planet.isPickable = true;
         this.planet.isBlocker = true;  
 
-        console.log(this.planet);
+        // console.log(this.planet);
 
         var fresnelMaterial = new BABYLON.StandardMaterial('athmosphereMaterial', this.scene);
 

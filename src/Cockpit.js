@@ -20,11 +20,11 @@ export default class {
             console.log(this.CockpitParts);
             
 
-            this.cockpit = task.loadedMeshes[3];
+            this.cockpit = task.loadedMeshes[1];
             this.hudA = task.loadedMeshes[2];
-            this.hudB = task.loadedMeshes[1];
+            this.hudB = task.loadedMeshes[3];
             this.joystick = task.loadedMeshes[4];
-            this.thrustLever = task.loadedMeshes[0];
+            this.thrustLever = task.loadedMeshes[5];
 
             this.CockpitParts = [this.cockpit, this.hudA, this.hudB];
             // var newMesh = BABYLON.Mesh.MergeMeshes(this.CockpitParts);
@@ -38,7 +38,9 @@ export default class {
                 this.CockpitParts[i].rotation.z = 0;
                 this.CockpitParts[i].rotation.x = 0;
 
-                this.CockpitParts[i].isBlocker = true;  
+                if(this.CockpitParts[i].id !== "Spaceship_HUDs_B"){
+                    this.CockpitParts[i].isBlocker = true;  
+                }
                 this.CockpitParts[i].receiveShadows = true;
 
                 this.CockpitParts[i].material.albedoColor = new BABYLON.Color3.FromHexString("#f00001");
@@ -46,8 +48,8 @@ export default class {
                 this.CockpitParts[i].material.overloadedAlbedo = new BABYLON.Color3.FromHexString("#a00000");
                 this.CockpitParts[i].material.overloadedAlbedoIntensity = 0.3;
 
-                this.CockpitParts[i].material.microSurface = 0.3;
-                this.CockpitParts[i].material.metallic = 1.0;
+                // this.CockpitParts[i].material.microSurface = 0.3;
+                // this.CockpitParts[i].material.metallic = 1.0;
 
                 this.CockpitParts[i].material.specularColor = new BABYLON.Color3(0.6, 0.5, 0.6);
                 this.CockpitParts[i].material.specularColor = new BABYLON.Color3(0, 0, 0);

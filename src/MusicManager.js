@@ -27,7 +27,7 @@ export default class {
 
         // }
 
-        this.music2 = new BABYLON.Sound("Music2", "assets/audio/music/hypoxia.mp3", this.scene, null, { loop: true, autoplay: true });
+        this.music2 = new BABYLON.Sound("Music2", "assets/audio/music/hypoxia.mp3", this.scene, null, { volume: 0.5, loop: true, autoplay: true });
     }
 
 }
