@@ -88,7 +88,8 @@ export default class {
         // this.scene.activeCamera = this.camera;
 
 
-        this.camera = new BABYLON.FreeCamera("Camera", new BABYLON.Vector3(0, 20, 0), this.scene);
+        // this.camera = new BABYLON.FreeCamera("Camera", new BABYLON.Vector3(0, 20, 0), this.scene);
+        this.camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 20, 0), this.scene);
 
         // Disable Cursorkeys
         this.camera.inputs.clear();

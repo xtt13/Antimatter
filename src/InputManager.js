@@ -35,8 +35,8 @@ export default class {
                 // console.log(values.x+" "+values.y)
             });
             
-            this.cameraManager.camera.inputs.add(new BABYLON.FreeCameraGamepadInput());
-            this.cameraManager.camera.inputs.attached.gamepad.gamepadAngularSensibility = 250;
+            // this.cameraManager.camera.inputs.add(new BABYLON.FreeCameraGamepadInput());
+            // this.cameraManager.camera.inputs.attached.gamepad.gamepadAngularSensibility = 250;
 
             // this.cameraManager.camera.inputs.addGamepad();
 
@@ -61,6 +61,9 @@ export default class {
                 }
             }
 
+
+            // Slow Down L
+
             if(gamepad._buttons[6]){
                 if (this.airSpeed > 0) {
                     this.airSpeed -= this.accValue + 0.01;
@@ -68,6 +71,8 @@ export default class {
                     this.engineSound.updateOptions({ playbackRate: newVal });
                 }
             }
+
+            // Speed Up R
 
             if(gamepad._buttons[7]){
                 if (this.airSpeed <= this.maxSpeed) {
@@ -77,6 +82,8 @@ export default class {
                     this.engineSound.updateOptions({ playbackRate: newVal });    
                 }
             }
+
+            // Left Stick Cockpit Rotation XYZ
 
             if(gamepad.leftStick.x > 0.3){
                 for (let i = 0; i < this.cockpitParts.length; i++) {
@@ -96,6 +103,20 @@ export default class {
                 for (let i = 0; i < this.cockpitParts.length; i++) {
                     this.cockpitParts[i].rotate(BABYLON.Axis.X, this.turnSpeed, BABYLON.Space.LOCAL);
                 }
+            }
+
+            // Camera Right Stick
+
+            if(gamepad.rightStick.x > 0.3){
+                this.cameraManager.camera.cameraRotation.y = -config.gamepadViewCameraSpeed;
+            } else if(gamepad.rightStick.x < -0.3){
+                this.cameraManager.camera.cameraRotation.y = config.gamepadViewCameraSpeed;
+            }
+
+            if(gamepad.rightStick.y > 0.3){
+                this.cameraManager.camera.cameraRotation.x = config.gamepadViewCameraSpeed;
+            } else if(gamepad.rightStick.y < -0.3){
+                this.cameraManager.camera.cameraRotation.x = -config.gamepadViewCameraSpeed;
             }
 
 

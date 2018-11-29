@@ -27,5 +27,6 @@ export default {
 	airSpeed: 0,
 	maxSpeed: 100,
 	turnSpeed: 0.01,
-	accValue: 0.01
+	accValue: 0.01,
+	gamepadViewCameraSpeed: 0.015
 };
