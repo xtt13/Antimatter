@@ -32,9 +32,73 @@ export default class {
             });
             
             gamepad.onleftstickchanged((values)=>{
-                //Left stick has been moved
-                console.log(values.x+" "+values.y)
+                // console.log(values.x+" "+values.y)
             });
+            
+            this.cameraManager.camera.inputs.add(new BABYLON.FreeCameraGamepadInput());
+            this.cameraManager.camera.inputs.attached.gamepad.gamepadAngularSensibility = 250;
+
+            // this.cameraManager.camera.inputs.addGamepad();
+
+
+            
+        });
+
+        this.scene.registerBeforeRender(() => {
+            var gamepad = this.gamepadManager.gamepads[0];
+
+            if (gamepad == undefined) return;
+
+            if(gamepad._buttons[4]){
+                for (let i = 0; i < this.cockpitParts.length; i++) {
+                    this.cockpitParts[i].rotate(BABYLON.Axis.Y, this.turnSpeed, BABYLON.Space.LOCAL);
+                }
+            }
+
+            if(gamepad._buttons[5]){
+                for (let i = 0; i < this.cockpitParts.length; i++) {
+                    this.cockpitParts[i].rotate(BABYLON.Axis.Y, -this.turnSpeed, BABYLON.Space.LOCAL);
+                }
+            }
+
+            if(gamepad._buttons[6]){
+                if (this.airSpeed > 0) {
+                    this.airSpeed -= this.accValue + 0.01;
+                    let newVal = this.engineSound._playbackRate -= 0.02;
+                    this.engineSound.updateOptions({ playbackRate: newVal });
+                }
+            }
+
+            if(gamepad._buttons[7]){
+                if (this.airSpeed <= this.maxSpeed) {
+
+                    this.airSpeed += this.accValue;
+                    let newVal = this.engineSound._playbackRate += 0.01;
+                    this.engineSound.updateOptions({ playbackRate: newVal });    
+                }
+            }
+
+            if(gamepad.leftStick.x > 0.3){
+                for (let i = 0; i < this.cockpitParts.length; i++) {
+                    this.cockpitParts[i].rotate(BABYLON.Axis.Z, this.turnSpeed, BABYLON.Space.LOCAL);
+                }
+            } else if(gamepad.leftStick.x < -0.3){
+                for (let i = 0; i < this.cockpitParts.length; i++) {
+                    this.cockpitParts[i].rotate(BABYLON.Axis.Z, -this.turnSpeed, BABYLON.Space.LOCAL);
+                }
+            }
+
+            if(gamepad.leftStick.y > 0.3){
+                for (let i = 0; i < this.cockpitParts.length; i++) {
+                    this.cockpitParts[i].rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
+                }
+            } else if(gamepad.leftStick.y < -0.3){
+                for (let i = 0; i < this.cockpitParts.length; i++) {
+                    this.cockpitParts[i].rotate(BABYLON.Axis.X, this.turnSpeed, BABYLON.Space.LOCAL);
+                }
+            }
+
+
         });
 
         this.initControll();
@@ -125,6 +189,7 @@ export default class {
             if (this.keysDown[83]) {
                 // S, rotate in the negative direction about the x axis
                 for (let i = 0; i < this.cockpitParts.length; i++) {
+                    console.log('S');
                     this.cockpitParts[i].rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
                 }
 
@@ -134,6 +199,7 @@ export default class {
             if (this.keysDown[87]) {
                 // W, rotate in the positive direction about the x axis
                 for (let i = 0; i < this.cockpitParts.length; i++) {
+                    console.log('W');
                     this.cockpitParts[i].rotate(BABYLON.Axis.X, this.turnSpeed, BABYLON.Space.LOCAL);
                 }
 
@@ -144,11 +210,9 @@ export default class {
 
             if (this.keysDown[68]) {
                 // D, rotate in the positive direction about the z axis
-
-
                 for (let i = 0; i < this.cockpitParts.length; i++) {
+                    console.log('D');
                     this.cockpitParts[i].rotate(BABYLON.Axis.Z, this.turnSpeed, BABYLON.Space.LOCAL);
-                    
                 }
 
                 //  this.cameraManager.camera.cameraRotation.y = 0.01;
@@ -157,6 +221,7 @@ export default class {
             if (this.keysDown[65]) {
                 // A, rotate in the negative direction about the z axis
                 for (let i = 0; i < this.cockpitParts.length; i++) {
+                    console.log('A');
                     this.cockpitParts[i].rotate(BABYLON.Axis.Z, -this.turnSpeed, BABYLON.Space.LOCAL);
                 }
 
@@ -168,6 +233,7 @@ export default class {
             if (this.keysDown[69]) {
                 // E rotate left
                 for (let i = 0; i < this.cockpitParts.length; i++) {
+                    console.log('E');
                     this.cockpitParts[i].rotate(BABYLON.Axis.Y, -this.turnSpeed, BABYLON.Space.LOCAL);
                 }
 
@@ -179,6 +245,7 @@ export default class {
             if (this.keysDown[81]) {
                 // Q, rotate right
                 for (let i = 0; i < this.cockpitParts.length; i++) {
+                    console.log('Q');
                     this.cockpitParts[i].rotate(BABYLON.Axis.Y, this.turnSpeed, BABYLON.Space.LOCAL);
                 }
 

@@ -89,11 +89,15 @@ export default class {
 
 
         this.camera = new BABYLON.FreeCamera("Camera", new BABYLON.Vector3(0, 20, 0), this.scene);
+
+        // Disable Cursorkeys
         this.camera.inputs.clear();
         this.camera.inputs.addMouse();
+
         // this.camera = new BABYLON.UniversalCamera("Camera", new BABYLON.Vector3(0, 20, 0), this.scene);
         // this.camera = new BABYLON.FlyCamera("Camera", new BABYLON.Vector3(0, 0, 20), this.scene);
         // this.camera.applyGravity = true;
+
         this.camera.maxZ = config.CameraMaxZ;
         this.camera.ellipsoid = new BABYLON.Vector3(3, 3, 3);
         this.camera.checkCollisions = true;

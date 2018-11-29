@@ -26,6 +26,6 @@ export default {
 
 	airSpeed: 0,
 	maxSpeed: 100,
-	turnSpeed: 0.005,
+	turnSpeed: 0.01,
 	accValue: 0.01
 };

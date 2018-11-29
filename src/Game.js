@@ -239,6 +239,8 @@ export default class {
 		// 	}
 		// })
 
+
+
 		this.engine.runRenderLoop(() => {
 			if (config.enableVR) {
 				// vrCamera.position = this.cockpit.CockpitParts[0].position.add(new BABYLON.Vector3(0, 20, 0));
