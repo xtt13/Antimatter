@@ -81,7 +81,6 @@ export default class {
 
 	setup() {
 
-		this.asteroids.setCockpit(this.cockpit.cockpit);
 		// Add Skybox
 		this.skybox = BABYLON.Mesh.CreateBox("skyBox", config.skyBoxSize, this.scene);
 		this.skybox.position = new BABYLON.Vector3(0, 0, 0);

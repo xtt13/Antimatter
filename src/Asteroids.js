@@ -36,10 +36,6 @@ export default class {
         this.createAsteroids();
     }
 
-    setCockpit(cockpit){
-        this.cockpit = cockpit;
-    }
-
     createAsteroids() {
         var loadAsteroid = this.assetsManager.addMeshTask("loadAsteroid", "Asteroid", "/assets/models/asteroids/", "asteroid.babylon");
         var loadBumpMap = this.assetsManager.addTextureTask("loadBumpMap", "/assets/models/asteroids/asteroid_normalmap.jpg");
@@ -116,7 +112,7 @@ export default class {
                 // asteroidInstance.isTargetable = true;
 
                 // console.log(this.baseObject);
-                this.initTargetableActions(asteroidInstance, this.customOutline, this.cockpit);
+                this.initTargetableActions(asteroidInstance, this.customOutline);
 
                 this.asteroids.push(asteroidInstance);
 
@@ -157,20 +153,13 @@ export default class {
         label.isVisible = false;
     }
 
-    initTargetableActions(target, customOutline, cockpit) {
+    initTargetableActions(target, customOutline) {
         target.actionManager = new BABYLON.ActionManager(this.scene);
         var label;
 
         target.actionManager.registerAction(
             new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger, (e) => {
                 var mesh = e.meshUnderPointer;
-
-                // console.log(this.cockpit.position);
-                // console.log(mesh.position);
-                // console.log(this.scene.activeCamera.globalPosition);
-
-                // console.log(BABYLON.Vector3.Distance(this.scene.activeCamera.globalPosition, mesh.position));
-                // console.log(mesh.position.subtract(this.cockpit.position).length());
 
                 var scalingValue = BABYLON.Vector3.Distance(this.scene.activeCamera.globalPosition, mesh.position)/500;
 
