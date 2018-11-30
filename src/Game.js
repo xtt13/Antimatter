@@ -60,7 +60,7 @@ export default class {
 
 		this.spaceStation = new Spacestation(this.scene, this.engine, this.assetsManager);
 		this.planet = new Planet(this.scene, this.engine, this.assetsManager);
-		this.asteroids = new Asteroids(this.scene, this.assetsManager, this.ship);
+		this.asteroids = new Asteroids(this.scene, this.assetsManager);
 		this.jumpGate = new JumpGate(this.scene, this.engine, this.assetsManager)
 
 		this.assetsManager.onFinish = (tasks) => {
@@ -81,7 +81,7 @@ export default class {
 
 	setup() {
 
-
+		this.asteroids.setCockpit(this.cockpit.cockpit);
 		// Add Skybox
 		this.skybox = BABYLON.Mesh.CreateBox("skyBox", config.skyBoxSize, this.scene);
 		this.skybox.position = new BABYLON.Vector3(0, 0, 0);

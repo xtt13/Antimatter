@@ -3,10 +3,10 @@ import * as GUI from 'babylonjs-gui';
 import config from './config';
 
 export default class {
-    constructor(scene, assetsManager, baseObject) {
+    constructor(scene, assetsManager) {
         this.scene = scene;
         this.assetsManager = assetsManager;
-        this.baseObject = baseObject.ship;
+        // this.baseObject = baseObject.ship;
 
         this.asteroids = [];
         this.customOutline = null;
@@ -36,23 +36,29 @@ export default class {
         this.createAsteroids();
     }
 
+    setCockpit(cockpit){
+        this.cockpit = cockpit;
+    }
+
     createAsteroids() {
         var loadAsteroid = this.assetsManager.addMeshTask("loadAsteroid", "Asteroid", "/assets/models/asteroids/", "asteroid.babylon");
         var loadBumpMap = this.assetsManager.addTextureTask("loadBumpMap", "/assets/models/asteroids/asteroid_normalmap.jpg");
 
         loadAsteroid.onSuccess = (task) => {
 
+            // Create Blueprint Asteroid
             var asteroid = this.scene.getMeshByName("Asteroid");
             
-
+            // After Texture Loading
             loadBumpMap.onSuccess = (task) => {
                 asteroid.material.bumpTexture = task.texture;
             }
 
-
             asteroid.material.backFaceCulling = false;
+
+            // The specular highlight often reflects the color of the light source
             asteroid.material.specularColor = new BABYLON.Color3(1, 1, 1);
-            asteroid.position.x = -10;
+
             asteroid.isTargetable = true;
             asteroid.receiveShadows = true;
 
@@ -68,29 +74,36 @@ export default class {
 
 
             asteroid.isTargetable = true;
-            this.initTargetableActions(asteroid, this.customOutline, this.baseObject);
+            // this.initTargetableActions(asteroid, this.customOutline, this.baseObject);
 
+            // Create numberOfAsteroids
             for (var i = 0; i < this.numberOfAsteroid; i++) {
 
                 var asteroidInstance = asteroid.createInstance('Asteroid-' + i);
 
+                // Set Asteroid Position
                 asteroidInstance.position = new BABYLON.Vector3(
                     this.position.x + Math.round(Math.random() * 3000) - 0,
                     this.position.y + Math.round(Math.random() * 3000) - 0,
                     this.position.y + Math.round(Math.random() * 3000) - 0
                 );
-
+                
+                // Set Rock Type
                 asteroidInstance.type = this.types[Math.floor(Math.random() * this.types.length)];
 
+                // Create random XYZ Values
                 var rndRotX = Math.floor(Math.random()*(this.max-this.min+1)+this.min);
                 var rndRotY = Math.floor(Math.random()*(this.max-this.min+1)+this.min);
                 var rndRotZ = Math.floor(Math.random()*(this.max-this.min+1)+this.min);
+
+                // Set random XYZ Rotation
                 asteroidInstance.rotation = new BABYLON.Vector3(
                     rndRotX,
                     rndRotY,
                     rndRotZ
                 );
 
+                // Set Random Scaling
                 var rndNumber = Math.floor(Math.random()*(this.max-this.min+1)+this.min);
                 asteroidInstance.scaling = new BABYLON.Vector3(
                     rndNumber,
@@ -98,19 +111,19 @@ export default class {
                     rndNumber
                 );
 
-                asteroidInstance.rotationSpeed = Math.random() * 0.03;
-                asteroidInstance.rotationDirection = Math.ceil(Math.random() * 6);
-                asteroidInstance.isTargetable = true;
+                // asteroidInstance.rotationSpeed = Math.random() * 0.03;
+                // asteroidInstance.rotationDirection = Math.ceil(Math.random() * 6);
+                // asteroidInstance.isTargetable = true;
 
                 // console.log(this.baseObject);
-                this.initTargetableActions(asteroidInstance, this.customOutline, this.baseObject);
+                this.initTargetableActions(asteroidInstance, this.customOutline, this.cockpit);
 
                 this.asteroids.push(asteroidInstance);
 
             }
 
             loadAsteroid.onError = function (task, message, exception) {
-                console.log(message, exception);
+                // console.log(message, exception);
             }
 
         }
@@ -132,7 +145,6 @@ export default class {
             this.advancedTexture.addControl(label); 
             label.linkWithMesh(mesh);
             label.linkOffsetY = -50;
-            console.log(label);
             var text = new GUI.TextBlock();
             text.text = mesh.type;
             text.color = "white";
@@ -145,7 +157,7 @@ export default class {
         label.isVisible = false;
     }
 
-    initTargetableActions(target, customOutline, baseObject) {
+    initTargetableActions(target, customOutline, cockpit) {
         target.actionManager = new BABYLON.ActionManager(this.scene);
         var label;
 
@@ -153,7 +165,14 @@ export default class {
             new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger, (e) => {
                 var mesh = e.meshUnderPointer;
 
-                var scalingValue = BABYLON.Vector3.Distance(this.scene.activeCamera.position, mesh.position)/240;
+                // console.log(this.cockpit.position);
+                // console.log(mesh.position);
+                // console.log(this.scene.activeCamera.globalPosition);
+
+                // console.log(BABYLON.Vector3.Distance(this.scene.activeCamera.globalPosition, mesh.position));
+                // console.log(mesh.position.subtract(this.cockpit.position).length());
+
+                var scalingValue = BABYLON.Vector3.Distance(this.scene.activeCamera.globalPosition, mesh.position)/500;
 
                 customOutline.position = mesh.position;
                 customOutline.scaling = new BABYLON.Vector3(
