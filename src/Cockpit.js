@@ -6,9 +6,9 @@ export default class {
         this.assetsManager = assetsManager;
         this.ship = ship;
         this.engine = engine;
-        
+
         this.loadCockpit();
-        
+
     }
 
     loadCockpit() {
@@ -18,7 +18,7 @@ export default class {
 
             this.CockpitParts = task.loadedMeshes;
             console.log(this.CockpitParts);
-            
+
 
             this.cockpit = task.loadedMeshes[1];
             this.hudA = task.loadedMeshes[2];
@@ -31,15 +31,16 @@ export default class {
 
             // this.CockpitParts[3].position = new BABYLON.Vector3(800, 800, 800);
 
+
             for (let i = 0; i < this.CockpitParts.length; i++) {
-                
+
                 this.CockpitParts[i].position = new BABYLON.Vector3(-900, 180, 0);
                 this.CockpitParts[i].rotation.y = 11;
                 this.CockpitParts[i].rotation.z = 0;
                 this.CockpitParts[i].rotation.x = 0;
 
-                if(this.CockpitParts[i].id !== "Spaceship_HUDs_B"){
-                    this.CockpitParts[i].isBlocker = true;  
+                if (this.CockpitParts[i].id !== "Spaceship_HUDs_B") {
+                    this.CockpitParts[i].isBlocker = true;
                 }
                 this.CockpitParts[i].receiveShadows = true;
 
@@ -55,9 +56,15 @@ export default class {
                 this.CockpitParts[i].material.specularColor = new BABYLON.Color3(0, 0, 0);
                 this.CockpitParts[i].material.specularPower = 2048;
 
-                // this.CockpitParts[i].checkCollisions = true;
+                this.CockpitParts[i].checkCollisions = true;
             }
-           
+
+            this.cockpit.physicsImpostor = new BABYLON.PhysicsImpostor(this.cockpit, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 0, friction: 0, restitution: 0.3});
+
+            this.cockpit.onCollide = () => {
+                console.log('I am colliding with something');
+            }
+
 
         }
 

@@ -1,9 +1,9 @@
 import * as BABYLON from 'babylonjs';
-import 'babylonjs-inspector';
+// import 'babylonjs-inspector';
 
 export default class {
     constructor(scene) {
-        this.scene = scene;
+        // this.scene = scene;
         // scene.showFps();
         // this.showFPS();
         // this.scene.showFps();

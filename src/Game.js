@@ -3,7 +3,6 @@ import * as BABYLON from 'babylonjs';
 import 'babylonjs-procedural-textures';
 // import * as GUI from 'babylonjs-gui';
 import 'babylonjs-loaders';
-import 'babylonjs-inspector';
 
 import config from './config';
 
@@ -49,6 +48,8 @@ export default class {
 	}
 
 	createScene() {
+		this.scene.enablePhysics();
+
 		this.helper = new Helper(this.scene);
 		this.assetsManager = new BABYLON.AssetsManager(this.scene);
 		this.MusicManager = new MusicManager(this.scene, this.assetsManager);
@@ -79,6 +80,7 @@ export default class {
 	}
 
 	setup() {
+
 
 		// Add Skybox
 		this.skybox = BABYLON.Mesh.CreateBox("skyBox", config.skyBoxSize, this.scene);
@@ -238,6 +240,12 @@ export default class {
 		// 		this.cameraManager.camera.rotation.z = 0;
 		// 	}
 		// })
+
+		this.scene.registerBeforeRender(() => {
+			// if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationRing, true)) {
+			// 	console.log('YAAA');
+			// }
+		})
 
 
 

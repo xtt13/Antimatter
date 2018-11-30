@@ -210,7 +210,7 @@ export default class {
             if (this.keysDown[83]) {
                 // S, rotate in the negative direction about the x axis
                 for (let i = 0; i < this.cockpitParts.length; i++) {
-                    console.log('S');
+                    // console.log('S');
                     this.cockpitParts[i].rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
                 }
 
@@ -220,7 +220,7 @@ export default class {
             if (this.keysDown[87]) {
                 // W, rotate in the positive direction about the x axis
                 for (let i = 0; i < this.cockpitParts.length; i++) {
-                    console.log('W');
+                    // console.log('W');
                     this.cockpitParts[i].rotate(BABYLON.Axis.X, this.turnSpeed, BABYLON.Space.LOCAL);
                 }
 
@@ -232,7 +232,7 @@ export default class {
             if (this.keysDown[68]) {
                 // D, rotate in the positive direction about the z axis
                 for (let i = 0; i < this.cockpitParts.length; i++) {
-                    console.log('D');
+                    // console.log('D');
                     this.cockpitParts[i].rotate(BABYLON.Axis.Z, this.turnSpeed, BABYLON.Space.LOCAL);
                 }
 
@@ -242,7 +242,7 @@ export default class {
             if (this.keysDown[65]) {
                 // A, rotate in the negative direction about the z axis
                 for (let i = 0; i < this.cockpitParts.length; i++) {
-                    console.log('A');
+                    // console.log('A');
                     this.cockpitParts[i].rotate(BABYLON.Axis.Z, -this.turnSpeed, BABYLON.Space.LOCAL);
                 }
 
@@ -254,7 +254,7 @@ export default class {
             if (this.keysDown[69]) {
                 // E rotate left
                 for (let i = 0; i < this.cockpitParts.length; i++) {
-                    console.log('E');
+                    // console.log('E');
                     this.cockpitParts[i].rotate(BABYLON.Axis.Y, -this.turnSpeed, BABYLON.Space.LOCAL);
                 }
 
@@ -266,7 +266,7 @@ export default class {
             if (this.keysDown[81]) {
                 // Q, rotate right
                 for (let i = 0; i < this.cockpitParts.length; i++) {
-                    console.log('Q');
+                    // console.log('Q');
                     this.cockpitParts[i].rotate(BABYLON.Axis.Y, this.turnSpeed, BABYLON.Space.LOCAL);
                 }
 
