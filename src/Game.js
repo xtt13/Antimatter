@@ -122,9 +122,9 @@ export default class {
 		this.sun.diffuse = new BABYLON.Color3(1, 0.9, 0.9);
 		this.sun.specular = new BABYLON.Color3(0, 0, 0);
 		// this.sun.excludedMeshes = [planet.atmosphere];
-		this.sun.intensity = 100;
+		this.sun.intensity = 10000000;
 		this.sun.shadowMinZ = 30;
-		this.sun.shadowMaxZ = 180;
+		this.sun.shadowMaxZ = 18000;
 
 		var lensFlareSystem = new BABYLON.LensFlareSystem("lensFlareSystem", this.sun, this.scene);
 		var flare00 = new BABYLON.LensFlare(0.1, 0, new BABYLON.Color3(1, 1, 1), "assets/textures/flares/Flare3.png", lensFlareSystem);

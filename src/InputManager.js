@@ -10,7 +10,7 @@ export default class {
         this.cockpitMode = true;
         this.game = game;
         this.engineSound = this.game.SoundManager.engineSound;
-        
+
 
         this.keys = {};
         this.keysDown = {};
@@ -23,25 +23,25 @@ export default class {
 
         this.gamepadManager = new BABYLON.GamepadManager();
 
-        this.gamepadManager.onGamepadConnectedObservable.add((gamepad, state)=>{
+        this.gamepadManager.onGamepadConnectedObservable.add((gamepad, state) => {
             console.log('Gamepad connected!');
 
-            gamepad.onButtonDownObservable.add((button, state)=>{
+            gamepad.onButtonDownObservable.add((button, state) => {
                 //Button has been pressed
                 console.log(button)
             });
-            
-            gamepad.onleftstickchanged((values)=>{
+
+            gamepad.onleftstickchanged((values) => {
                 // console.log(values.x+" "+values.y)
             });
-            
+
             // this.cameraManager.camera.inputs.add(new BABYLON.FreeCameraGamepadInput());
             // this.cameraManager.camera.inputs.attached.gamepad.gamepadAngularSensibility = 250;
 
             // this.cameraManager.camera.inputs.addGamepad();
 
 
-            
+
         });
 
         this.scene.registerBeforeRender(() => {
@@ -49,13 +49,13 @@ export default class {
 
             if (gamepad == undefined) return;
 
-            if(gamepad._buttons[4]){
+            if (gamepad._buttons[4]) {
                 for (let i = 0; i < this.cockpitParts.length; i++) {
                     this.cockpitParts[i].rotate(BABYLON.Axis.Y, this.turnSpeed, BABYLON.Space.LOCAL);
                 }
             }
 
-            if(gamepad._buttons[5]){
+            if (gamepad._buttons[5]) {
                 for (let i = 0; i < this.cockpitParts.length; i++) {
                     this.cockpitParts[i].rotate(BABYLON.Axis.Y, -this.turnSpeed, BABYLON.Space.LOCAL);
                 }
@@ -64,7 +64,7 @@ export default class {
 
             // Slow Down L
 
-            if(gamepad._buttons[6]){
+            if (gamepad._buttons[6]) {
                 if (this.airSpeed > 0) {
                     this.airSpeed -= this.accValue + 0.01;
                     let newVal = this.engineSound._playbackRate -= 0.02;
@@ -74,32 +74,32 @@ export default class {
 
             // Speed Up R
 
-            if(gamepad._buttons[7]){
+            if (gamepad._buttons[7]) {
                 if (this.airSpeed <= this.maxSpeed) {
 
                     this.airSpeed += this.accValue;
                     let newVal = this.engineSound._playbackRate += 0.01;
-                    this.engineSound.updateOptions({ playbackRate: newVal });    
+                    this.engineSound.updateOptions({ playbackRate: newVal });
                 }
             }
 
             // Left Stick Cockpit Rotation XYZ
 
-            if(gamepad.leftStick.x > 0.3){
+            if (gamepad.leftStick.x > 0.3) {
                 for (let i = 0; i < this.cockpitParts.length; i++) {
                     this.cockpitParts[i].rotate(BABYLON.Axis.Z, this.turnSpeed, BABYLON.Space.LOCAL);
                 }
-            } else if(gamepad.leftStick.x < -0.3){
+            } else if (gamepad.leftStick.x < -0.3) {
                 for (let i = 0; i < this.cockpitParts.length; i++) {
                     this.cockpitParts[i].rotate(BABYLON.Axis.Z, -this.turnSpeed, BABYLON.Space.LOCAL);
                 }
             }
 
-            if(gamepad.leftStick.y > 0.3){
+            if (gamepad.leftStick.y > 0.3) {
                 for (let i = 0; i < this.cockpitParts.length; i++) {
                     this.cockpitParts[i].rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
                 }
-            } else if(gamepad.leftStick.y < -0.3){
+            } else if (gamepad.leftStick.y < -0.3) {
                 for (let i = 0; i < this.cockpitParts.length; i++) {
                     this.cockpitParts[i].rotate(BABYLON.Axis.X, this.turnSpeed, BABYLON.Space.LOCAL);
                 }
@@ -107,15 +107,15 @@ export default class {
 
             // Camera Right Stick
 
-            if(gamepad.rightStick.x > 0.3){
+            if (gamepad.rightStick.x > 0.3) {
                 this.cameraManager.camera.cameraRotation.y = -config.gamepadViewCameraSpeed;
-            } else if(gamepad.rightStick.x < -0.3){
+            } else if (gamepad.rightStick.x < -0.3) {
                 this.cameraManager.camera.cameraRotation.y = config.gamepadViewCameraSpeed;
             }
 
-            if(gamepad.rightStick.y > 0.3){
+            if (gamepad.rightStick.y > 0.3) {
                 this.cameraManager.camera.cameraRotation.x = config.gamepadViewCameraSpeed;
-            } else if(gamepad.rightStick.y < -0.3){
+            } else if (gamepad.rightStick.y < -0.3) {
                 this.cameraManager.camera.cameraRotation.x = -config.gamepadViewCameraSpeed;
             }
 
@@ -162,13 +162,16 @@ export default class {
                 // SHOOT
                 // this.ship.fire();
             }
+
+            // Scan Asteroids
+            if (code === 86) {
+                this.game.asteroids.scanAsteroids();
+            }
         };
     }
 
     checkKeys(engine) {
         var elapsed = engine.getDeltaTime() / 1000;
-
-        // return;
 
         // Slow Down Y
         if (this.keysDown[89]) {
@@ -200,7 +203,7 @@ export default class {
 
                 // console.log(this.airSpeed);        
                 // if(this.airSpeed > 3) this.game.rattling = 77;
-                
+
             } else {
 
             }

@@ -63,16 +63,27 @@ export default class {
 	*/
 
         // var lensEffect = new BABYLON.LensRenderingPipeline('lens', {
-            // edge_blur: 3.0,
-            // chromatic_aberration: 1.0,
-            // distortion: 1.0
-            // dof_focus_distance: 300,
-            // dof_aperture: 1.0,			// set this very high for tilt-shift effect
-            // grain_amount: 0.1,   
-            // dof_pentagon: true,
-            // dof_gain: 10.0,
-            // dof_threshold: 1.0,
-            // dof_darken: 0.25
+        //     // edge_blur: 3.0,
+        //     // chromatic_aberration: 1.0,
+        //     // distortion: 1.0,
+        //     // dof_focus_distance: 300,
+        //     // dof_aperture: 1.0,			// set this very high for tilt-shift effect
+        //     // grain_amount: 0.1,   
+        //     // dof_pentagon: true,
+        //     // dof_gain: 10.0,
+        //     // dof_threshold: 1.0,
+        //     // dof_darken: 0.25,
+
+        //     edge_blur: 1.0,
+        //     chromatic_aberration: 1.0,
+        //     distortion: 1.0,
+        //     dof_focus_distance: 50,
+        //     dof_aperture: 6.0,			// set this very high for tilt-shift effect
+        //     grain_amount: 1.0,
+        //     dof_pentagon: true,
+        //     dof_gain: 1.0,
+        //     dof_threshold: 1.0,
+        //     dof_darken: 0.25
         // }, this.scene, 1.0, this.camera);
 
         // var postProcess = new BABYLON.ImageProcessingPostProcess("processing", 1.0, this.camera);

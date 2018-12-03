@@ -55,7 +55,7 @@ export default class {
                 // this.station[i].material.specularPower = 2048;
             }
 
-            this.StationRing.physicsImpostor = new BABYLON.PhysicsImpostor(this.StationRing, BABYLON.PhysicsImpostor.MeshImpostor, {mass: 0, friction: 0, restitution: 0.3});
+            // this.StationRing.physicsImpostor = new BABYLON.PhysicsImpostor(this.StationRing, BABYLON.PhysicsImpostor.MeshImpostor, {mass: 0, friction: 0, restitution: 0.3});
 
             this.engine.runRenderLoop(() => {
                 this.StationRing.rotate(BABYLON.Axis.Y, -0.0002, BABYLON.Space.LOCAL);

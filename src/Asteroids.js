@@ -11,6 +11,8 @@ export default class {
         this.asteroids = [];
         this.customOutline = null;
 
+        this.scanning = false;
+
         this.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui1");
 
         this.numberOfAsteroid = 300;
@@ -32,7 +34,7 @@ export default class {
             z: 3000
         }
 
-        if(config.disableAsteroids) return;
+        if (config.disableAsteroids) return;
         this.createAsteroids();
     }
 
@@ -44,7 +46,7 @@ export default class {
 
             // Create Blueprint Asteroid
             var asteroid = this.scene.getMeshByName("Asteroid");
-            
+
             // After Texture Loading
             loadBumpMap.onSuccess = (task) => {
                 asteroid.material.bumpTexture = task.texture;
@@ -83,14 +85,14 @@ export default class {
                     this.position.y + Math.round(Math.random() * 3000) - 0,
                     this.position.y + Math.round(Math.random() * 3000) - 0
                 );
-                
+
                 // Set Rock Type
                 asteroidInstance.type = this.types[Math.floor(Math.random() * this.types.length)];
 
                 // Create random XYZ Values
-                var rndRotX = Math.floor(Math.random()*(this.max-this.min+1)+this.min);
-                var rndRotY = Math.floor(Math.random()*(this.max-this.min+1)+this.min);
-                var rndRotZ = Math.floor(Math.random()*(this.max-this.min+1)+this.min);
+                var rndRotX = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
+                var rndRotY = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
+                var rndRotZ = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
 
                 // Set random XYZ Rotation
                 asteroidInstance.rotation = new BABYLON.Vector3(
@@ -100,12 +102,14 @@ export default class {
                 );
 
                 // Set Random Scaling
-                var rndNumber = Math.floor(Math.random()*(this.max-this.min+1)+this.min);
+                var rndNumber = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
                 asteroidInstance.scaling = new BABYLON.Vector3(
                     rndNumber,
                     rndNumber,
                     rndNumber
                 );
+
+                asteroidInstance.physicsImpostor = new BABYLON.PhysicsImpostor(asteroidInstance, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 0, friction: 0, restitution: 0.3});
 
                 // asteroidInstance.rotationSpeed = Math.random() * 0.03;
                 // asteroidInstance.rotationDirection = Math.ceil(Math.random() * 6);
@@ -125,31 +129,35 @@ export default class {
         }
     }
 
-    addLabel(mesh){
-            var label = new GUI.Rectangle("label for " + mesh.name);
+    addLabel(mesh) {
+        var label = new GUI.Rectangle("label for " + mesh.name);
 
-            label.background = "black"
-            label.height = "30px";
-            // label.alpha = 0.8;
-            label.width = "130px";
-            label.cornerRadius = 3;
-            label.fontFamily = "Orbitron";
-            label.fontSize = '12px';
-            // label.thickness = 1;
-            label.linkOffsetY = 30;
-            
-            this.advancedTexture.addControl(label); 
-            label.linkWithMesh(mesh);
-            label.linkOffsetY = -50;
-            var text = new GUI.TextBlock();
-            text.text = mesh.type;
-            text.color = "white";
-            label.addControl(text); 
+        // label.background = "black"
+        label.height = "30px";
+        // label.alpha = 0.8;
+        label.width = "150px";
+        // label.cornerRadius = 3;
+        label.fontFamily = "Orbitron";
+        label.fontSize = '20px';
+        label.thickness = 2;
+        label.color = "cyan";
 
-            return label;
+        this.advancedTexture.addControl(label);
+
+        label.linkWithMesh(mesh);
+        label.linkOffsetY = -30;
+
+        var text = new GUI.TextBlock();
+        text.text = mesh.type;
+        text.color = "cyan";
+        label.addControl(text);
+
+        console.log(label);
+
+        return label;
     }
 
-    removeLabel(mesh, label){
+    removeLabel(mesh, label) {
         label.isVisible = false;
     }
 
@@ -161,7 +169,7 @@ export default class {
             new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger, (e) => {
                 var mesh = e.meshUnderPointer;
 
-                var scalingValue = BABYLON.Vector3.Distance(this.scene.activeCamera.globalPosition, mesh.position)/500;
+                var scalingValue = BABYLON.Vector3.Distance(this.scene.activeCamera.globalPosition, mesh.position) / 500;
 
                 customOutline.position = mesh.position;
                 customOutline.scaling = new BABYLON.Vector3(
@@ -172,6 +180,7 @@ export default class {
 
                 customOutline.rotation = mesh.rotation;
                 customOutline.isVisible = true;
+
                 label = this.addLabel(target);
 
                 // shootLaser(ship, mesh, scene);
@@ -179,11 +188,47 @@ export default class {
         );
 
         target.actionManager.registerAction(
-            new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger,(e) => {
+            new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger, (e) => {
                 customOutline.isVisible = false;
                 this.removeLabel(target, label);
             })
         );
+    }
+
+    scanAsteroids() {
+        if(this.scanning) return;
+
+        this.scanning = true;
+        
+        let index = 0;
+
+        let scanInterval = setInterval(() => {
+            if (index > this.asteroids.length - 2) {
+                clearInterval(scanInterval);
+                this.scanning = false;
+            }
+
+            this.drawOutline(this.asteroids[index]);
+            index++;
+        }, 80);
+
+
+    }
+
+    drawOutline(mesh) {
+
+        var scalingValue = BABYLON.Vector3.Distance(this.scene.activeCamera.globalPosition, mesh.position) / 500;
+
+        this.customOutline.position = mesh.position;
+        this.customOutline.scaling = new BABYLON.Vector3(
+            mesh.scaling.x + scalingValue,
+            mesh.scaling.y + scalingValue,
+            mesh.scaling.z + scalingValue
+        );
+
+        this.customOutline.rotation = mesh.rotation;
+        this.customOutline.isVisible = true;
+
     }
 
 
