@@ -5,7 +5,7 @@ export default {
 	enableVR: true,
 	disableMusic: false,
 
-	disablePostProgress: true,
+	disablePostProgress: false,
 	disableAsteroids: false,
 	disableSpacestation: false,
 	disablePlanet: false,
