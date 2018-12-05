@@ -100,6 +100,7 @@ export default class {
         // this.camera.applyGravity = true;
 
         this.camera.maxZ = config.CameraMaxZ;
+        this.camera.applyGravity = true;
         this.camera.ellipsoid = new BABYLON.Vector3(3, 3, 3);
         this.camera.checkCollisions = true;
         this.camera.parent = this.cockpit;
@@ -120,6 +121,58 @@ export default class {
         // // this.camera.upVector = new BABYLON.Vector3(1, 0, 1);
         // this.scene.activeCamera = this.camera;
         // this.camera.attachControl(this.canvas, false);
+    }
+
+    fadeIn() {
+        BABYLON.Effect.ShadersStore["fadePixelShader"] =
+            "precision highp float;" +
+            "varying vec2 vUV;" +
+            "uniform sampler2D textureSampler; " +
+            "uniform float fadeLevel; " +
+            "void main(void){" +
+            "vec4 baseColor = texture2D(textureSampler, vUV) * fadeLevel;" +
+            "baseColor.a = 1.0;" +
+            "gl_FragColor = baseColor;" +
+            "}";
+
+        var fadeLevel = 1.0;
+        var postProcess = new BABYLON.PostProcess("Fade", "fade", ["fadeLevel"], null, 1.0, this.camera);
+        postProcess.onApply = (effect) => {
+            effect.setFloat("fadeLevel", fadeLevel);
+        };
+
+        var alpha = 0;
+        this.scene.registerBeforeRender(function () {
+            //fadeLevel = Math.abs(Math.cos(alpha));
+            fadeLevel = (alpha <= 1 ? alpha : 1);;
+            alpha += 0.01;
+        });
+    }
+
+    fadeOut() {
+        BABYLON.Effect.ShadersStore["fadePixelShader"] =
+            "precision highp float;" +
+            "varying vec2 vUV;" +
+            "uniform sampler2D textureSampler; " +
+            "uniform float fadeLevel; " +
+            "void main(void){" +
+            "vec4 baseColor = texture2D(textureSampler, vUV) * fadeLevel;" +
+            "baseColor.a = 1.0;" +
+            "gl_FragColor = baseColor;" +
+            "}";
+
+        var fadeLevel = 1.0;
+        var postProcess = new BABYLON.PostProcess("Fade", "fade", ["fadeLevel"], null, 1.0, this.camera);
+        postProcess.onApply = (effect) => {
+            effect.setFloat("fadeLevel", fadeLevel);
+        };
+
+        var alpha = 1;
+        this.scene.registerBeforeRender(function () {
+            //fadeLevel = Math.abs(Math.cos(alpha));
+            fadeLevel = (alpha <= 1 ? alpha : 0);;
+            alpha -= 0.01;
+        });
     }
 
 }

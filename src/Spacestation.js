@@ -16,6 +16,23 @@ export default class {
 
         loadStation.onSuccess = (task) => {
 
+
+            // GLTF 2
+            // console.log(task);
+
+            // for (let i = 0; i < task.loadedMeshes.length; i++) {
+            //     let element = task.loadedMeshes[i];
+            //     console.log('run');
+                
+            //     element.scaling = new BABYLON.Vector3(config.spaceStationScaling, config.spaceStationScaling, config.spaceStationScaling);
+            //     element.checkCollisions = true;
+            //     element.isBlocker = true;
+            //     element.receiverShadows = true;
+            // }
+
+
+
+
             this.StationBottom = this.scene.getMeshByName("StationBottom");
             this.StationTop = this.scene.getMeshByName("StationTop");
             this.StationRing = this.scene.getMeshByName("StationRing");
@@ -55,7 +72,7 @@ export default class {
                 // this.station[i].material.specularPower = 2048;
             }
 
-            // this.StationRing.physicsImpostor = new BABYLON.PhysicsImpostor(this.StationRing, BABYLON.PhysicsImpostor.MeshImpostor, {mass: 0, friction: 0, restitution: 0.3});
+            this.StationRing.physicsImpostor = new BABYLON.PhysicsImpostor(this.StationRing, BABYLON.PhysicsImpostor.MeshImpostor, {mass: 0, friction: 0, restitution: 0.3});
 
             this.engine.runRenderLoop(() => {
                 this.StationRing.rotate(BABYLON.Axis.Y, -0.0002, BABYLON.Space.LOCAL);

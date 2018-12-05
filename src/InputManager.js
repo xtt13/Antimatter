@@ -158,14 +158,24 @@ export default class {
                 this.cameraManager.cockpitCamera();
             }
 
-            if (code === 32) {
-                // SHOOT
-                // this.ship.fire();
+            // I-Key
+            if (code === 73) {
+                this.game.wormhole.startWormhole();
             }
 
             // Scan Asteroids
             if (code === 86) {
                 this.game.asteroids.scanAsteroids();
+            }
+
+            // FadeIn Camera
+            if (code === 67) {
+                this.game.cameraManager.fadeIn();
+            }
+
+            // FadeOut Camera
+            if (code === 86) {
+                this.game.cameraManager.fadeOut();
             }
         };
     }

@@ -19,6 +19,7 @@ import MusicManager from './MusicManager';
 import SoundManager from './SoundManager';
 import JumpGate from './JumpGate';
 import Cockpit from './Cockpit';
+import Wormhole from './Wormhole';
 
 export default class {
 	constructor() {
@@ -32,9 +33,9 @@ export default class {
 
 		this.scene = new BABYLON.Scene(this.engine);
 		this.scene.clearColor = BABYLON.Color3.Black();
-		this.scene.collisionsEnabled = true;
 		this.scene.checkCollisions = true;
-
+		this.scene.gravity = new BABYLON.Vector3(0, 0, 0);
+		this.scene.collisionsEnabled = true;
 
 
 		this.ship = null;
@@ -106,6 +107,9 @@ export default class {
 
 		this.cameraManager = new CameraManager(this.scene, this.canvas, this.ship, this.cockpit);
 		this.SoundManager.initSound(this.cameraManager);
+
+		this.wormhole = new Wormhole(this.scene, this.engine, this.assetsManager, this.cameraManager.camera);
+
 
 		this.light = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 1, 0), this.scene);
 		this.light.groundColor = new BABYLON.Color3(0.2, 0.2, 0.2);
@@ -207,8 +211,8 @@ export default class {
 			//   }
 		}
 
-		var stations = [this.spaceStation.StationBottom, this.spaceStation.StationTop, this.spaceStation.StationRing, this.spaceStation.StationMiddle];
-		var scaleVal = 0.001;
+		// var stations = [this.spaceStation.StationBottom, this.spaceStation.StationTop, this.spaceStation.StationRing, this.spaceStation.StationMiddle];
+		// var scaleVal = 0.001;
 
 		// this.cameraManager.initCamera(this.spaceStation.StationRing);
 		// console.log(cameraManager.camera);
