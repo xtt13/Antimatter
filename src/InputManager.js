@@ -180,8 +180,17 @@ export default class {
             }
 
             // Shake M-Key
-            if (code == 77){
+            if (code == 77) {
                 this.game.cameraManager.shake();
+            }
+
+            // Shake L-Key
+            if (code == 76) {
+                this.game.jumpGate.startJumpGate();
+            }
+
+            if(code == 187) {
+                console.log(this.game.cockpit.cockpit.position);
             }
         };
     }

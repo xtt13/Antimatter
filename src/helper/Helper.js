@@ -1,5 +1,4 @@
 import * as BABYLON from 'babylonjs';
-// import 'babylonjs-inspector';
 
 export default class {
     constructor(scene) {

@@ -128,7 +128,7 @@ export default class {
 		// this.sun.excludedMeshes = [planet.atmosphere];
 		this.sun.intensity = 10000000;
 		this.sun.shadowMinZ = 30;
-		this.sun.shadowMaxZ = 18000;
+		this.sun.shadowMaxZ = 1800000;
 
 		var lensFlareSystem = new BABYLON.LensFlareSystem("lensFlareSystem", this.sun, this.scene);
 		var flare00 = new BABYLON.LensFlare(0.1, 0, new BABYLON.Color3(1, 1, 1), "assets/textures/flares/Flare3.png", lensFlareSystem);

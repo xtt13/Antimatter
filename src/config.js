@@ -28,5 +28,12 @@ export default {
 	maxSpeed: 100,
 	turnSpeed: 0.01,
 	accValue: 0.01,
-	gamepadViewCameraSpeed: 0.015
+	gamepadViewCameraSpeed: 0.015,
+
+	// Hangar Position
+	// cockpitPosition: new BABYLON.Vector3(-900, 180, 0)
+
+	// JumpGate ViewPosition
+	cockpitPosition: new BABYLON.Vector3(12000, 0, 8000)
+
 };

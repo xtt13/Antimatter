@@ -10,7 +10,7 @@
     },
     "license": "MIT",
     "devDependencies": {
-        "ajv": "^5.5.2",
+        "ajv": "^6.6.1",
         "babel-core": "^6.26.3",
         "babel-eslint": "^7.2.3",
         "babel-loader": "^7.1.1",
@@ -32,6 +32,7 @@
         "babylonjs-loaders": "^3.2.0",
         "babylonjs-materials": "^3.2.0",
         "babylonjs-procedural-textures": "^3.2.0",
+        "babylonjs-serializers": "^3.3.0",
         "spectorjs": "^0.9.4"
     }
 }
