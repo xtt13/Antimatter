@@ -175,4 +175,38 @@ export default class {
         });
     }
 
+    shake() {
+        // Parameter 1 - Name of this animation, nothing more.
+
+        // Parameter 2 - The property concerned.This can be any mesh property, depending upon what you want to change.Here we want to scale an object on the X axis, so it will be “scaling.x”.
+
+        // Parameter 3 - Frames per second requested: highest FPS possible in this animation.
+
+        // Parameter 4 - Type of change.Here you decide and enter what kind of value will be modified: is it a float(e.g.a translation), a vector(e.g.a direction), or a quaternion.Exact values are:
+
+        let cameraAnimation = new BABYLON.Animation("cameraAnimation", "position", 30, BABYLON.Animation.ANIMATIONTYPE_VECTOR3,  BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+        let nextPos = this.camera.position.add(new BABYLON.Vector3(-1, 0, 0));
+
+        // Animation keys
+        var keysCameraShake = [];
+        keysCameraShake.push({ frame: 0, value: this.camera.position });
+        keysCameraShake.push({ frame: 120, value: nextPos });
+        cameraAnimation.setKeys(keysCameraShake);
+
+        var easingFunction = new BABYLON.ElasticEase();
+
+        // For each easing function, you can choose beetween EASEIN (default), EASEOUT, EASEINOUT
+        easingFunction.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+
+        // Adding easing function to my animation
+        cameraAnimation.setEasingFunction(easingFunction);
+
+        // Adding animation to my torus animations collection
+        this.camera.animations.push(cameraAnimation);
+
+        //Finally, launch animations on torus, from key 0 to key 120 with loop activated
+        this.scene.beginAnimation(this.camera, 0, 120, true);
+
+    }
+
 }

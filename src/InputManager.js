@@ -177,6 +177,10 @@ export default class {
             if (code === 86) {
                 this.game.cameraManager.fadeOut();
             }
+
+            if (code == 77){
+                this.game.cameraManager.shake();
+            }
         };
     }
 
