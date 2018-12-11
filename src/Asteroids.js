@@ -108,9 +108,9 @@ export default class {
                     rndNumber,
                     rndNumber
                 );
-                
+
                 asteroidInstance.checkCollisions = true;
-                asteroidInstance.physicsImpostor = new BABYLON.PhysicsImpostor(asteroidInstance, BABYLON.PhysicsImpostor.SphereImpostor, {mass: 0, friction: 0, restitution: 0.3});
+                asteroidInstance.physicsImpostor = new BABYLON.PhysicsImpostor(asteroidInstance, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 0, friction: 0, restitution: 0.3 });
 
                 // asteroidInstance.rotationSpeed = Math.random() * 0.03;
                 // asteroidInstance.rotationDirection = Math.ceil(Math.random() * 6);
@@ -184,6 +184,14 @@ export default class {
 
                 label = this.addLabel(target);
 
+                let beepSound = new BABYLON.Sound("beepSound", "assets/audio/sound/beep.mp3", this.scene, null,
+                    {
+                        playbackRate: 1,
+                        volume: 1,
+                        loop: false,
+                        autoplay: true
+                    })
+
                 // shootLaser(ship, mesh, scene);
             })
         );
@@ -197,10 +205,10 @@ export default class {
     }
 
     scanAsteroids() {
-        if(this.scanning) return;
+        if (this.scanning) return;
 
         this.scanning = true;
-        
+
         let index = 0;
 
         let scanInterval = setInterval(() => {
@@ -208,6 +216,14 @@ export default class {
                 clearInterval(scanInterval);
                 this.scanning = false;
             }
+
+            let beepSound = new BABYLON.Sound("beepSound", "assets/audio/sound/beep.mp3", this.scene, null,
+            {
+                playbackRate: 1,
+                volume: 1,
+                loop: false,
+                autoplay: true
+            })
 
             this.drawOutline(this.asteroids[index]);
             index++;

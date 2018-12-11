@@ -175,7 +175,7 @@ export default class {
         });
     }
 
-    shake() {
+    shake(sound) {
         // Parameter 1 - Name of this animation, nothing more.
 
         // Parameter 2 - The property concerned.This can be any mesh property, depending upon what you want to change.Here we want to scale an object on the X axis, so it will be “scaling.x”.
@@ -184,13 +184,17 @@ export default class {
 
         // Parameter 4 - Type of change.Here you decide and enter what kind of value will be modified: is it a float(e.g.a translation), a vector(e.g.a direction), or a quaternion.Exact values are:
 
-        let cameraAnimation = new BABYLON.Animation("cameraAnimation", "position", 30, BABYLON.Animation.ANIMATIONTYPE_VECTOR3,  BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
-        let nextPos = this.camera.position.add(new BABYLON.Vector3(-1, 0, 0));
+        let cameraAnimation = new BABYLON.Animation("cameraAnimation", "position", 30, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+        let nextPos = this.camera.position.add(new BABYLON.Vector3(-1, -1, 1));
+        let finalPos = this.camera.position.add(new BABYLON.Vector3(0, 0, 0));
 
         // Animation keys
         var keysCameraShake = [];
         keysCameraShake.push({ frame: 0, value: this.camera.position });
         keysCameraShake.push({ frame: 120, value: nextPos });
+        keysCameraShake.push({ frame: 240, value: finalPos });
+        keysCameraShake.push({ frame: 480, value: nextPos });
+        keysCameraShake.push({ frame: 660, value: finalPos });
         cameraAnimation.setKeys(keysCameraShake);
 
         var easingFunction = new BABYLON.ElasticEase();
@@ -205,7 +209,17 @@ export default class {
         this.camera.animations.push(cameraAnimation);
 
         //Finally, launch animations on torus, from key 0 to key 120 with loop activated
-        this.scene.beginAnimation(this.camera, 0, 120, true);
+        this.scene.beginAnimation(this.camera, 0, 660, true);
+
+        if (sound) {
+            this.shakeSound = new BABYLON.Sound("shakeSound", "assets/audio/sound/shake.mp3", this.scene, null,
+                {
+                    playbackRate: 1,
+                    volume: 1,
+                    loop: false,
+                    autoplay: true
+                });
+        }
 
     }
 

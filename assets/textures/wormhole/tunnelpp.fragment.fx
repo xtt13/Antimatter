@@ -25,9 +25,9 @@ void main(void)
 
 	vec3 col = texture2D(tunnelSampler, uv).xyz;
 
-	// float ao = smoothstep(0.0, 0.3, h) - smoothstep(0.5, 1.0, h);
-	// col *= 1.0 - 0.6*ao*r;
-	// col *= r*r;
+	float ao = smoothstep(0.0, 0.3, h) - smoothstep(0.5, 1.0, h);
+	col *= 1.0 - 0.6*ao*r;
+	col *= r*r;
 
 	gl_FragColor = vec4(col, 1.0);
 }

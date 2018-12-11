@@ -144,40 +144,42 @@ export default class {
 
             var code = e.keyCode ? e.keyCode : e.which;
 
+            // Fullscreen 1-Key
             if (code === 49) {
                 this.launchFullscreen();
             }
 
             if (code === 50) {
-                // SWITCH TO FOLLOW CAM
+                // SWITCH TO FOLLOW CAM 2-Key
                 this.cameraManager.initCamera(this.ship.ship);
             }
 
             if (code === 51) {
-                // SWITCH TO COCKPIT CAMERA
+                // SWITCH TO COCKPIT CAMERA 3-Key
                 this.cameraManager.cockpitCamera();
             }
 
-            // I-Key
+            // Wormhole I-Key
             if (code === 73) {
                 this.game.wormhole.startWormhole();
             }
 
-            // Scan Asteroids
-            if (code === 86) {
+            // Scan Asteroids P-Key
+            if (code === 80) {
                 this.game.asteroids.scanAsteroids();
             }
 
-            // FadeIn Camera
+            // FadeIn Camera C-Key
             if (code === 67) {
                 this.game.cameraManager.fadeIn();
             }
 
-            // FadeOut Camera
+            // FadeOut Camera V-Key
             if (code === 86) {
                 this.game.cameraManager.fadeOut();
             }
 
+            // Shake M-Key
             if (code == 77){
                 this.game.cameraManager.shake();
             }
