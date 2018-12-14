@@ -26,7 +26,7 @@ Soon - **Still in development**
 
 ## Credits
 
-###Assets: 
+### Assets: 
 I bought all assets (licence) from [CGTrader](https://www.cgtrader.com/)
 
 I converted all assets to GLTF2 Format
