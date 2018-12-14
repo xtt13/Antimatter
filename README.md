@@ -5,7 +5,7 @@
 > 3D Spacegame made with **Babylon.js v3.3.0**
 
 > **Year 2220:** 
-After the destruction of Earth, the last humans gather in a space station orbiting Mars. Fifty years ago, the last ark and hope of humanity broke into the solar system Proxima Centauri to settle on the planet Proxima Centauri B. A few years ago, the breakthrough came in the development of jump gates to other solar systems. Your job is to complete the planned jump gate in order to meet the ark at the final destination. This will also save all inhabitants of your space station and lead them into a new future.
+After the destruction of Earth, the last humans gather in a space station orbiting Mars. Fifty years ago, the last ark and hope of humanity left Mars heading to the solar system Proxima Centauri to settle on the planet Proxima Centauri B. A few years ago, the breakthrough came in the development of jump gates to other solar systems. Your job is to complete the planned jump gate in order to meet the ark at the final destination. This will also save all inhabitants of your space station and lead them into a new future.
 
 ## Play Online
 
