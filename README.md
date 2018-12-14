@@ -27,9 +27,17 @@ Soon - **Still in development**
 ## Credits
 
 ### Assets: 
-I bought all assets (licence) from [CGTrader](https://www.cgtrader.com/)
+I bought all assets (licence) from [CGTrader](https://www.cgtrader.com/) and [Unity Asset Store](https://assetstore.unity.com/)
 
-I converted all assets to GLTF2 Format
+* [Forged3D - Battleships](https://assetstore.unity.com/packages/3d/vehicles/space/battleships-100098)
+* [DEKO - Spaceship](https://assetstore.unity.com/packages/3d/vehicles/space/spaceship-6028)
+* [CGPitbull - SciFi Frigate G2 Low-poly 3D model](https://www.cgtrader.com/3d-models/space/spaceship/scifi-frigate-g2)
+* [CGPitbull - Spaceship Cockpit C2 Low-poly 3D model](https://www.cgtrader.com/3d-models/space/spaceship/spaceship-cockpit-c2)
+* [CGPitbull - SF Heavy JumpGate JG4 Low-poly 3D model](https://www.cgtrader.com/3d-models/space/spaceship/sf-heavy-jumpgate-jg4)
+
+I converted all 3D-assets to GLTF2 Format
+
+Audio-Files are mainly from [Soundsnap](https://www.soundsnap.com/)
 
 
 ## Screenshots
