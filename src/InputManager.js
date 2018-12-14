@@ -190,7 +190,15 @@ export default class {
                 this.game.jumpGate.startJumpGate();
                 setTimeout(() => {
                     this.game.cameraManager.shake(true);
-                }, 5000);
+                    setInterval(() => {
+                        var elapsed = this.engine.getDeltaTime() / 1000;
+                        for (let i = 0; i < this.cockpitParts.length; i++) {
+                            this.cockpitParts[i].translate(BABYLON.Axis.Z, elapsed + this.airSpeed, BABYLON.Space.GLOBAL);
+                        }
+                        this.airSpeed += (this.accValue + 0.3);
+
+                    }, 100);
+                }, 6000);
                 
                 setTimeout(() => {
                     this.game.cameraManager.fadeOut();
@@ -200,7 +208,7 @@ export default class {
                         this.game.cameraManager.fadeIn();
                     }, 3000);
                     
-                }, 8000);
+                }, 9000);
             }
 
             if(code == 187) {
@@ -210,6 +218,8 @@ export default class {
     }
 
     checkKeys(engine) {
+        this.engine = engine;
+
         var elapsed = engine.getDeltaTime() / 1000;
 
         // Slow Down Y
