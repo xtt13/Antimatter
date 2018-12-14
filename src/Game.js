@@ -36,6 +36,7 @@ export default class {
 		this.scene.checkCollisions = true;
 		this.scene.gravity = new BABYLON.Vector3(0, 0, 0);
 		this.scene.collisionsEnabled = true;
+		this.scene.ambientColor = new BABYLON.Color3(1, 1, 1);
 
 
 		this.ship = null;
@@ -108,7 +109,7 @@ export default class {
 		this.cameraManager = new CameraManager(this.scene, this.canvas, this.ship, this.cockpit);
 		this.SoundManager.initSound(this.cameraManager);
 
-		this.wormhole = new Wormhole(this.scene, this.engine, this.assetsManager, this.cameraManager.camera);
+		this.wormhole = new Wormhole(this.scene, this.engine, this.assetsManager, this.cameraManager.camera, this);
 
 
 		this.light = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 1, 0), this.scene);

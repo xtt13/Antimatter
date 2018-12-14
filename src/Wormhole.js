@@ -2,12 +2,12 @@ import * as BABYLON from 'babylonjs';
 import config from './config';
 
 export default class {
-    constructor(scene, engine, assetsManager, camera) {
+    constructor(scene, engine, assetsManager, camera, game) {
         this.scene = scene;
         this.engine = engine;
         this.assetsManager = assetsManager;
         this.camera = camera;
-
+        this.game = game;
         this.running = false;
 
     }
@@ -43,7 +43,9 @@ export default class {
 
         console.log(tunnelShader);
 
-        tunnelShader.alphaMode = 0.5;
+        // tunnelShader.alphaMode = 0.5;
+
+
 
     }
 
@@ -61,11 +63,26 @@ export default class {
         shaderMaterial.setFloat("time", 0);
         shaderMaterial.setVector3("direction", BABYLON.Vector3.Zero());
 
+        this.game.skybox.material = shaderMaterial;
+
+
+        // Skydome    
+        // var skybox = BABYLON.Mesh.CreateSphere("skyBox", 50, 500, scene);    
+        // The sky creation    
+        // BABYLON.Engine.ShadersRepository = "shaders/";    
+        // var shader = new BABYLON.ShaderMaterial("gradient", scene, "gradient", {});    
+        // shader.setFloat("offset", 200);    
+        // shader.setColor3("topColor", BABYLON.Color3.FromInts(0, 119, 255));    
+        // shader.setColor3("bottomColor", BABYLON.Color3.FromInts(240, 240, 255));    
+        // shader.backFaceCulling = false;    
+        // skybox.material = shader;
 
 
 
 
     }
+
+
 
 
 }

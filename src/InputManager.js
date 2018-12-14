@@ -162,6 +162,7 @@ export default class {
             // Wormhole I-Key
             if (code === 73) {
                 this.game.wormhole.startWormhole();
+                // this.game.wormhole.shaderMaterial();
             }
 
             // Scan Asteroids P-Key
@@ -187,6 +188,19 @@ export default class {
             // Shake L-Key
             if (code == 76) {
                 this.game.jumpGate.startJumpGate();
+                setTimeout(() => {
+                    this.game.cameraManager.shake(true);
+                }, 5000);
+                
+                setTimeout(() => {
+                    this.game.cameraManager.fadeOut();
+
+                    setTimeout(() => {
+                        this.game.wormhole.startWormhole();
+                        this.game.cameraManager.fadeIn();
+                    }, 3000);
+                    
+                }, 8000);
             }
 
             if(code == 187) {

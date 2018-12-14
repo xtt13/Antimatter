@@ -13,7 +13,7 @@ export default class {
         this.start = false;
         this.visibleRings = false;
 
-        // var mySphere = BABYLON.MeshBuilder.CreateSphere("mySphere", {diameter: 2000, diameterX: 3000}, this.scene);
+        // var mySphere = BABYLON.MeshBuilder.CreateSphere("mySphere", {diameter: 200, diameterX: 300}, this.scene);
 		// mySphere.position = new BABYLON.Vector3(-8000, 0, 8000);
 
         this.sparkleLight = new BABYLON.PointLight("sparkleLight", new BABYLON.Vector3(-8000, 0, 8000), this.scene);
@@ -62,11 +62,11 @@ export default class {
             this.jumpGate.position = this.position;
             this.jumpGateRing1.position = this.position;
 
-            this.jumpGate.material.specularColor = new BABYLON.Color3(0, 0, 0);
-            this.jumpGateRing1.material.specularColor = new BABYLON.Color3(0, 0, 0);
+            // this.jumpGate.material.specularColor = new BABYLON.Color3(1, 1, 1);
+            // this.jumpGateRing1.material.specularColor = new BABYLON.Color3(0, 0, 0);
 
-            this.jumpGate.material.specularPower = 1024;
-            this.jumpGateRing1.material.specularPower = 1024;
+            // this.jumpGate.material.specularPower = 1024;
+            // this.jumpGateRing1.material.specularPower = 1024;
 
             this.jumpGate.isBlocker = true;
             this.jumpGate.receiveShadows = true;
@@ -81,7 +81,11 @@ export default class {
             this.jumpGateRing1.isVisible = false;
             this.jumpGateRing2.isVisible = false;
 
-            // this.jumpGate.material.metallic = 1;
+            // this.jumpGate.material.albedoColor = new BABYLON.Vector3(1, 1, 1);
+            this.jumpGate.material.diffuseColor = new BABYLON.Color3(0, 0, 0);
+            this.jumpGate.material.specularColor = new BABYLON.Color3(0, 0, 0);
+            console.log(this.jumpGate.material);
+
 
 
             this.engine.runRenderLoop(() => {
@@ -109,6 +113,7 @@ export default class {
         this.start = true;
 
         this.viewjumpGateRings();
+
 
         let jumpGateSound = new BABYLON.Sound("jumpGate", "assets/audio/sound/jumpGate.mp3", this.scene, null,
             {
