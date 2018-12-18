@@ -10,6 +10,7 @@ export default class {
         this.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui1");
         this.labels = [];
 
+        // Show Textbox
         // this.createUIBackground();
     }
 
@@ -39,7 +40,7 @@ export default class {
             //     'padding: 10px;' +
             //     'background-color: red;');
 
-            n.innerHTML = "Hello this is a Test Message!";
+            n.innerHTML = "Year 2220: After the destruction of Earth, the last humans gather in a space station orbiting Mars. Fifty years ago, the last ark and hope of humanity left Mars heading to the solar system Proxima Centauri to settle on the planet Proxima Centauri B. A few years ago, the breakthrough came in the development of jump gates to other solar systems. Your job is to complete the planned jump gate in order to meet the ark at the final destination. This will also save all inhabitants of your space station and lead them into a new future.";
 
             document.body.appendChild(n);
     }

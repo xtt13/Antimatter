@@ -17,10 +17,18 @@ export default {
 	jumpGateScaling: 0.5,
 
 
+	// Follow Cam: 
+	// planetInfiniteDistance: false,
+	// skyBoxInfiniteDistance: false,
+	//skyBoxSize: 1115000,
+
+
+	// Cockpit Cam:
 	planetInfiniteDistance: true,
 	skyBoxInfiniteDistance: true,
+	skyBoxSize: 115000,
 
-	skyBoxSize: 105000,
+	
 
 	CameraMaxZ: 100000,
 
@@ -34,6 +42,6 @@ export default {
 	// cockpitPosition: new BABYLON.Vector3(-900, 180, 0)
 
 	// JumpGate ViewPosition
-	cockpitPosition: new BABYLON.Vector3(12000, 0, 8000)
+	cockpitPosition: new BABYLON.Vector3(14000, 0, 8000)
 
 };

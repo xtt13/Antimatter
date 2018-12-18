@@ -23,7 +23,7 @@ export default class {
             // for (let i = 0; i < task.loadedMeshes.length; i++) {
             //     let element = task.loadedMeshes[i];
             //     console.log('run');
-                
+
             //     element.scaling = new BABYLON.Vector3(config.spaceStationScaling, config.spaceStationScaling, config.spaceStationScaling);
             //     element.checkCollisions = true;
             //     element.isBlocker = true;
@@ -72,7 +72,10 @@ export default class {
                 // this.station[i].material.specularPower = 2048;
             }
 
-            this.StationRing.physicsImpostor = new BABYLON.PhysicsImpostor(this.StationRing, BABYLON.PhysicsImpostor.MeshImpostor, {mass: 0, friction: 0, restitution: 0.3});
+            // var mySphere = BABYLON.MeshBuilder.CreateSphere("mySphere", { diameter: 5000, diameterX: 7000 }, this.scene);
+            // mySphere.physicsImpostor = new BABYLON.PhysicsImpostor(mySphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 0, friction: 0, restitution: 0.3 });
+
+            // this.StationRing.physicsImpostor = new BABYLON.PhysicsImpostor(this.StationRing, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0, friction: 0, restitution: 0.3 });
 
             this.engine.runRenderLoop(() => {
                 this.StationRing.rotate(BABYLON.Axis.Y, -0.0002, BABYLON.Space.LOCAL);

@@ -28,8 +28,11 @@ export default class {
 		this.engine = new BABYLON.Engine(this.canvas, true, {
 			stencil: true
 		});
-		this.engine.displayLoadingUI();
+
 		this.engine.disableManifestCheck = true;
+
+		this.engine.loadingUIText = "Year 2200";
+		this.engine.hideLoadingUI();
 
 		this.scene = new BABYLON.Scene(this.engine);
 		this.scene.clearColor = BABYLON.Color3.Black();
@@ -37,6 +40,10 @@ export default class {
 		this.scene.gravity = new BABYLON.Vector3(0, 0, 0);
 		this.scene.collisionsEnabled = true;
 		this.scene.ambientColor = new BABYLON.Color3(1, 1, 1);
+
+		var gravityVector = new BABYLON.Vector3(0, 0, 0);
+		var physicsPlugin = new BABYLON.CannonJSPlugin();
+		this.scene.enablePhysics(gravityVector, physicsPlugin);
 
 
 		this.ship = null;
@@ -50,7 +57,9 @@ export default class {
 	}
 
 	createScene() {
-		this.scene.enablePhysics();
+		// this.scene.enablePhysics();
+
+		this.physicsHelper = new BABYLON.PhysicsHelper(this.scene);
 
 		this.helper = new Helper(this.scene);
 		this.assetsManager = new BABYLON.AssetsManager(this.scene);
@@ -106,7 +115,7 @@ export default class {
 
 
 
-		this.cameraManager = new CameraManager(this.scene, this.canvas, this.ship, this.cockpit);
+		this.cameraManager = new CameraManager(this.scene, this.canvas, this.ship, this.cockpit, this);
 		this.SoundManager.initSound(this.cameraManager);
 
 		this.wormhole = new Wormhole(this.scene, this.engine, this.assetsManager, this.cameraManager.camera, this);
@@ -127,9 +136,9 @@ export default class {
 		this.sun.diffuse = new BABYLON.Color3(1, 0.9, 0.9);
 		this.sun.specular = new BABYLON.Color3(0, 0, 0);
 		// this.sun.excludedMeshes = [planet.atmosphere];
-		this.sun.intensity = 10000000;
-		this.sun.shadowMinZ = 30;
-		this.sun.shadowMaxZ = 1800000;
+		// this.sun.intensity = 10000000;
+		// this.sun.shadowMinZ = 30;
+		// this.sun.shadowMaxZ = 1800000;
 
 		var lensFlareSystem = new BABYLON.LensFlareSystem("lensFlareSystem", this.sun, this.scene);
 		var flare00 = new BABYLON.LensFlare(0.1, 0, new BABYLON.Color3(1, 1, 1), "assets/textures/flares/Flare3.png", lensFlareSystem);
@@ -161,6 +170,9 @@ export default class {
 			var vrHelper = this.scene.createDefaultVRExperience({
 				createDeviceOrientationCamera: false
 			});
+
+			// vrHelper.webVRCamera.parent = this.cockpit.CockpitParts[0];
+			// console.log(vrHelper.webVRCamera);
 
 			// var vrCamera = vrHelper.webVRCamera;
 			// vrHelper.currentVRCamera.maxZ = config.CameraMaxZ;

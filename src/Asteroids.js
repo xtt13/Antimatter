@@ -109,8 +109,8 @@ export default class {
                     rndNumber
                 );
 
-                asteroidInstance.checkCollisions = true;
-                asteroidInstance.physicsImpostor = new BABYLON.PhysicsImpostor(asteroidInstance, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 0, friction: 0, restitution: 0.3 });
+                // asteroidInstance.checkCollisions = true;
+                // asteroidInstance.physicsImpostor = new BABYLON.PhysicsImpostor(asteroidInstance, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 0, friction: 0, restitution: 0.3 });
 
                 // asteroidInstance.rotationSpeed = Math.random() * 0.03;
                 // asteroidInstance.rotationDirection = Math.ceil(Math.random() * 6);

@@ -129,6 +129,10 @@ export default class {
 
         // window.myobj = this.keys;
 
+        window.onclick = () => {
+            this.launchFullscreen();
+        }
+
         this.keys.handleKeyDown = (event) => {
             this.keysDown[event.keyCode] = true;
         };
@@ -206,6 +210,10 @@ export default class {
                     setTimeout(() => {
                         this.game.wormhole.startWormhole();
                         this.game.cameraManager.fadeIn();
+
+                        setTimeout(() => {
+                            this.game.cameraManager.fadeOut();
+                        }, 7000);
                     }, 3000);
                     
                 }, 9000);
@@ -220,7 +228,7 @@ export default class {
     checkKeys(engine) {
         this.engine = engine;
 
-        var elapsed = engine.getDeltaTime() / 1000;
+        
 
         // Slow Down Y
         if (this.keysDown[89]) {
@@ -258,129 +266,143 @@ export default class {
             }
         }
 
-        if (this.cockpitMode) {
-            if (this.keysDown[83]) {
-                // S, rotate in the negative direction about the x axis
-                for (let i = 0; i < this.cockpitParts.length; i++) {
-                    // console.log('S');
-                    this.cockpitParts[i].rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
-                }
-
-                // this.cameraManager.camera.cameraRotation.x = -0.001;
-            }
-
-            if (this.keysDown[87]) {
-                // W, rotate in the positive direction about the x axis
-                for (let i = 0; i < this.cockpitParts.length; i++) {
-                    // console.log('W');
-                    this.cockpitParts[i].rotate(BABYLON.Axis.X, this.turnSpeed, BABYLON.Space.LOCAL);
-                }
-
-
-                // this.cameraManager.camera.cameraRotation.x = 0.001;
-            }
-
-
-            if (this.keysDown[68]) {
-                // D, rotate in the positive direction about the z axis
-                for (let i = 0; i < this.cockpitParts.length; i++) {
-                    // console.log('D');
-                    this.cockpitParts[i].rotate(BABYLON.Axis.Z, this.turnSpeed, BABYLON.Space.LOCAL);
-                }
-
-                //  this.cameraManager.camera.cameraRotation.y = 0.01;
-            }
-
-            if (this.keysDown[65]) {
-                // A, rotate in the negative direction about the z axis
-                for (let i = 0; i < this.cockpitParts.length; i++) {
-                    // console.log('A');
-                    this.cockpitParts[i].rotate(BABYLON.Axis.Z, -this.turnSpeed, BABYLON.Space.LOCAL);
-                }
-
-                //  this.cameraManager.camera.cameraRotation.y = -0.01;
-            }
-
-            // OLD
-
-            if (this.keysDown[69]) {
-                // E rotate left
-                for (let i = 0; i < this.cockpitParts.length; i++) {
-                    // console.log('E');
-                    this.cockpitParts[i].rotate(BABYLON.Axis.Y, -this.turnSpeed, BABYLON.Space.LOCAL);
-                }
-
-                // if (autocoord) {
-                //     ship.rotate(BABYLON.Axis.Z, turnSpeed, BABYLON.Space.LOCAL);
-                // }
-            }
-
-            if (this.keysDown[81]) {
-                // Q, rotate right
-                for (let i = 0; i < this.cockpitParts.length; i++) {
-                    // console.log('Q');
-                    this.cockpitParts[i].rotate(BABYLON.Axis.Y, this.turnSpeed, BABYLON.Space.LOCAL);
-                }
-
-
-                // if (autocoord) {
-                //     ship.rotate(BABYLON.Axis.Z, -turnSpeed, BABYLON.Space.LOCAL);
-                // }
-            }
-
-            for (let i = 0; i < this.cockpitParts.length; i++) {
-                this.cockpitParts[i].translate(BABYLON.Axis.Z, elapsed + this.airSpeed, BABYLON.Space.GLOBAL);
-            }
+        if (this.cameraManager.camera.name == "CockpitCamera") {
+            this.cockpitControlls(engine);
 
         } else {
-            if (this.keysDown[83]) {
-                // S, rotate in the negative direction about the x axis
-                this.ship.ship.rotate(BABYLON.Axis.X, this.turnSpeed, BABYLON.Space.LOCAL);
-            }
-
-            if (this.keysDown[87]) {
-                // W, rotate in the positive direction about the x axis
-                this.ship.ship.rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
-
-            }
-
-            if (this.keysDown[68]) {
-                // D, rotate in the positive direction about the z axis
-                this.ship.ship.rotate(BABYLON.Axis.Z, this.turnSpeed, BABYLON.Space.LOCAL);
-
-
-            }
-
-            if (this.keysDown[65]) {
-                // A, rotate in the negative direction about the z axis
-                this.ship.ship.rotate(BABYLON.Axis.Z, -this.turnSpeed, BABYLON.Space.LOCAL);
-            }
-
-            // OLD
-
-            if (this.keysDown[69]) {
-                // Q rotate left
-                this.ship.ship.rotate(BABYLON.Axis.Y, this.turnSpeed, BABYLON.Space.LOCAL);
-
-                // if (autocoord) {
-                //     ship.rotate(BABYLON.Axis.Z, turnSpeed, BABYLON.Space.LOCAL);
-                // }
-            }
-
-            if (this.keysDown[81]) {
-                // E, rotate right
-                this.ship.ship.rotate(BABYLON.Axis.Y, -this.turnSpeed, BABYLON.Space.LOCAL);
-
-                // if (autocoord) {
-                //     ship.rotate(BABYLON.Axis.Z, -turnSpeed, BABYLON.Space.LOCAL);
-                // }
-            }
-
-
-            this.ship.ship.translate(BABYLON.Axis.Z, elapsed - this.airSpeed, BABYLON.Space.GLOBAL);
+            this.spaceshipControlls(engine);
         }
 
 
+    }
+
+    cockpitControlls(engine){
+        var elapsed = engine.getDeltaTime() / 1000;
+
+        if (this.keysDown[83]) {
+            // S, rotate in the negative direction about the x axis
+            for (let i = 0; i < this.cockpitParts.length; i++) {
+                // console.log('S');
+                this.cockpitParts[i].rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
+            }
+
+            // this.cameraManager.camera.cameraRotation.x = -0.001;
+        }
+
+        if (this.keysDown[87]) {
+            // W, rotate in the positive direction about the x axis
+            for (let i = 0; i < this.cockpitParts.length; i++) {
+                // console.log('W');
+                this.cockpitParts[i].rotate(BABYLON.Axis.X, this.turnSpeed, BABYLON.Space.LOCAL);
+            }
+
+
+            // this.cameraManager.camera.cameraRotation.x = 0.001;
+        }
+
+
+        if (this.keysDown[68]) {
+            // D, rotate in the positive direction about the z axis
+            for (let i = 0; i < this.cockpitParts.length; i++) {
+                // console.log('D');
+                this.cockpitParts[i].rotate(BABYLON.Axis.Z, this.turnSpeed, BABYLON.Space.LOCAL);
+            }
+
+            //  this.cameraManager.camera.cameraRotation.y = 0.01;
+        }
+
+        if (this.keysDown[65]) {
+            // A, rotate in the negative direction about the z axis
+            for (let i = 0; i < this.cockpitParts.length; i++) {
+                // console.log('A');
+                this.cockpitParts[i].rotate(BABYLON.Axis.Z, -this.turnSpeed, BABYLON.Space.LOCAL);
+            }
+
+            //  this.cameraManager.camera.cameraRotation.y = -0.01;
+        }
+
+        // OLD
+
+        if (this.keysDown[69]) {
+            // E rotate left
+            for (let i = 0; i < this.cockpitParts.length; i++) {
+                // console.log('E');
+                this.cockpitParts[i].rotate(BABYLON.Axis.Y, -this.turnSpeed, BABYLON.Space.LOCAL);
+            }
+
+            // if (autocoord) {
+            //     ship.rotate(BABYLON.Axis.Z, turnSpeed, BABYLON.Space.LOCAL);
+            // }
+        }
+
+        if (this.keysDown[81]) {
+            // Q, rotate right
+            for (let i = 0; i < this.cockpitParts.length; i++) {
+                // console.log('Q');
+                this.cockpitParts[i].rotate(BABYLON.Axis.Y, this.turnSpeed, BABYLON.Space.LOCAL);
+            }
+
+
+            // if (autocoord) {
+            //     ship.rotate(BABYLON.Axis.Z, -turnSpeed, BABYLON.Space.LOCAL);
+            // }
+        }
+
+        for (let i = 0; i < this.cockpitParts.length; i++) {
+            this.cockpitParts[i].translate(BABYLON.Axis.Z, elapsed + this.airSpeed, BABYLON.Space.GLOBAL);
+        }
+    }
+
+    spaceshipControlls(engine){
+        var elapsed = engine.getDeltaTime() / 1000;
+
+        if (this.keysDown[83]) {
+            // S, rotate in the negative direction about the x axis
+            this.ship.ship.rotate(BABYLON.Axis.X, this.turnSpeed, BABYLON.Space.LOCAL);
+        }
+
+        if (this.keysDown[87]) {
+            // W, rotate in the positive direction about the x axis
+            this.ship.ship.rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
+
+        }
+
+        if (this.keysDown[68]) {
+            // D, rotate in the positive direction about the z axis
+            this.ship.ship.rotate(BABYLON.Axis.Z, this.turnSpeed, BABYLON.Space.LOCAL);
+
+
+        }
+
+        if (this.keysDown[65]) {
+            // A, rotate in the negative direction about the z axis
+            this.ship.ship.rotate(BABYLON.Axis.Z, -this.turnSpeed, BABYLON.Space.LOCAL);
+        }
+
+        // OLD
+
+        if (this.keysDown[69]) {
+            // Q rotate left
+            this.ship.ship.rotate(BABYLON.Axis.Y, this.turnSpeed, BABYLON.Space.LOCAL);
+
+            // if (autocoord) {
+            //     ship.rotate(BABYLON.Axis.Z, turnSpeed, BABYLON.Space.LOCAL);
+            // }
+        }
+
+        if (this.keysDown[81]) {
+            // E, rotate right
+            this.ship.ship.rotate(BABYLON.Axis.Y, -this.turnSpeed, BABYLON.Space.LOCAL);
+
+            // if (autocoord) {
+            //     ship.rotate(BABYLON.Axis.Z, -turnSpeed, BABYLON.Space.LOCAL);
+            // }
+        }
+
+
+        this.ship.ship.translate(BABYLON.Axis.Z, elapsed - this.airSpeed, BABYLON.Space.GLOBAL);
+
+        
     }
 
     launchFullscreen() {
