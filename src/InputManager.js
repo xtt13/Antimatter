@@ -274,7 +274,8 @@ export default class {
         //     this.spaceshipControlls(engine);
         // }
 
-        this.spaceshipControlls(engine);
+        this.cockpitControlls(engine);
+        // this.spaceshipControlls(engine);
 
 
     }

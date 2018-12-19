@@ -32,7 +32,7 @@ export default {
 
 	CameraMaxZ: 100000,
 
-	airSpeed: 0,
+	airSpeed: 0.2,
 	maxSpeed: 100,
 	turnSpeed: 0.01,
 	accValue: 0.01,

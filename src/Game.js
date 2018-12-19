@@ -246,20 +246,32 @@ export default class {
 		this.engine.runRenderLoop(() => {
 			if (config.enableVR) {
 
-				vrCamera.position = this.ship.ship.position.add(new BABYLON.Vector3(0, 4, -4));
+				// vrCamera.position = this.ship.ship.position.add(new BABYLON.Vector3(0, 4, -4));
+				// console.log(this.cockpit.cockpit.position, this.cameraManager.camera.position);
+
+				
+				// vrCamera.position = this.cockpit.cockpit.position.add(new BABYLON.Vector3(0, 4, -4));
+
+				vrCamera.position = this.cockpit.cockpit.position.add(new BABYLON.Vector3(0, 20, 0));
+				// vrCamera.rotation = new BABYLON.Vector3(0, 11, 0);
+
 				// vrHelper.webVRCamera.position = this.cockpit.CockpitParts[0].position.add(new BABYLON.Vector3(0, 20, 0));
 				// vrHelper.webVRCamera.position = this.cockpit.cockpit.position.add(new BABYLON.Vector3(0, 0, 0));
 				// console.log(this.cameraManager.camera.globalPosition);
 				// vrHelper.webVRCamera.parent = this.cameraManager.camera;
 				// vrHelper.webVRCamera.position = this.cameraManager.camera.globalPosition;
 				// vrHelper.webVRCamera.globalPosition = this.cameraManager.camera.globalPosition;
-				console.log(vrHelper.webVRCamera);
-				console.log(vrHelper.webVRCamera.globalPosition, this.cameraManager.camera.globalPosition);
+				// console.log(vrHelper.webVRCamera);
+				// console.log(vrHelper.webVRCamera.globalPosition, this.cameraManager.camera.globalPosition);
 				// vrCamera.position = this.cameraManager.camera.position;
 
-				// if (vrHelper.webVRCamera.rightController) {
-				// 	this.cockpit.CockpitParts[4].rotationQuaternion = vrHelper.webVRCamera.rightController.deviceRotationQuaternion.clone();
-				// }
+				if (vrHelper.webVRCamera.rightController) {
+					// this.cockpit.CockpitParts[4].rotationQuaternion = vrHelper.webVRCamera.rightController.deviceRotationQuaternion.clone();
+
+					// for (let i = 0; i < this.cockpitParts.length; i++) {
+					// 	this.cockpit.cockpitParts[i].rotation = vrHelper.webVRCamera.rightController.deviceRotationQuaternion;
+					// }
+				}
 			}
 
 

@@ -35,8 +35,8 @@ export default class {
 
             for (let i = 0; i < this.CockpitParts.length; i++) {
 
-                this.CockpitParts[i].position = config.cockpitPosition;
-                this.CockpitParts[i].rotation = new BABYLON.Vector3(0, 11, 0);
+                // this.CockpitParts[i].position = config.cockpitPosition;
+                // this.CockpitParts[i].rotation = new BABYLON.Vector3(0, 11, 0);
 
                 if (this.CockpitParts[i].id !== "Spaceship_HUDs_B") {
                     this.CockpitParts[i].isBlocker = true;
