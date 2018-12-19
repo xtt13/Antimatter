@@ -245,14 +245,15 @@ export default class {
             }
         }
 
-        // Speed Up X
-        if (this.keysDown[88]) {
+        // Speed Up X this.keysDown[88]
+        if (true) {
             if (this.airSpeed <= this.maxSpeed) {
 
                 if (this.ship.engineSystem2 !== undefined) {
                     this.ship.engineSystem2.start();
                     this.ship.engineSystem1.start();
                 }
+                console.log('speedup');
                 this.airSpeed += this.accValue;
                 let newVal = this.engineSound._playbackRate += 0.01;
                 this.engineSound.updateOptions({ playbackRate: newVal });
@@ -266,12 +267,14 @@ export default class {
             }
         }
 
-        if (this.cameraManager.camera.name == "CockpitCamera") {
-            this.cockpitControlls(engine);
+        // if (this.cameraManager.camera.name == "CockpitCamera") {
+        //     this.cockpitControlls(engine);
 
-        } else {
-            this.spaceshipControlls(engine);
-        }
+        // } else {
+        //     this.spaceshipControlls(engine);
+        // }
+
+        this.spaceshipControlls(engine);
 
 
     }

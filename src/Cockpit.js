@@ -44,29 +44,29 @@ export default class {
 
                 // this.CockpitParts[i].receiveShadows = true;
 
-                // // this.CockpitParts[i].material.albedoColor = new BABYLON.Color3.FromHexString("#f00001");
-                // // this.CockpitParts[i].material.reflectivityColor = new BABYLON.Color3.FromHexString("#404040");
-                // // this.CockpitParts[i].material.overloadedAlbedo = new BABYLON.Color3.FromHexString("#a00000");
-                // // this.CockpitParts[i].material.overloadedAlbedoIntensity = 0.3;
+                // this.CockpitParts[i].material.albedoColor = new BABYLON.Color3.FromHexString("#f00001");
+                // this.CockpitParts[i].material.reflectivityColor = new BABYLON.Color3.FromHexString("#404040");
+                // this.CockpitParts[i].material.overloadedAlbedo = new BABYLON.Color3.FromHexString("#a00000");
+                // this.CockpitParts[i].material.overloadedAlbedoIntensity = 0.3;
 
-                // this.CockpitParts[i].material.microSurface = 0.3;
-                // this.CockpitParts[i].material.metallic = 0.3;
-
-                // //this.CockpitParts[i].material.specularColor = new BABYLON.Color3(0.6, 0.5, 0.6);
-                // this.CockpitParts[i].material.specularColor = new BABYLON.Color3(1, 1, 1);
-                // this.CockpitParts[i].material.specularPower = 4096;
-                // this.CockpitParts[i].material.diffuseColor = new BABYLON.Color3(1, 1, 1);
-
-
-                this.CockpitParts[i].receiveShadows = true;
-                this.CockpitParts[i].material.albedoColor = new BABYLON.Color3.FromHexString("#f00001");
-                this.CockpitParts[i].material.reflectivityColor = new BABYLON.Color3.FromHexString("#404040");
-                this.CockpitParts[i].material.overloadedAlbedo = new BABYLON.Color3.FromHexString("#a00000");
-                this.CockpitParts[i].material.overloadedAlbedoIntensity = 0.3;
                 this.CockpitParts[i].material.microSurface = 0.3;
                 this.CockpitParts[i].material.metallic = 0.3;
-                this.CockpitParts[i].material.specularColor = new BABYLON.Color3(0.6, 0.5, 0.6);
-                this.CockpitParts[i].material.specularPower = 2048;
+
+                //this.CockpitParts[i].material.specularColor = new BABYLON.Color3(0.6, 0.5, 0.6);
+                this.CockpitParts[i].material.specularColor = new BABYLON.Color3(1, 1, 1);
+                this.CockpitParts[i].material.specularPower = 4096;
+                this.CockpitParts[i].material.diffuseColor = new BABYLON.Color3(1, 1, 1);
+
+
+                // this.CockpitParts[i].receiveShadows = true;
+                // this.CockpitParts[i].material.albedoColor = new BABYLON.Color3.FromHexString("#f00001");
+                // this.CockpitParts[i].material.reflectivityColor = new BABYLON.Color3.FromHexString("#404040");
+                // this.CockpitParts[i].material.overloadedAlbedo = new BABYLON.Color3.FromHexString("#a00000");
+                // this.CockpitParts[i].material.overloadedAlbedoIntensity = 0.3;
+                // this.CockpitParts[i].material.microSurface = 0.3;
+                // this.CockpitParts[i].material.metallic = 0.3;
+                // this.CockpitParts[i].material.specularColor = new BABYLON.Color3(0.6, 0.5, 0.6);
+                // this.CockpitParts[i].material.specularPower = 2048;
                 
 
                 // this.CockpitParts[i].checkCollisions = true;

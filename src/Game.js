@@ -174,7 +174,7 @@ export default class {
 			// vrHelper.webVRCamera.parent = this.cockpit.CockpitParts[0];
 			// console.log(vrHelper.webVRCamera);
 
-			// var vrCamera = vrHelper.webVRCamera;
+			var vrCamera = vrHelper.webVRCamera;
 			// vrHelper.currentVRCamera.maxZ = config.CameraMaxZ;
 			// this.scene.activeCamera.resetToCurrentRotation();
 			// vrHelper.currentVRCamera.resetToCurrentRotation();
@@ -234,28 +234,6 @@ export default class {
 		// this.scene.workerCollisions = true
 		// console.log(this.scene.workerCollisions);
 
-		this.rattling = 0;
-		this.RATL = 777;
-		this.CAMERAFOV = this.cameraManager.camera.fov;
-
-		// this.scene.registerBeforeRender(() => {
-		// 	console.log(this.inputManager.airSpeed>3);
-		// 	if(this.inputManager.airSpeed < 3) this.rattling = 50;
-		// 	if (this.rattling > 0) {
-		// 		this.rattling--;
-		// 		if (this.rattling % 6 == 0) {
-		// 			this.cameraManager.camera.fov = this.CAMERAFOV + this.rattling / this.RATL;
-		// 			this.cameraManager.camera.rotation.z = this.rattling / this.RATL;
-		// 		}
-		// 		else if (this.rattling % 6 == 3) {
-		// 			this.cameraManager.camera.fov = this.CAMERAFOV - this.rattling / this.RATL;
-		// 			this.cameraManager.camera.rotation.z = -this.rattling / this.RATL;
-		// 		}
-		// 	} else {y
-		// 		this.cameraManager.camera.fov = this.CAMERAFOV;
-		// 		this.cameraManager.camera.rotation.z = 0;
-		// 	}
-		// })
 
 		this.scene.registerBeforeRender(() => {
 			// if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationRing, true)) {
@@ -267,7 +245,16 @@ export default class {
 
 		this.engine.runRenderLoop(() => {
 			if (config.enableVR) {
-				// vrCamera.position = this.cockpit.CockpitParts[0].position.add(new BABYLON.Vector3(0, 20, 0));
+
+				vrCamera.position = this.ship.ship.position.add(new BABYLON.Vector3(0, 4, -4));
+				// vrHelper.webVRCamera.position = this.cockpit.CockpitParts[0].position.add(new BABYLON.Vector3(0, 20, 0));
+				// vrHelper.webVRCamera.position = this.cockpit.cockpit.position.add(new BABYLON.Vector3(0, 0, 0));
+				// console.log(this.cameraManager.camera.globalPosition);
+				// vrHelper.webVRCamera.parent = this.cameraManager.camera;
+				// vrHelper.webVRCamera.position = this.cameraManager.camera.globalPosition;
+				// vrHelper.webVRCamera.globalPosition = this.cameraManager.camera.globalPosition;
+				console.log(vrHelper.webVRCamera);
+				console.log(vrHelper.webVRCamera.globalPosition, this.cameraManager.camera.globalPosition);
 				// vrCamera.position = this.cameraManager.camera.position;
 
 				// if (vrHelper.webVRCamera.rightController) {

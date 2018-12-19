@@ -13,9 +13,9 @@ export default class {
         this.start = false;
         this.visibleRings = false;
 
-        var collSphere = BABYLON.MeshBuilder.CreateSphere("collSphere", {diameter: 2000, diameterX: 3000}, this.scene);
-        collSphere.position = new BABYLON.Vector3(-8000, 0, 8000);
-        collSphere.physicsImpostor = new BABYLON.PhysicsImpostor(collSphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 0, restitution: 1 });
+        // var collSphere = BABYLON.MeshBuilder.CreateSphere("collSphere", {diameter: 2000, diameterX: 3000}, this.scene);
+        // collSphere.position = new BABYLON.Vector3(-8000, 0, 8000);
+        // collSphere.physicsImpostor = new BABYLON.PhysicsImpostor(collSphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 0, restitution: 1 });
 
         this.sparkleLight = new BABYLON.PointLight("sparkleLight", new BABYLON.Vector3(-8000, 0, 8000), this.scene);
         this.sparkleLight.diffuse = new BABYLON.Color3(1, 0.9, 0.9);

@@ -28,7 +28,7 @@ export default {
 	skyBoxInfiniteDistance: true,
 	skyBoxSize: 115000,
 
-	
+
 
 	CameraMaxZ: 100000,
 
@@ -39,9 +39,9 @@ export default {
 	gamepadViewCameraSpeed: 0.015,
 
 	// Hangar Position
-	// cockpitPosition: new BABYLON.Vector3(-900, 180, 0)
+	cockpitPosition: new BABYLON.Vector3(-900, 180, 0)
 
 	// JumpGate ViewPosition
-	cockpitPosition: new BABYLON.Vector3(14000, 0, 8000)
+	// cockpitPosition: new BABYLON.Vector3(14000, 0, 8000)
 
 };
