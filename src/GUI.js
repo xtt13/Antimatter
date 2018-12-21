@@ -1,5 +1,6 @@
 import * as BABYLON from 'babylonjs';
 import * as GUI from 'babylonjs-gui';
+import { toUnicode } from 'punycode';
 
 export default class {
     constructor(scene, camera, asteroids) {
@@ -40,10 +41,43 @@ export default class {
             //     'padding: 10px;' +
             //     'background-color: red;');
 
-            n.innerHTML = "Year 2220: After the destruction of Earth, the last humans gather in a space station orbiting Mars. Fifty years ago, the last ark and hope of humanity left Mars heading to the solar system Proxima Centauri to settle on the planet Proxima Centauri B. A few years ago, the breakthrough came in the development of jump gates to other solar systems. Your job is to complete the planned jump gate in order to meet the ark at the final destination. This will also save all inhabitants of your space station and lead them into a new future.";
+            let content = `Hello, I'm your bord computer! In your mission you'll have to mine all relevant asteroids in this orbit. You'll find the necessary informations in your log by pressing the Tab-Key. It's probably the best idea to start with a orbit scan.
+
+            You can either control your ship by pressing the W, A, S, D keys, or with a XBOX360 controller.
+            Change your view by pressing the Key Number 1, or 2.`;
+
+
+            let boardIntro = new BABYLON.Sound("bordintro", "assets/audio/sound/bordintro.mp3", this.scene, null,
+            {
+                playbackRate: 1,
+                volume: 1,
+                loop: false,
+                autoplay: true
+            })
+
+            n.innerHTML = '';
 
             document.body.appendChild(n);
+
+            let counter = 0;
+            let uibox = document.querySelector('.scanlines');
+
+            // Interval for Key by Key
+            let textInterval = setInterval(() => {
+                uibox.textContent += `${content[counter]}`;
+                counter++;
+                if(counter > (content.length - 1)){
+                    clearInterval(textInterval);
+                    setTimeout(() => {
+                        n.style.display = 'none';
+                    }, 3000);
+                } 
+            }, 50);
+
+            
     }
+
+    
 
     createLabel(mesh){
         // console.log(mesh.label);

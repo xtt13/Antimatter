@@ -2,15 +2,16 @@
 import * as BABYLON from 'babylonjs';
 
 export default {
-	enableVR: true,
+	enableVR: false,
 	disableMusic: false,
 
 	disablePostProgress: false,
 	disableAsteroids: false,
 	disableSpacestation: false,
-	disablePlanet: false,
+	disablePlanet: true,
 	disableJumpGate: false,
-
+											
+	spaceStationPosition: new BABYLON.Vector3(0, 0, 0),
 	spaceStationScaling: 1,
 
 	disableJumpGate: false,
@@ -20,7 +21,7 @@ export default {
 	// Follow Cam: 
 	// planetInfiniteDistance: false,
 	// skyBoxInfiniteDistance: false,
-	//skyBoxSize: 1115000,
+	// skyBoxSize: 1115000,
 
 
 	// Cockpit Cam:
@@ -32,16 +33,16 @@ export default {
 
 	CameraMaxZ: 100000,
 
-	airSpeed: 0.2,
+	airSpeed: 0,
 	maxSpeed: 100,
 	turnSpeed: 0.01,
 	accValue: 0.01,
 	gamepadViewCameraSpeed: 0.015,
 
 	// Hangar Position
-	cockpitPosition: new BABYLON.Vector3(-900, 180, 0)
+	// cockpitPosition: new BABYLON.Vector3(-900, 180, 0)
 
 	// JumpGate ViewPosition
-	// cockpitPosition: new BABYLON.Vector3(14000, 0, 8000)
+	cockpitPosition: new BABYLON.Vector3(14000, 0, 8000)
 
 };

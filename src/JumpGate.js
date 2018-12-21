@@ -69,25 +69,24 @@ export default class {
             // this.jumpGate.material.specularPower = 1024;
             // this.jumpGateRing1.material.specularPower = 1024;
 
-            this.jumpGate.isBlocker = true;
-            this.jumpGate.receiveShadows = true;
-            this.jumpGateRing1.isBlocker = true;
-            this.jumpGateRing1.receiveShadows = true;
+            // this.jumpGate.isBlocker = true;
+            // this.jumpGate.receiveShadows = true;
+            // this.jumpGateRing1.isBlocker = true;
+            // this.jumpGateRing1.receiveShadows = true;
 
-            this.jumpGateRing2 = this.jumpGateRing1.clone('jumpGateRing2');
-            this.jumpGateRing2.scaling = new BABYLON.Vector3(0.44, 0.44, 0.44);
-            this.jumpGateRing2.isBlocker = true;
-            this.jumpGateRing2.rotation.y = 5;
+            // this.jumpGateRing2 = this.jumpGateRing1.clone('jumpGateRing2');
+            // this.jumpGateRing2.scaling = new BABYLON.Vector3(0.44, 0.44, 0.44);
+            // this.jumpGateRing2.isBlocker = true;
+            // this.jumpGateRing2.rotation.y = 5;
 
-            this.jumpGateRing1.isVisible = false;
-            this.jumpGateRing2.isVisible = false;
+            // this.jumpGateRing1.isVisible = false;
+            // this.jumpGateRing2.isVisible = false;
 
-            // this.jumpGate.material.albedoColor = new BABYLON.Vector3(1, 1, 1);
+            this.jumpGate.material.albedoColor = new BABYLON.Vector3(1, 1, 1);
             this.jumpGate.material.diffuseColor = new BABYLON.Color3(0, 0, 0);
-            this.jumpGate.material.specularColor = new BABYLON.Color3(0, 0, 0);
-            console.log(this.jumpGate.material);
+            this.jumpGate.material.specularColor = new BABYLON.Color3(1, 1, 1);
 
-
+            // this.jumpGate.material = null;
 
             this.engine.runRenderLoop(() => {
                 if (this.start) {

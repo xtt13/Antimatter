@@ -32,11 +32,17 @@ export default class {
 
             // this.CockpitParts[3].position = new BABYLON.Vector3(800, 800, 800);
 
+            // this.gateLight = new BABYLON.PointLight("light", new BABYLON.Vector3(0, 1, 0), this.scene);
+            // this.gateLight.position = config.cockpitPosition;
+            // this.gateLight.diffuse = new BABYLON.Color3(0, 0, 1);
+            // this.gateLight.specular = new BABYLON.Color3(0, 0, 1);
+            // this.gateLight.intensity = 0.3;
+
 
             for (let i = 0; i < this.CockpitParts.length; i++) {
 
-                // this.CockpitParts[i].position = config.cockpitPosition;
-                // this.CockpitParts[i].rotation = new BABYLON.Vector3(0, 11, 0);
+                this.CockpitParts[i].position = config.cockpitPosition;
+                this.CockpitParts[i].rotation = new BABYLON.Vector3(0, 11, 0);
 
                 if (this.CockpitParts[i].id !== "Spaceship_HUDs_B") {
                     this.CockpitParts[i].isBlocker = true;
@@ -49,22 +55,23 @@ export default class {
                 // this.CockpitParts[i].material.overloadedAlbedo = new BABYLON.Color3.FromHexString("#a00000");
                 // this.CockpitParts[i].material.overloadedAlbedoIntensity = 0.3;
 
-                this.CockpitParts[i].material.microSurface = 0.3;
-                this.CockpitParts[i].material.metallic = 0.3;
+                // this.CockpitParts[i].material.microSurface = 0.3;
+                this.CockpitParts[i].material.metallic = 0.1;
 
-                //this.CockpitParts[i].material.specularColor = new BABYLON.Color3(0.6, 0.5, 0.6);
+                // //this.CockpitParts[i].material.specularColor = new BABYLON.Color3(0.6, 0.5, 0.6);
+
                 this.CockpitParts[i].material.specularColor = new BABYLON.Color3(1, 1, 1);
                 this.CockpitParts[i].material.specularPower = 4096;
                 this.CockpitParts[i].material.diffuseColor = new BABYLON.Color3(1, 1, 1);
 
 
-                // this.CockpitParts[i].receiveShadows = true;
+                // // this.CockpitParts[i].receiveShadows = true;
+
                 // this.CockpitParts[i].material.albedoColor = new BABYLON.Color3.FromHexString("#f00001");
                 // this.CockpitParts[i].material.reflectivityColor = new BABYLON.Color3.FromHexString("#404040");
                 // this.CockpitParts[i].material.overloadedAlbedo = new BABYLON.Color3.FromHexString("#a00000");
                 // this.CockpitParts[i].material.overloadedAlbedoIntensity = 0.3;
-                // this.CockpitParts[i].material.microSurface = 0.3;
-                // this.CockpitParts[i].material.metallic = 0.3;
+
                 // this.CockpitParts[i].material.specularColor = new BABYLON.Color3(0.6, 0.5, 0.6);
                 // this.CockpitParts[i].material.specularPower = 2048;
                 
@@ -72,7 +79,7 @@ export default class {
                 // this.CockpitParts[i].checkCollisions = true;
             }
 
-            this.cockpit.physicsImpostor = new BABYLON.PhysicsImpostor(this.cockpit, BABYLON.PhysicsImpostor.MeshImpostor, {mass: 1, friction: 0, restitution: 0.3});
+            // this.cockpit.physicsImpostor = new BABYLON.PhysicsImpostor(this.cockpit, BABYLON.PhysicsImpostor.MeshImpostor, {mass: 1, friction: 0, restitution: 0.3});
 
             this.cockpit.onCollide = () => {
                 console.log('I am colliding with something');

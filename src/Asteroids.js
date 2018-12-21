@@ -49,13 +49,15 @@ export default class {
 
             // After Texture Loading
             loadBumpMap.onSuccess = (task) => {
-                asteroid.material.bumpTexture = task.texture;
+                // asteroid.material.bumpTexture = task.texture;
             }
 
-            asteroid.material.backFaceCulling = false;
+            asteroid.material = null;
+
+            // asteroid.material.backFaceCulling = false;
 
             // The specular highlight often reflects the color of the light source
-            asteroid.material.specularColor = new BABYLON.Color3(1, 1, 1);
+            // asteroid.material.specularColor = new BABYLON.Color3(1, 1, 1);
 
             asteroid.isTargetable = true;
             asteroid.receiveShadows = true;
@@ -134,9 +136,10 @@ export default class {
         var label = new GUI.Rectangle("label for " + mesh.name);
 
         // label.background = "black"
-        label.height = "30px";
+        label.height = "35px";
         // label.alpha = 0.8;
-        label.width = "150px";
+        label.width = "170px";
+        label.padding = "10px";
         // label.cornerRadius = 3;
         label.fontFamily = "Orbitron";
         label.fontSize = '20px';

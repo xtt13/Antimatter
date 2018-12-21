@@ -46,6 +46,9 @@ export default class {
             this.station = [this.StationBottom, this.StationTop, this.StationRing, this.StationMiddle];
 
             for (let i = 0; i < this.station.length; i++) {
+
+                this.station[i].position = config.spaceStationPosition;
+
                 this.station[i].checkCollisions = true;
                 this.station[i].isBlocker = true;
                 this.station[i].receiveShadows = true;

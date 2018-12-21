@@ -155,6 +155,13 @@ export default class {
 
             if (code === 50) {
                 // SWITCH TO FOLLOW CAM 2-Key
+
+                // this.ship.ship.position = this.game.cockpit.cockpit.position;
+                // this.ship.ship.rotation = this.game.cockpit.cockpit.rotation;
+
+                // this.ship.ship.isVisible = true;
+                // this.game.cockpit.cockpit.isVisible = false;
+
                 this.cameraManager.initCamera(this.ship.ship);
             }
 
@@ -184,6 +191,17 @@ export default class {
                 this.game.cameraManager.fadeOut();
             }
 
+            if (code == 186) {
+                console.log('detach');
+                this.game.cameraManager.camera.lockedTarget = null;
+
+                // Parameters: alpha, beta, radius, target position, scene
+                // this.game.cameraManager.camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0, 0, 10, this.game.ship.ship, this.scene);
+
+                // This attaches the camera to the canvas
+                // this.game.cameraManager.camera.attachControl(this.game.canvas, true);
+            }
+
             // Shake M-Key
             if (code == 77) {
                 this.game.cameraManager.shake();
@@ -203,7 +221,7 @@ export default class {
 
                     }, 100);
                 }, 6000);
-                
+
                 setTimeout(() => {
                     this.game.cameraManager.fadeOut();
 
@@ -215,11 +233,11 @@ export default class {
                             this.game.cameraManager.fadeOut();
                         }, 7000);
                     }, 3000);
-                    
+
                 }, 9000);
             }
 
-            if(code == 187) {
+            if (code == 187) {
                 console.log(this.game.cockpit.cockpit.position);
             }
         };
@@ -228,7 +246,7 @@ export default class {
     checkKeys(engine) {
         this.engine = engine;
 
-        
+
 
         // Slow Down Y
         if (this.keysDown[89]) {
@@ -245,8 +263,8 @@ export default class {
             }
         }
 
-        // Speed Up X this.keysDown[88]
-        if (true) {
+        // Speed Up X
+        if (this.keysDown[88]) {
             if (this.airSpeed <= this.maxSpeed) {
 
                 if (this.ship.engineSystem2 !== undefined) {
@@ -267,20 +285,20 @@ export default class {
             }
         }
 
-        // if (this.cameraManager.camera.name == "CockpitCamera") {
-        //     this.cockpitControlls(engine);
+        if (this.cameraManager.camera.name == "CockpitCamera") {
+            this.cockpitControlls(engine);
 
-        // } else {
-        //     this.spaceshipControlls(engine);
-        // }
+        } else {
+            this.spaceshipControlls(engine);
+        }
 
-        this.cockpitControlls(engine);
+        // this.cockpitControlls(engine);
         // this.spaceshipControlls(engine);
 
 
     }
 
-    cockpitControlls(engine){
+    cockpitControlls(engine) {
         var elapsed = engine.getDeltaTime() / 1000;
 
         if (this.keysDown[83]) {
@@ -357,7 +375,7 @@ export default class {
         }
     }
 
-    spaceshipControlls(engine){
+    spaceshipControlls(engine) {
         var elapsed = engine.getDeltaTime() / 1000;
 
         if (this.keysDown[83]) {
@@ -406,7 +424,7 @@ export default class {
 
         this.ship.ship.translate(BABYLON.Axis.Z, elapsed - this.airSpeed, BABYLON.Space.GLOBAL);
 
-        
+
     }
 
     launchFullscreen() {

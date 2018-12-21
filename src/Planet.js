@@ -30,7 +30,7 @@ export default class {
         //     return check;
         //   };
 
-        var loadPlanetTexture = this.assetsManager.addTextureTask("planetTexture", "/assets/textures/planets/2k_mars.jpg");
+        var loadPlanetTexture = this.assetsManager.addTextureTask("planetTexture", "/assets/textures/planets/8k_mars.jpg");
         // var loadPlanetBumpTexture = this.assetsManager.addTextureTask("bumpTexture", "/assets/textures/planets/earthUV.jpg");
 
         loadPlanetTexture.onSuccess = (task) => {
