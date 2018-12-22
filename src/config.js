@@ -8,7 +8,7 @@ export default {
 	disablePostProgress: false,
 	disableAsteroids: false,
 	disableSpacestation: false,
-	disablePlanet: true,
+	disablePlanet: false,
 	disableJumpGate: false,
 											
 	spaceStationPosition: new BABYLON.Vector3(0, 0, 0),
@@ -43,6 +43,8 @@ export default {
 	// cockpitPosition: new BABYLON.Vector3(-900, 180, 0)
 
 	// JumpGate ViewPosition
-	cockpitPosition: new BABYLON.Vector3(14000, 0, 8000)
+	// cockpitPosition: new BABYLON.Vector3(14000, 0, 8000)
+
+	cockpitPosition: new BABYLON.Vector3(0, 0, 0)
 
 };

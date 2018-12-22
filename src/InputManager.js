@@ -371,7 +371,7 @@ export default class {
         }
 
         for (let i = 0; i < this.cockpitParts.length; i++) {
-            this.cockpitParts[i].translate(BABYLON.Axis.Z, elapsed + this.airSpeed, BABYLON.Space.GLOBAL);
+            this.cockpitParts[i].translate(BABYLON.Axis.Z, 0 + this.airSpeed, BABYLON.Space.GLOBAL);
         }
     }
 

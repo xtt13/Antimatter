@@ -31,7 +31,7 @@
         "babylonjs-inspector": "^3.3.0",
         "babylonjs-loaders": "^3.2.0",
         "babylonjs-materials": "^3.2.0",
-        "babylonjs-procedural-textures": "^3.2.0",
+        "babylonjs-procedural-textures": "^3.3.0",
         "babylonjs-serializers": "^3.3.0",
         "spectorjs": "^0.9.4"
     }

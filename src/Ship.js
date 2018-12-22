@@ -54,16 +54,17 @@ export default class {
             this.ship.rotation.y = 7;
             this.ship.rotation.x = 5.8;
             this.ship.receiveShadows = true;
-            // var reflectionTexture = new BABYLON.CubeTexture("assets/textures/stars", scene);
-            this.ship.material.albedoColor = new BABYLON.Color3.FromHexString("#f00001");
-            // ship.material.reflectionTexture = reflectionTexture;
-            this.ship.material.reflectivityColor = new BABYLON.Color3.FromHexString("#404040");
-            this.ship.material.overloadedAlbedo = new BABYLON.Color3.FromHexString("#a00000");
-            this.ship.material.overloadedAlbedoIntensity = 0.3;
-            this.ship.material.microSurface = 0.3;
-            this.ship.material.metallic = 1.0;
-            this.ship.material.specularColor = new BABYLON.Color3(0.6, 0.5, 0.6);
-            this.ship.material.specularPower = 2048;
+            
+            // // var reflectionTexture = new BABYLON.CubeTexture("assets/textures/stars", scene);
+            // this.ship.material.albedoColor = new BABYLON.Color3.FromHexString("#f00001");
+            // // ship.material.reflectionTexture = reflectionTexture;
+            // this.ship.material.reflectivityColor = new BABYLON.Color3.FromHexString("#404040");
+            // this.ship.material.overloadedAlbedo = new BABYLON.Color3.FromHexString("#a00000");
+            // this.ship.material.overloadedAlbedoIntensity = 0.3;
+            // this.ship.material.microSurface = 0.3;
+            // this.ship.material.metallic = 1.0;
+            // this.ship.material.specularColor = new BABYLON.Color3(0.6, 0.5, 0.6);
+            // this.ship.material.specularPower = 2048;
 
             // this.ship.renderingGroupId = 1;
 

@@ -64,15 +64,17 @@ export default class {
 
                 // var box = BABYLON.MeshBuilder.CreateBox("Box", {}, scene);
                 // var boxMaterial = new BABYLON.StandardMaterial("mat", scene);
-                this.station[i].material.backFaceCulling = true;
-                this.station[i].material.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/stars", this.scene);
-                this.station[i].material.reflectionTexture.coordinatesMode = BABYLON.Texture.CUBIC_MODE;
-                this.station[i].material.diffuseColor = new BABYLON.Color3(0, 0, 0);
-                this.station[i].material.specularColor = new BABYLON.Color3(0, 0, 0);
+                // this.station[i].material.backFaceCulling = true;
+                // this.station[i].material.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/stars", this.scene);
+                // this.station[i].material.reflectionTexture.coordinatesMode = BABYLON.Texture.CUBIC_MODE;
+                // this.station[i].material.diffuseColor = new BABYLON.Color3(0, 0, 0);
+                // this.station[i].material.specularColor = new BABYLON.Color3(0, 0, 0);
 
 
                 // this.station[i].material.specularColor = new BABYLON.Color3(0.6, 0.5, 0.6);
                 // this.station[i].material.specularPower = 2048;
+
+                // this.station[i].material = null;
             }
 
             // var mySphere = BABYLON.MeshBuilder.CreateSphere("mySphere", { diameter: 5000, diameterX: 7000 }, this.scene);

@@ -152,8 +152,9 @@ export default class {
 		var flare03 = new BABYLON.LensFlare(0.15, 1.4, new BABYLON.Color3(0.5, 0.5, 1.0), "assets/textures/flares/Flare.png", lensFlareSystem);
 		var flare04 = new BABYLON.LensFlare(0.05, 1.5, new BABYLON.Color3(1, 1, 1), "assets/textures/flares/Flare3.png", lensFlareSystem);
 
-
-
+		this.shadowGenerator = new BABYLON.ShadowGenerator(1024, this.sun);
+		this.shadowGenerator.getShadowMap().renderList.push(this.cockpit.cockpit);
+		
 		this.inputManager = new InputManager(this.scene, this.ship, this.cockpit, this.cameraManager, this);
 		this.PostProgress = new PostProcesses(this.scene, this.cameraManager.camera);
 		this.GUIClass = new GUI(this.scene, this.cameraManager, this.asteroids);
