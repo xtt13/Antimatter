@@ -1,4 +1,4 @@
-# Antimatter - WebVR Browsergame
+# Antimatter - 3D Browsergame
 
 ![](http://www.michaeldorn.at/potf/antimatter1.png)
 
