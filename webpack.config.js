@@ -12,6 +12,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     },
     watch: true,
+    mode: 'production',
     plugins: [
 
         // // webpack.optimize.CommonsChunkPlugin has been removed, please use config.optimization.splitChunks instead.
@@ -51,12 +52,12 @@ module.exports = {
             host: process.env.IP || 'localhost',
             port: process.env.PORT || 3000,
             files: [{
-                // match: ['./assets/maps/*.json', './assets/tilesets/*.png'],
+                match: ['./src/**/*'],
                 fn: function (event, file) {
                     this.reload()
                 }
             }],
-            // files: ['./assets/maps/*.json'],
+            // files: ['./src/*'],
             server: {
                 baseDir: ['./dist']
             }

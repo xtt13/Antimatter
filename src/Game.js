@@ -1,7 +1,6 @@
 import * as BABYLON from 'babylonjs';
 
 import 'babylonjs-procedural-textures';
-// import * as GUI from 'babylonjs-gui';
 import 'babylonjs-loaders';
 
 import config from './config';
@@ -31,7 +30,7 @@ export default class {
 
 		this.engine.disableManifestCheck = true;
 
-		this.engine.loadingUIText = "Year 2200";
+		// this.engine.loadingUIText = "Year 2200";
 		this.engine.hideLoadingUI();
 
 		this.scene = new BABYLON.Scene(this.engine);
@@ -40,10 +39,6 @@ export default class {
 		this.scene.gravity = new BABYLON.Vector3(0, 0, 0);
 		this.scene.collisionsEnabled = true;
 		this.scene.ambientColor = new BABYLON.Color3(1, 1, 1);
-
-		var gravityVector = new BABYLON.Vector3(0, 0, 0);
-		var physicsPlugin = new BABYLON.CannonJSPlugin();
-		this.scene.enablePhysics(gravityVector, physicsPlugin);
 
 
 		this.ship = null;
@@ -57,9 +52,6 @@ export default class {
 	}
 
 	createScene() {
-		// this.scene.enablePhysics();
-
-		this.physicsHelper = new BABYLON.PhysicsHelper(this.scene);
 
 		this.helper = new Helper(this.scene);
 		this.assetsManager = new BABYLON.AssetsManager(this.scene);

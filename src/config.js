@@ -2,6 +2,7 @@
 import * as BABYLON from 'babylonjs';
 
 export default {
+	showDebugLayer: false,
 	enableVR: false,
 	disableMusic: false,
 
@@ -17,12 +18,10 @@ export default {
 	disableJumpGate: false,
 	jumpGateScaling: 0.5,
 
-
 	// Follow Cam: 
 	// planetInfiniteDistance: false,
 	// skyBoxInfiniteDistance: false,
 	// skyBoxSize: 1115000,
-
 
 	// Cockpit Cam:
 	planetInfiniteDistance: true,
