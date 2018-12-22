@@ -15,6 +15,8 @@ export default class {
         this.keys = {};
         this.keysDown = {};
 
+        this.disableMovementKeys = false;
+
         this.airSpeed = config.airSpeed;
         this.maxSpeed = config.maxSpeed;
         this.turnSpeed = config.turnSpeed;
@@ -172,7 +174,7 @@ export default class {
 
             // Wormhole I-Key
             if (code === 73) {
-                this.game.wormhole.startWormhole();
+                // this.game.wormhole.startWormhole();
                 // this.game.wormhole.shaderMaterial();
             }
 
@@ -212,25 +214,31 @@ export default class {
                 this.game.jumpGate.startJumpGate();
                 setTimeout(() => {
                     this.game.cameraManager.shake(true);
-                    setInterval(() => {
-                        var elapsed = this.engine.getDeltaTime() / 1000;
-                        for (let i = 0; i < this.cockpitParts.length; i++) {
-                            this.cockpitParts[i].translate(BABYLON.Axis.Z, elapsed + this.airSpeed, BABYLON.Space.GLOBAL);
-                        }
-                        this.airSpeed += (this.accValue + 0.3);
+                    // setInterval(() => {
+                    //     var elapsed = this.engine.getDeltaTime() / 1000;
+                    //     for (let i = 0; i < this.cockpitParts.length; i++) {
+                    //         this.cockpitParts[i].translate(BABYLON.Axis.Z, elapsed + this.airSpeed, BABYLON.Space.GLOBAL);
+                    //     }
+                    //     this.airSpeed += (this.accValue + 0.3);
 
-                    }, 100);
+                    // }, 100);
                 }, 6000);
 
                 setTimeout(() => {
-                    this.game.cameraManager.fadeOut();
+                    // this.game.cameraManager.fadeOut();
 
                     setTimeout(() => {
-                        this.game.wormhole.startWormhole();
-                        this.game.cameraManager.fadeIn();
+
+                        for (let i = 0; i < this.cockpitParts.length; i++) {
+                            // this.cockpitParts[i].rotation = new BABYLON.Vector3(11, 0, 0);
+                        }
+
+                        // this.game.wormhole.startWormhole();
+                        // this.game.cockpit.createSpaceTunnel();
+                        // this.game.cameraManager.fadeIn();
 
                         setTimeout(() => {
-                            this.game.cameraManager.fadeOut();
+                            // this.game.cameraManager.fadeOut();
                         }, 7000);
                     }, 3000);
 
@@ -284,6 +292,9 @@ export default class {
 
             }
         }
+
+
+        if(this.disableMovementKeys) return;
 
         if (this.cameraManager.camera.name == "CockpitCamera") {
             this.cockpitControlls(engine);

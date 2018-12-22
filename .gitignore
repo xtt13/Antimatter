@@ -7,6 +7,4 @@ deploy/
 .vscode/
 *.log
 package-lock.json
-src/plugins/particle-storm.min.js
-src/plugins/phaser-virtual-joystick.min.js
 *.DS_Store

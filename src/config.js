@@ -39,12 +39,15 @@ export default {
 	accValue: 0.01,
 	gamepadViewCameraSpeed: 0.015,
 
+	createSpaceTunnel: false,
+	spaceTunnelQuality: 2048,
+
 	// Hangar Position
 	// cockpitPosition: new BABYLON.Vector3(-900, 180, 0)
 
 	// JumpGate ViewPosition
-	// cockpitPosition: new BABYLON.Vector3(14000, 0, 8000)
+	cockpitPosition: new BABYLON.Vector3(14000, 0, 8000)
 
-	cockpitPosition: new BABYLON.Vector3(0, 0, 0)
+	// cockpitPosition: new BABYLON.Vector3(0, 0, 0)
 
 };

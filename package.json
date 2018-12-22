@@ -1,38 +1,35 @@
 {
-    "name": "Antimatter",
-    "version": "1.0.0",
-    "description": "A Babylon.JS Game",
-    "author": "Michael Dorn <work@michaeldorn.at>",
-    "main": "index.js",
-    "scripts": {
-        "dev": "webpack",
-        "deploy": "webpack --config webpack.production.config.js"
-    },
-    "license": "MIT",
-    "devDependencies": {
-        "ajv": "^6.6.1",
-        "babel-core": "^6.26.3",
-        "babel-eslint": "^7.2.3",
-        "babel-loader": "^7.1.1",
-        "babel-polyfill": "^6.23.0",
-        "babel-preset-es2015": "^6.24.1",
-        "browser-sync": "^2.26.3",
-        "browser-sync-webpack-plugin": "^1.2.0",
-        "clean-webpack-plugin": "^0.1.17",
-        "copy-webpack-plugin": "^4.2.0",
-        "expose-loader": "^0.7.3",
-        "html-webpack-plugin": "^2.30.1",
-        "script-loader": "^0.7.2",
-        "webpack": "^3.11.0"
-    },
-    "dependencies": {
-        "babylonjs": "^3.3.0",
-        "babylonjs-gui": "^3.2.0",
-        "babylonjs-inspector": "^3.3.0",
-        "babylonjs-loaders": "^3.2.0",
-        "babylonjs-materials": "^3.2.0",
-        "babylonjs-procedural-textures": "^3.3.0",
-        "babylonjs-serializers": "^3.3.0",
-        "spectorjs": "^0.9.4"
-    }
+  "name": "newstruct",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "dev": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "babel-loader": "^8.0.4",
+    "babel-preset-es2015": "^6.24.1",
+    "browser-sync": "^2.26.3",
+    "browser-sync-webpack-plugin": "^2.2.2",
+    "copy-webpack-plugin": "^4.6.0",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.28.2",
+    "webpack-cli": "^3.1.2"
+  },
+  "dependencies": {
+    "babylonjs": "^3.3.0",
+    "babylonjs-gui": "^3.3.0",
+    "babylonjs-inspector": "^3.3.0",
+    "babylonjs-loaders": "^3.3.0",
+    "babylonjs-materials": "^3.3.0",
+    "babylonjs-procedural-textures": "^3.3.0",
+    "babylonjs-serializers": "^3.3.0",
+    "spectorjs": "^0.9.5"
+  }
 }

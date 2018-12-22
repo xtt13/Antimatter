@@ -24,7 +24,7 @@ export default class {
         this.sparkleLight.intensity = 100000;
         this.sparkleLight.shadowMinZ = 30;
         this.sparkleLight.shadowMaxZ = 18000;
-        this.sparkleLight.range = 100000;
+        this.sparkleLight.range = 1000;
 
         this.lensFlareSystem2 = new BABYLON.LensFlareSystem("lensFlareSystem2", this.sparkleLight, this.scene);
         this.lensFlaresArr = [];
