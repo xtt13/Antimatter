@@ -52,7 +52,7 @@ export default class {
 
         this.planet = BABYLON.MeshBuilder.CreateSphere("planet", {
             diameter: this.planetDiameter,
-            diameterX: this.planetDiameter
+            // diameterX: this.planetDiameter
         }, this.scene);
 
         if(config.planetInfiniteDistance){

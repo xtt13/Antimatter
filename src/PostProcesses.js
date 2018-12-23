@@ -6,12 +6,12 @@ export default class {
         this.scene = scene;
         this.camera = camera;
 
-        if (config.disablePostProgress) return;
-        this.initPostProgress();
+        if (config.disablePostProcess) return;
+        this.initPostProcess();
         // this.sceneOptimizer();
     }
 
-    initPostProgress() {
+    initPostProcess() {
         // var postProcess = new BABYLON.FxaaPostProcess("fxaa", 1.0, this.camera);
         // var postProcess = new BABYLON.ColorCorrectionPostProcess("color_correction", "./assets/textures/colorcorrection/tableAktive.png", 1.0, this.camera);
         // //antialiasing on render textures

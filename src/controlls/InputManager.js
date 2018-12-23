@@ -1,5 +1,5 @@
 import * as BABYLON from 'babylonjs';
-import config from './config';
+import config from '../config';
 
 export default class {
     constructor(scene, ship, cockpit, cameraManager, game) {
@@ -172,12 +172,6 @@ export default class {
                 this.cameraManager.cockpitCamera();
             }
 
-            // Wormhole I-Key
-            if (code === 73) {
-                // this.game.wormhole.startWormhole();
-                // this.game.wormhole.shaderMaterial();
-            }
-
             // Scan Asteroids P-Key
             if (code === 80) {
                 this.game.asteroids.scanAsteroids();
@@ -233,7 +227,6 @@ export default class {
                             // this.cockpitParts[i].rotation = new BABYLON.Vector3(11, 0, 0);
                         }
 
-                        // this.game.wormhole.startWormhole();
                         // this.game.cockpit.createSpaceTunnel();
                         // this.game.cameraManager.fadeIn();
 
