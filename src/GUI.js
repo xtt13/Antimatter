@@ -1,6 +1,5 @@
 import * as BABYLON from 'babylonjs';
 import * as GUI from 'babylonjs-gui';
-import { toUnicode } from 'punycode';
 
 export default class {
     constructor(scene, camera, asteroids) {
@@ -41,7 +40,7 @@ export default class {
             //     'padding: 10px;' +
             //     'background-color: red;');
 
-            let content = `Hello, I'm your bord computer! In your mission you'll have to mine all relevant asteroids in this orbit. You'll find the necessary informations in your log by pressing the Tab-Key. It's probably the best idea to start with a orbit scan.
+            let content = `Hello, I'm your bord computer! In your mission you'll have to mine all relevant asteroids in this orbit. You'll find the necessary information in your log by pressing the Tab-Key. It's probably the best idea to start with an orbit scan.
 
             You can either control your ship by pressing the W, A, S, D keys, or with a XBOX360 controller.
             Change your view by pressing the Key Number 1, or 2.`;
@@ -70,7 +69,7 @@ export default class {
                     clearInterval(textInterval);
                     setTimeout(() => {
                         n.style.display = 'none';
-                    }, 3000);
+                    }, 10000);
                 } 
             }, 50);
 

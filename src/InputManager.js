@@ -131,9 +131,9 @@ export default class {
 
         // window.myobj = this.keys;
 
-        window.onclick = () => {
-            this.launchFullscreen();
-        }
+        // window.onclick = () => {
+        //     this.launchFullscreen();
+        // }
 
         this.keys.handleKeyDown = (event) => {
             this.keysDown[event.keyCode] = true;

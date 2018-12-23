@@ -12,7 +12,8 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     },
     watch: true,
-    mode: 'production',
+    mode: 'development',
+    // cache: false,
     plugins: [
 
         // // webpack.optimize.CommonsChunkPlugin has been removed, please use config.optimization.splitChunks instead.
@@ -25,8 +26,8 @@ module.exports = {
             {
                 // filename: '../index.html',
                 template: './src/template.html',
-                chunks: ['vendor', 'bundle'],
-                chunksSortMode: 'manual',
+                // chunks: ['vendor', 'bundle'],
+                // chunksSortMode: 'manual',
                 minify: {
                     removeAttributeQuotes: false,
                     collapseWhitespace: false,
@@ -67,5 +68,10 @@ module.exports = {
         rules: [
             { test: /\.js$/, use: ['babel-loader'], include: path.join(__dirname, 'src') },
         ]
-    }
+    },
+    externals: {
+        "oimo": true,
+        "cannon": true,
+        "earcut": true
+    },
 };

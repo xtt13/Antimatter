@@ -113,17 +113,6 @@ export default class {
 		this.wormhole = new Wormhole(this.scene, this.engine, this.assetsManager, this.cameraManager.camera, this);
 
 
-		// this.light = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 1, 0), this.scene);
-		// this.light.groundColor = new BABYLON.Color3(0.2, 0.2, 0.2);
-		// this.light.intensity = 0.3;
-		// this.light.intensity = 10;
-
-		// this.gateLight = new BABYLON.PointLight("light", new BABYLON.Vector3(0, 1, 0), this.scene);
-		// this.gateLight.position = new BABYLON.Vector3(930, 184, 0);
-		// this.gateLight.diffuse = new BABYLON.Color3(0, 0, 1);
-		// this.gateLight.specular = new BABYLON.Color3(0, 0, 1);
-		// this.gateLight.intensity = 0.3;
-
 		this.sun = new BABYLON.PointLight("sun", new BABYLON.Vector3(-30000, 0, 50), this.scene);
 		this.sun.diffuse = new BABYLON.Color3(1, 0.9, 0.9);
 		this.sun.specular = new BABYLON.Color3(0, 0, 0);
