@@ -68,8 +68,6 @@ export default class {
         this.planet.isPickable = true;
         this.planet.isBlocker = true;  
 
-        // console.log(this.planet);
-
         var fresnelMaterial = new BABYLON.StandardMaterial('athmosphereMaterial', this.scene);
 
         fresnelMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);

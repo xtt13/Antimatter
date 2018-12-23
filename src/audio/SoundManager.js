@@ -6,7 +6,7 @@ export default class {
         this.scene = scene;
         this.ship = ship;
         
-
+        this.startHangarSound();
     }
 
     startHangarSound() {

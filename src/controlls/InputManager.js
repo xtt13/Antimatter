@@ -10,6 +10,7 @@ export default class {
         this.cockpitMode = true;
         this.game = game;
         this.engineSound = this.game.SoundManager.engineSound;
+        console.log(this.engineSound);
 
 
         this.keys = {};
@@ -164,7 +165,7 @@ export default class {
                 // this.ship.ship.isVisible = true;
                 // this.game.cockpit.cockpit.isVisible = false;
 
-                this.cameraManager.initCamera(this.ship.ship);
+                this.cameraManager.followCamera(this.ship.ship);
             }
 
             if (code === 51) {

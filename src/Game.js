@@ -30,7 +30,6 @@ import Spacestation from './Spacestation';
 import JumpGate from './JumpGate';
 
 
-
 export default class {
 	constructor() {
 
@@ -51,7 +50,9 @@ export default class {
 		this.scene.checkCollisions = true;
 		this.scene.gravity = new BABYLON.Vector3(0, 0, 0);
 		this.scene.collisionsEnabled = true;
-		this.scene.ambientColor = new BABYLON.Color3(1, 1, 1);
+
+		// Backside Shadow Color
+		this.scene.ambientColor = new BABYLON.Color3(0.1, 0.1, 0.1);
 
 		// Init Variables
 		this.ship = null;
@@ -130,10 +131,18 @@ export default class {
 		this.skyboxMaterial = new BABYLON.StandardMaterial("skyboxMaterial", this.scene);
 		this.skyboxMaterial.backFaceCulling = false;
 		this.skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/stars", this.scene);
+		
+		// if(navigator.platform.indexOf('Mac') > -1){
+		// 	this.skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/stars", this.scene);
+		// } else {
+		// 	this.skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/stars", this.scene);
+		// }
+
 		this.skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
 		this.skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
 		this.skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
 
+		// Assign material to skybox
 		this.skybox.material = this.skyboxMaterial;
 
 		if (config.skyBoxInfiniteDistance) {
@@ -148,10 +157,10 @@ export default class {
 		this.sun = new BABYLON.PointLight("sun", new BABYLON.Vector3(-30000, 0, 50), this.scene);
 		this.sun.diffuse = new BABYLON.Color3(1, 0.9, 0.9);
 		this.sun.specular = new BABYLON.Color3(0, 0, 0);
-		// this.sun.excludedMeshes = [planet.atmosphere];
 		this.sun.intensity = 1000000000;
 		this.sun.shadowMinZ = 30;
 		this.sun.shadowMaxZ = 1800000;
+		// this.sun.excludedMeshes = [planet.atmosphere];
 
 		// Create Lensflares
 		var lensFlareSystem = new BABYLON.LensFlareSystem("lensFlareSystem", this.sun, this.scene);
@@ -169,13 +178,14 @@ export default class {
 		// Create Shadow Generator
 		this.shadowGenerator = new BABYLON.ShadowGenerator(1024, this.sun);
 		this.shadowGenerator.getShadowMap().renderList.push(this.cockpit.cockpit);
+		// this.shadowGenerator.getShadowMap().renderList.push(this.jumpGate.jumpGate);
 		// this.shadowGenerator.addShadowCaster(this.ship.ship);
 		// this.shadowGenerator.useExponentialShadowMap = true;
 		// this.shadowGenerator.usePoissonSampling = true;
 
 
 
-		
+
 		this.engine.runRenderLoop(() => {
 
 			// Check if Keys are pressed

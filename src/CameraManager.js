@@ -10,18 +10,11 @@ export default class {
         this.game = game;
 
         this.cockpitCamera();
-        // this.vrCamera();
-        // this.initCamera();
-
-        // if(config.enableVR){
-        //     this.vrCamera();
-        // } else {
-        //     this.initCamera(this.ship);
-        // }
+        // this.followCamera();
 
     }
 
-    initCamera(target) {
+    followCamera(target) {
 
         // this.game.planet.infiniteDistance = false;
         this.game.skybox.infiniteDistance = false;
@@ -33,36 +26,13 @@ export default class {
         this.camera.cameraAcceleration = 0.1;
         this.camera.maxCameraSpeed = 200;
         this.camera.maxZ = 10000000;
-
-        // this.camera.noRotationConstraint = true;
-        // this.camera.attachControl(this.canvas, true);
-        this.camera.target = target; // version 2.4 and earlier
-        this.camera.lockedTarget = target; //version 2.5 onwards
+        this.camera.lockedTarget = target;
 
         this.scene.activeCamera = this.camera;
-
-
-        // // Parameters: name, position, scene
-        // this.camera = new BABYLON.FlyCamera("FollowCamera", this.ship.position.add(new BABYLON.Vector3(0, 100, 0)), this.scene);
-
-        // // Airplane like rotation, with faster roll correction and banked-turns.
-        // // Default is 100. A higher number means slower correction.
-        // this.camera.rollCorrect = 10;
-        // // Default is false.
-        // this.camera.bankedTurn = true;
-        // // Defaults to 90° in radians in how far banking will roll the camera.
-        // this.camera.bankedTurnLimit = Math.PI / 2;
-        // // How much of the Yawing (turning) will affect the Rolling (banked-turn.)
-        // // Less than 1 will reduce the Rolling, and more than 1 will increase it.
-        // this.camera.bankedTurnMultiplier = 1;
-
-        // // This attaches the camera to the canvas
-        // this.camera.attachControl(canvas, true);
     }
 
     cockpitCamera() {
 
-        // this.camera = new BABYLON.FreeCamera("Camera", new BABYLON.Vector3(0, 20, 0), this.scene);
         this.camera = new BABYLON.UniversalCamera("CockpitCamera", new BABYLON.Vector3(0, 20, 0), this.scene);
 
         // Disable Cursorkeys
@@ -76,29 +46,6 @@ export default class {
         this.camera.parent = this.cockpit;
         this.scene.activeCamera = this.camera;
         this.camera.attachControl(this.canvas, true);
-    }
-
-    vrCamera() {
-
-
-        // this.camera = new BABYLON.WebVRFreeCamera("VRCamera", new BABYLON.Vector3(0, 0, 20), this.scene, {controllerMeshes: true, defaultLightningOnControllers: true});
-        // // this.camera.ctype = 2;
-        // this.camera.maxZ = config.CameraMaxZ;
-        // this.camera.setTarget(this.cockpit.position);
-        // this.camera.parent = this.cockpit;
-        // this.camera.noRotationConstraint = true;
-        // this.camera.rotation = new BABYLON.Vector3(-1.9, 3.14, 0);
-        // // this.camera.upVector = new BABYLON.Vector3(1, 0, 1);
-        // this.scene.activeCamera = this.camera;
-        // this.camera.attachControl(this.canvas, false);
-
-        // this.camera = new BABYLON.WebVRFreeCamera("vrCamera", new BABYLON.Vector3(0, -20, 0), this.scene, {controllerMeshes: true, defaultLightningOnControllers: true});
-        // this.camera.maxZ = config.CameraMaxZ;
-
-        // this.camera.setTarget(this.cockpit.position.add(new BABYLON.Vector3(0, 0, 0))); // X: Links/Rechts, Y: Oben/Unten, Z: Vorne/Hinten
-        // this.camera.parent = this.cockpit;
-        // this.camera.attachControl(this.canvas, true);
-        // this.scene.activeCamera = this.camera;
     }
 
     fadeIn() {

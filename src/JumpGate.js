@@ -51,7 +51,6 @@ export default class {
 
         loadJumpGate.onSuccess = (task) => {
 
-            console.log(task);
             this.jumpGate = task.loadedMeshes[1];
             this.jumpGateRing1 = task.loadedMeshes[2];
 
@@ -88,6 +87,13 @@ export default class {
             this.jumpGate.material.specularColor = new BABYLON.Color3(1, 1, 1);
 
             this.jumpGate.material.specularPower = 1024;
+
+            // var gizmoManager = new BABYLON.GizmoManager(this.scene);
+            // gizmoManager.positionGizmoEnabled = true;
+            // gizmoManager.rotationGizmoEnabled = true;
+            // gizmoManager.scaleGizmoEnabled = true;
+            // gizmoManager.boundingBoxGizmoEnabled = true;
+            // gizmoManager.attachableMeshes = [this.jumpGate];
 
 
             this.engine.runRenderLoop(() => {

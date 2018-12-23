@@ -52,7 +52,7 @@ export default class {
                 // asteroid.material.bumpTexture = task.texture;
             }
 
-            asteroid.material = null;
+            // asteroid.material = null;
 
             // asteroid.material.backFaceCulling = false;
 
