@@ -82,8 +82,13 @@ export default class {
 
             // this.StationRing.physicsImpostor = new BABYLON.PhysicsImpostor(this.StationRing, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 0, friction: 0, restitution: 0.3 });
 
+            // this.hangarLight = new BABYLON.PointLight("hangarLight", new BABYLON.Vector3(-900, 200, 0), this.scene);
+            // this.hangarLight.diffuse = new BABYLON.Color3(1, 0, 0);
+            // this.hangarLight.specular = new BABYLON.Color3(1, 0, 0);
+            // this.hangarLight.intensity = 100000000;
+
             this.engine.runRenderLoop(() => {
-                this.StationRing.rotate(BABYLON.Axis.Y, -0.0002, BABYLON.Space.LOCAL);
+                // this.StationRing.rotate(BABYLON.Axis.Y, -0.0002, BABYLON.Space.LOCAL);
             });
 
         }

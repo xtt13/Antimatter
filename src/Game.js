@@ -47,6 +47,7 @@ export default class {
 		// Init Scene
 		this.scene = new BABYLON.Scene(this.engine);
 		this.scene.clearColor = BABYLON.Color3.Black();
+
 		this.scene.checkCollisions = true;
 		this.scene.gravity = new BABYLON.Vector3(0, 0, 0);
 		this.scene.collisionsEnabled = true;
@@ -70,7 +71,7 @@ export default class {
 
 		this.helper = new Helper(this.scene);
 		this.assetsManager = new BABYLON.AssetsManager(this.scene);
-		
+
 		this.MusicManager = new MusicManager(this.scene, this.assetsManager);
 		this.SoundManager = new SoundManager(this.scene, this.assetsManager);
 
@@ -130,13 +131,15 @@ export default class {
 		// Create Skybox Material
 		this.skyboxMaterial = new BABYLON.StandardMaterial("skyboxMaterial", this.scene);
 		this.skyboxMaterial.backFaceCulling = false;
-		this.skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/stars", this.scene);
-		
-		// if(navigator.platform.indexOf('Mac') > -1){
-		// 	this.skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/stars", this.scene);
-		// } else {
-		// 	this.skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/stars", this.scene);
-		// }
+		this.skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/space/space", this.scene);
+
+		// OS and Navigator Detection (Chrome/Mac Texture Limitation Bug)
+		if (navigator.platform.indexOf('Mac') > -1 && navigator.userAgent.indexOf("Chrome") > -1) {
+			console.log('Low-Res Skybox (macOS & Chrome');
+			this.skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/stars", this.scene);
+		} else {
+			this.skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/space/space", this.scene);
+		}
 
 		this.skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
 		this.skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
@@ -177,11 +180,18 @@ export default class {
 
 		// Create Shadow Generator
 		this.shadowGenerator = new BABYLON.ShadowGenerator(1024, this.sun);
-		this.shadowGenerator.getShadowMap().renderList.push(this.cockpit.cockpit);
-		// this.shadowGenerator.getShadowMap().renderList.push(this.jumpGate.jumpGate);
-		// this.shadowGenerator.addShadowCaster(this.ship.ship);
-		// this.shadowGenerator.useExponentialShadowMap = true;
-		// this.shadowGenerator.usePoissonSampling = true;
+		// this.shadowGenerator.getShadowMap().renderList.push(this.cockpit.cockpit);
+		this.shadowGenerator.getShadowMap().renderList.push(this.jumpGate.jumpGate);
+		this.shadowGenerator.getShadowMap().renderList.push(this.spaceStation.StationBottom);
+		this.shadowGenerator.getShadowMap().renderList.push(this.spaceStation.StationTop);
+		// this.shadowGenerator.getShadowMap().renderList.push(this.spaceStation.StationRing);
+		this.shadowGenerator.getShadowMap().renderList.push(this.spaceStation.StationMiddle);
+
+		// Better Blur => More Costs
+		// this.shadowGenerator.useBlurExponentialShadowMap = true;
+		
+		this.shadowGenerator.useKernelBlur = true;
+		this.shadowGenerator.blurKernel = 64;
 
 
 

@@ -37,6 +37,8 @@ export default class {
                     this.CockpitParts[i].isBlocker = true;
                 }
 
+                this.CockpitParts[i].receiveShadows = true;
+
                 this.CockpitParts[i].material.specularPower = 4096;
                 this.CockpitParts[i].material.metallic = 0.2;
 
