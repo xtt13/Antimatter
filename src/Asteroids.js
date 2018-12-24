@@ -34,6 +34,9 @@ export default class {
             z: 3000
         }
 
+        this.numberOfAsteroid = 900;
+        this.spread = 6000;
+
         if (config.disableAsteroids) return;
         this.createAsteroids();
     }
@@ -83,9 +86,9 @@ export default class {
 
                 // Set Asteroid Position
                 asteroidInstance.position = new BABYLON.Vector3(
-                    this.position.x + Math.round(Math.random() * 3000) - 0,
-                    this.position.y + Math.round(Math.random() * 3000) - 0,
-                    this.position.y + Math.round(Math.random() * 3000) - 0
+                    this.position.x + Math.round(Math.random() * this.spread) - 0,
+                    this.position.y + Math.round(Math.random() * this.spread) - 0,
+                    this.position.y + Math.round(Math.random() * this.spread) - 0
                 );
 
                 // Set Rock Type

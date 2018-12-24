@@ -5,7 +5,7 @@ export default {
 	// ##################
 	// Show Debug Layer
 	// ##################
-	showDebugLayer: true,	
+	showDebugLayer: false,
 
 	// ##################
 	// Diable Music
@@ -23,6 +23,11 @@ export default {
 	disableAsteroids: false,
 
 	// ##################
+	// Diable Skybox
+	// ##################
+	disableSkybox: false,
+
+	// ##################
 	// Spacestation Config
 	// ##################	
 	disableSpacestation: false,
@@ -37,7 +42,7 @@ export default {
 	// ##################
 	// Jumpgate Config
 	// ##################
-	disableJumpGate: false,					
+	disableJumpGate: false,
 	jumpGateScaling: 0.5,
 
 

@@ -8,11 +8,21 @@ export default class {
         this.assetsManager = assetsManager;
 
         this.planetDiameter = 70000;
-        this.x = 50000;
-        this.y = 0;
-        this.z = 50;
 
-        if(config.disablePlanet) return;
+        // - Zu Mir, + Weg von mir
+        this.x = 25000;
+
+        // - Nach Unten , + Nach Oben
+        this.y = -35000;
+
+        // + Nach Link, - Nach Rechts
+        this.z = 0;
+
+        this.segments = 128;
+
+
+
+        if (config.disablePlanet) return;
         this.loadPlanet();
     }
 
@@ -39,7 +49,7 @@ export default class {
 
         // loadPlanetBumpTexture.onSuccess = (task) => {
         //     this.planetMaterial.bumpTexture = task.texture;
-	    //     this.planetMaterial.bumpTexture.level = 2;
+        //     this.planetMaterial.bumpTexture.level = 2;
         // }
 
         loadPlanetTexture.onError = function (task, message, exception) {
@@ -51,51 +61,62 @@ export default class {
         // }
 
         this.planet = BABYLON.MeshBuilder.CreateSphere("planet", {
+            segments: this.segments,
             diameter: this.planetDiameter,
             // diameterX: this.planetDiameter
         }, this.scene);
 
-        if(config.planetInfiniteDistance){
+        if (config.planetInfiniteDistance) {
             this.planet.infiniteDistance = true;
             // this.planet.renderingGroupId = 1;
         }
         // this.planet.renderingGroupId = 1;
         this.planet.material = this.planetMaterial;
         this.planet.position = new BABYLON.Vector3(this.x, this.y, this.z);
-    
+        // this.planet.rotation = new BABYLON.Vector3(20, 0, 0);
+
         this.planet.collisionsEnabled = true;
         this.planet.checkCollisions = true;
         this.planet.isPickable = true;
-        this.planet.isBlocker = true;  
+        this.planet.isBlocker = true;
 
         var fresnelMaterial = new BABYLON.StandardMaterial('athmosphereMaterial', this.scene);
 
         fresnelMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
         fresnelMaterial.emissiveColor = new BABYLON.Color3(0, 0, 0);
         fresnelMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-    
+
         fresnelMaterial.alpha = 0;
         fresnelMaterial.specularPower = 10;
-    
-    
+
+
         fresnelMaterial.opacityFresnelParameters = new BABYLON.FresnelParameters();
-        fresnelMaterial.opacityFresnelParameters.bias = 0.7;
+        fresnelMaterial.opacityFresnelParameters.bias = 0.5;
         fresnelMaterial.opacityFresnelParameters.power = 10;
-        // fresnelMaterial.opacityFresnelParameters.leftColor = BABYLON.Color3.White();
-        // fresnelMaterial.opacityFresnelParameters.rightColor = BABYLON.Color3.Black();
-    
+        fresnelMaterial.opacityFresnelParameters.leftColor = BABYLON.Color3.White();
+        fresnelMaterial.opacityFresnelParameters.rightColor = BABYLON.Color3.Black();
+
         this.atmosphere = BABYLON.MeshBuilder.CreateSphere("earth", {
+            segments: this.segments,
             diameter: this.planetDiameter,
-            diameterX: this.planetDiameter
+            // diameterX: this.planetDiameter
         }, this.scene);
 
-        if(config.planetInfiniteDistance){
+        if (config.planetInfiniteDistance) {
             this.atmosphere.infiniteDistance = true;
             // this.atmosphere.renderingGroupId = 2;
         }
         this.atmosphere.position = this.planet.position;
         this.atmosphere.material = fresnelMaterial;
-        this.atmosphere.isBlocker = true; 
+        this.atmosphere.isBlocker = true;
+
+
+        // var gizmoManager = new BABYLON.GizmoManager(this.scene);
+        // gizmoManager.positionGizmoEnabled = true;
+        // gizmoManager.rotationGizmoEnabled = true;
+        // gizmoManager.scaleGizmoEnabled = true;
+        // gizmoManager.boundingBoxGizmoEnabled = true;
+        // gizmoManager.attachableMeshes = [this.planet, this.atmosphere];
 
         this.engine.runRenderLoop(() => {
             this.planet.rotate(BABYLON.Axis.Y, -0.00005, BABYLON.Space.LOCAL);
