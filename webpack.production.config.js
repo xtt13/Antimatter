@@ -47,6 +47,19 @@ module.exports = {
         to: path.resolve(__dirname, 'deploy')
       }
     ]),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, 'src/sw.js'),
+        to: path.resolve(__dirname, 'deploy')
+      }
+    ]),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, 'src/manifest.json'),
+        to: path.resolve(__dirname, 'deploy')
+      }
+    ])
+
 
   ],
   module: {

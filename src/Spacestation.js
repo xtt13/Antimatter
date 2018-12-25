@@ -52,6 +52,7 @@ export default class {
                 this.station[i].checkCollisions = true;
                 this.station[i].isBlocker = true;
                 this.station[i].receiveShadows = true;
+                this.station[i].occlusionType = BABYLON.AbstractMesh.OCCLUSION_TYPE_OPTIMISTIC;
 
                 // this.station[i].material.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/stars", this.scene);
                 // this.station[i].material.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;

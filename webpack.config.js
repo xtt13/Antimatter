@@ -42,12 +42,24 @@ module.exports = {
             }
         ),
 
-        // new CopyWebpackPlugin([
-        //     {
-        //         from: path.resolve(__dirname, 'assets/**/*'),
-        //         to: path.resolve(__dirname, 'dist')
-        //     }
-        // ]),
+        new CopyWebpackPlugin([
+            {
+                from: path.resolve(__dirname, 'assets/**/*'),
+                to: path.resolve(__dirname, 'dist')
+            }
+        ]),
+                new CopyWebpackPlugin([
+            {
+                from: path.resolve(__dirname, 'src/sw.js'),
+                to: path.resolve(__dirname, 'dist')
+            }
+        ]),
+                new CopyWebpackPlugin([
+            {
+                from: path.resolve(__dirname, 'src/manifest.json'),
+                to: path.resolve(__dirname, 'dist')
+            }
+        ]),
 
         new BrowserSyncPlugin({
             host: process.env.IP || 'localhost',

@@ -9,14 +9,18 @@ export default class {
 
         this.planetDiameter = 70000;
 
-        // - Zu Mir, + Weg von mir
-        this.x = 25000;
+        // // - Zu Mir, + Weg von mir
+        // this.x = 25000;
 
-        // - Nach Unten , + Nach Oben
-        this.y = -35000;
+        // // - Nach Unten , + Nach Oben
+        // this.y = -35000;
 
-        // + Nach Link, - Nach Rechts
-        this.z = 0;
+        // // + Nach Link, - Nach Rechts
+        // this.z = 0;
+
+        this.x = 50000;
+        this.y = 0;
+        this.z = 50;
 
         this.segments = 128;
 
@@ -91,8 +95,8 @@ export default class {
 
 
         fresnelMaterial.opacityFresnelParameters = new BABYLON.FresnelParameters();
-        fresnelMaterial.opacityFresnelParameters.bias = 0.5;
-        fresnelMaterial.opacityFresnelParameters.power = 10;
+        fresnelMaterial.opacityFresnelParameters.bias = 0.55;
+        fresnelMaterial.opacityFresnelParameters.power = 5;
         fresnelMaterial.opacityFresnelParameters.leftColor = BABYLON.Color3.White();
         fresnelMaterial.opacityFresnelParameters.rightColor = BABYLON.Color3.Black();
 

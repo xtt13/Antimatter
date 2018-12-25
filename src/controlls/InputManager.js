@@ -1,4 +1,5 @@
 import * as BABYLON from 'babylonjs';
+import "babylonjs-gui";
 import config from '../config';
 
 export default class {
@@ -23,6 +24,8 @@ export default class {
         this.turnSpeed = config.turnSpeed;
         this.accValue = config.accValue
         this.autocoord = false;
+
+        this.initMobileUI();
 
         this.gamepadManager = new BABYLON.GamepadManager();
 
@@ -126,6 +129,84 @@ export default class {
         });
 
         this.initControll();
+    }
+
+    isMobileDevice() {
+        return true;
+        return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+    }
+
+    initMobileUI() {
+
+        if (this.isMobileDevice()) {
+            console.log('Mobile UI');
+
+            this.initMobileControll();
+
+            // GUI
+            var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+
+            var panel = new BABYLON.GUI.StackPanel();
+            panel.width = "250px";
+            //panel.height = "250px";
+            panel.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+            panel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
+            advancedTexture.addControl(panel);
+
+            var header = new BABYLON.GUI.TextBlock();
+            header.text = "Y-rotation: 0 deg";
+            header.height = "250px";
+            header.color = "white";
+            panel.addControl(header);
+
+            var slider = new BABYLON.GUI.Slider();
+            slider.minimum = 0;
+            slider.maximum = config.maxSpeed;
+            slider.value = 0;
+            slider.height = "40px";
+            slider.width = "200px";
+            slider.rotation = -Math.PI / 2;;
+            slider.onValueChangedObservable.add((value) => {
+                this.airSpeed = value;
+            });
+            console.log(slider);
+            panel.addControl(slider);
+        }
+    }
+
+    initMobileControll() {
+        window.addEventListener("deviceorientation", (event) => {
+
+            // alpha: rotation around z axis
+            if (event.alpha < 5 || event.alpha > 355) {
+
+
+            }
+
+            //beta: rotation around x axis
+            if (event.beta < -5) {
+                for (let i = 0; i < this.cockpitParts.length; i++) {
+                    // console.log('A');
+                    this.cockpitParts[i].rotate(BABYLON.Axis.Z, -this.turnSpeed, BABYLON.Space.LOCAL);
+                }
+            }
+
+            if (event.beta > 5) {
+                for (let i = 0; i < this.cockpitParts.length; i++) {
+                    // console.log('A');
+                    this.cockpitParts[i].rotate(BABYLON.Axis.Z, this.turnSpeed, BABYLON.Space.LOCAL);
+                }
+            }
+
+            //gamma: rotation around y axis
+            if (event.gamma < 5 || event.gamma > 355) {
+
+
+            }
+
+            // console.log(event.alpha, event.beta, event.gamma);
+            console.log(event.beta);
+        });
     }
 
     initControll() {
@@ -288,7 +369,7 @@ export default class {
         }
 
 
-        if(this.disableMovementKeys) return;
+        if (this.disableMovementKeys) return;
 
         if (this.cameraManager.camera.name == "CockpitCamera") {
             this.cockpitControlls(engine);
