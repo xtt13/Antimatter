@@ -2,14 +2,14 @@ import * as BABYLON from 'babylonjs';
 import config from './../config';
 
 export default class {
-    constructor(scene, assetsManager, ship, engine) {
+    constructor(scene, assetsManager, ship, engine, game) {
         this.scene = scene;
         this.assetsManager = assetsManager;
         this.ship = ship;
         this.engine = engine;
+        this.game = game;
 
         this.loadCockpit();
-
     }
 
     loadCockpit() {
@@ -44,9 +44,6 @@ export default class {
 
             }
 
-            if(config.createSpaceTunnel){
-                this.createSpaceTunnel();
-            }
 
             // this.cockpit.physicsImpostor = new BABYLON.PhysicsImpostor(this.cockpit, BABYLON.PhysicsImpostor.MeshImpostor, {mass: 1, friction: 0, restitution: 0.3});
 
@@ -62,11 +59,9 @@ export default class {
 
     }
 
-    createSpaceTunnel() {
+    createSpaceTunnel(cameraManager, inputManager) {
 
         // Disable Movementkeys
-
-
         var spaceScale = 50.0;
         var space = BABYLON.Mesh.CreateCylinder("space", 10 * spaceScale, 0, 6 * spaceScale, 20, 20, this.scene);
 
@@ -83,6 +78,9 @@ export default class {
             this.CockpitParts[i].position = new BABYLON.Vector3(0, 0, 0);
             this.CockpitParts[i].rotation = new BABYLON.Vector3(11, 11, 0);
         }
+
+        cameraManager.shake();
+        inputManager.disableKeys();
 
         this.scene.registerBeforeRender(() => {
             starfieldPT.time += this.scene.getAnimationRatio() * 0.8;

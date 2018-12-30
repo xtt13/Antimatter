@@ -74,8 +74,9 @@ export default {
 	// ##################
 	// Enable Wormhole
 	// ##################
-	createSpaceTunnel: false,
-	spaceTunnelQuality: 2048,
+	createSpaceTunnel: true,
+	// spaceTunnelQuality: 2048,
+	spaceTunnelQuality: 1024,
 
 
 	// ##################

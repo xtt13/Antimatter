@@ -25,8 +25,6 @@ module.exports = {
       {
         // filename: '../index.html',
         template: './src/template.html',
-        chunks: ['vendor', 'bundle'],
-        chunksSortMode: 'manual',
         minify: {
           removeAttributeQuotes: false,
           collapseWhitespace: false,

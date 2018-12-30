@@ -159,6 +159,15 @@ export default class {
         text.color = "cyan";
         label.addControl(text);
 
+        var points = [
+            mesh.position,
+            this.scene.activeCamera.globalPosition
+        ];
+
+        this.line = BABYLON.MeshBuilder.CreateLines("lines", { points: points }, this.scene);
+        this.line.color = new BABYLON.Color3(0, 1, 1);
+
+        console.log(this.line);
         console.log(label);
 
         return label;
@@ -166,6 +175,7 @@ export default class {
 
     removeLabel(mesh, label) {
         label.isVisible = false;
+        this.line.isVisible = false;
     }
 
     initTargetableActions(target, customOutline) {
@@ -224,12 +234,12 @@ export default class {
             }
 
             let beepSound = new BABYLON.Sound("beepSound", "assets/audio/sound/beep.mp3", this.scene, null,
-            {
-                playbackRate: 1,
-                volume: 1,
-                loop: false,
-                autoplay: true
-            })
+                {
+                    playbackRate: 1,
+                    volume: 1,
+                    loop: false,
+                    autoplay: true
+                })
 
             this.drawOutline(this.asteroids[index]);
             index++;

@@ -112,6 +112,7 @@ export default class {
         let cameraAnimation = new BABYLON.Animation("cameraAnimation", "position", 30, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
         let nextPos = this.camera.position.add(new BABYLON.Vector3(-1, -1, 1));
         let finalPos = this.camera.position.add(new BABYLON.Vector3(0, 0, 0));
+        // let finalPos = this.camera.position.add(new BABYLON.Vector3(-1, -1, 1));
 
         // Animation keys
         var keysCameraShake = [];

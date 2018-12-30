@@ -25,7 +25,7 @@ export default class {
         this.accValue = config.accValue
         this.autocoord = false;
 
-        this.initMobileUI();
+        // this.initMobileUI();
 
         this.gamepadManager = new BABYLON.GamepadManager();
 
@@ -270,7 +270,7 @@ export default class {
             }
 
             if (code == 186) {
-                console.log('detach');
+                console.log('detach camera');
                 this.game.cameraManager.camera.lockedTarget = null;
 
                 // Parameters: alpha, beta, radius, target position, scene
@@ -326,10 +326,12 @@ export default class {
         };
     }
 
+    disableKeys(){
+        this.disableMovementKeys = true;
+    }
+
     checkKeys(engine) {
         this.engine = engine;
-
-
 
         // Slow Down Y
         if (this.keysDown[89]) {
@@ -354,13 +356,16 @@ export default class {
                     this.ship.engineSystem2.start();
                     this.ship.engineSystem1.start();
                 }
+
                 console.log('speedup');
+
                 this.airSpeed += this.accValue;
                 let newVal = this.engineSound._playbackRate += 0.01;
                 this.engineSound.updateOptions({ playbackRate: newVal });
-                // console.log(this.engineSound._playbackRate);
 
-                // console.log(this.airSpeed);        
+                // console.log(this.engineSound._playbackRate);
+                // console.log(this.airSpeed);     
+
                 // if(this.airSpeed > 3) this.game.rattling = 77;
 
             } else {
@@ -404,7 +409,6 @@ export default class {
                 this.cockpitParts[i].rotate(BABYLON.Axis.X, this.turnSpeed, BABYLON.Space.LOCAL);
             }
 
-
             // this.cameraManager.camera.cameraRotation.x = 0.001;
         }
 
@@ -425,7 +429,7 @@ export default class {
                 // console.log('A');
                 this.cockpitParts[i].rotate(BABYLON.Axis.Z, -this.turnSpeed, BABYLON.Space.LOCAL);
             }
-
+            
             //  this.cameraManager.camera.cameraRotation.y = -0.01;
         }
 
@@ -437,10 +441,6 @@ export default class {
                 // console.log('E');
                 this.cockpitParts[i].rotate(BABYLON.Axis.Y, -this.turnSpeed, BABYLON.Space.LOCAL);
             }
-
-            // if (autocoord) {
-            //     ship.rotate(BABYLON.Axis.Z, turnSpeed, BABYLON.Space.LOCAL);
-            // }
         }
 
         if (this.keysDown[81]) {
@@ -449,11 +449,6 @@ export default class {
                 // console.log('Q');
                 this.cockpitParts[i].rotate(BABYLON.Axis.Y, this.turnSpeed, BABYLON.Space.LOCAL);
             }
-
-
-            // if (autocoord) {
-            //     ship.rotate(BABYLON.Axis.Z, -turnSpeed, BABYLON.Space.LOCAL);
-            // }
         }
 
         for (let i = 0; i < this.cockpitParts.length; i++) {
@@ -472,14 +467,11 @@ export default class {
         if (this.keysDown[87]) {
             // W, rotate in the positive direction about the x axis
             this.ship.ship.rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
-
         }
 
         if (this.keysDown[68]) {
             // D, rotate in the positive direction about the z axis
             this.ship.ship.rotate(BABYLON.Axis.Z, this.turnSpeed, BABYLON.Space.LOCAL);
-
-
         }
 
         if (this.keysDown[65]) {
@@ -487,29 +479,17 @@ export default class {
             this.ship.ship.rotate(BABYLON.Axis.Z, -this.turnSpeed, BABYLON.Space.LOCAL);
         }
 
-        // OLD
-
         if (this.keysDown[69]) {
             // Q rotate left
             this.ship.ship.rotate(BABYLON.Axis.Y, this.turnSpeed, BABYLON.Space.LOCAL);
-
-            // if (autocoord) {
-            //     ship.rotate(BABYLON.Axis.Z, turnSpeed, BABYLON.Space.LOCAL);
-            // }
         }
 
         if (this.keysDown[81]) {
             // E, rotate right
             this.ship.ship.rotate(BABYLON.Axis.Y, -this.turnSpeed, BABYLON.Space.LOCAL);
-
-            // if (autocoord) {
-            //     ship.rotate(BABYLON.Axis.Z, -turnSpeed, BABYLON.Space.LOCAL);
-            // }
         }
 
-
         this.ship.ship.translate(BABYLON.Axis.Z, elapsed - this.airSpeed, BABYLON.Space.GLOBAL);
-
 
     }
 

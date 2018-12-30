@@ -53,7 +53,8 @@ export default class {
 		this.scene.collisionsEnabled = true;
 
 		// Backside Shadow Color
-		this.scene.ambientColor = new BABYLON.Color3(0.1, 0.1, 0.1);
+		this.scene.ambientColor = new BABYLON.Color3(0.2, 0.2, 0.2);
+		// this.scene.ambientColor = new BABYLON.Color3(1, 1, 1);
 
 		// Init Variables
 		this.ship = null;
@@ -155,7 +156,9 @@ export default class {
 			}
 		}
 
-
+		if(config.createSpaceTunnel){
+			this.cockpit.createSpaceTunnel(this.cameraManager, this.inputManager);
+		}
 
 
 
@@ -184,12 +187,18 @@ export default class {
 
 		// Create Shadow Generator
 		this.shadowGenerator = new BABYLON.ShadowGenerator(1024, this.sun);
+		this.shadowGenerator.setDarkness(0.5);
+
+
 		// this.shadowGenerator.getShadowMap().renderList.push(this.cockpit.cockpit);
 		// this.shadowGenerator.getShadowMap().renderList.push(this.jumpGate.jumpGate);
+
 		this.shadowGenerator.getShadowMap().renderList.push(this.spaceStation.StationBottom);
 		this.shadowGenerator.getShadowMap().renderList.push(this.spaceStation.StationTop);
 		// this.shadowGenerator.getShadowMap().renderList.push(this.spaceStation.StationRing);
 		this.shadowGenerator.getShadowMap().renderList.push(this.spaceStation.StationMiddle);
+
+		
 
 		// Better Blur => More Costs
 		// this.shadowGenerator.useBlurExponentialShadowMap = true;
