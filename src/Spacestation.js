@@ -100,5 +100,12 @@ export default class {
 
     }
 
+    deleteSpaceStation(){
+        for (let i = 0; i < this.station.length; i++) {
+            this.station[i].dispose();
+            this.station[i] = null;
+        }
+    }
+
 
 }

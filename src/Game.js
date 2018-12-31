@@ -157,7 +157,7 @@ export default class {
 		}
 
 		if(config.createSpaceTunnel){
-			this.cockpit.createSpaceTunnel(this.cameraManager, this.inputManager);
+			this.cockpit.createSpaceTunnel(this.cameraManager, this.inputManager, this);
 		}
 
 
@@ -207,7 +207,7 @@ export default class {
 		this.shadowGenerator.blurKernel = 64;
 
 
-
+		console.log(this.scene);
 
 		this.engine.runRenderLoop(() => {
 

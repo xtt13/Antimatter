@@ -114,6 +114,9 @@ export default class {
                     rndNumber
                 );
 
+                //Any subsequent changes to position / rotation / scaling will then be ignore:
+                asteroidInstance.freezeWorldMatrix();
+
                 // asteroidInstance.checkCollisions = true;
                 // asteroidInstance.physicsImpostor = new BABYLON.PhysicsImpostor(asteroidInstance, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 0, friction: 0, restitution: 0.3 });
 
@@ -262,6 +265,14 @@ export default class {
         this.customOutline.rotation = mesh.rotation;
         this.customOutline.isVisible = true;
 
+    }
+
+    deleteAllAsteroids() {
+        for (let i = 0; i < this.asteroids.length; i++) {
+            let element = this.asteroids[i];
+            element.dispose();
+            element = null;
+        }
     }
 
 

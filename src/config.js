@@ -76,7 +76,7 @@ export default {
 	// ##################
 	createSpaceTunnel: true,
 	// spaceTunnelQuality: 2048,
-	spaceTunnelQuality: 1024,
+	spaceTunnelQuality: 512,
 
 
 	// ##################

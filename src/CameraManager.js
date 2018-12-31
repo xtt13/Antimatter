@@ -100,7 +100,11 @@ export default class {
         });
     }
 
-    shake(sound) {
+    shake(sound = false, loop = false) {
+
+        // Keine Animation auf die Rotation weil ich sonst meine Kamera nicht mehr bewegen kann!
+        // Daher Animation auf die Position!
+
         // Parameter 1 - Name of this animation, nothing more.
 
         // Parameter 2 - The property concerned.This can be any mesh property, depending upon what you want to change.Here we want to scale an object on the X axis, so it will be “scaling.x”.
@@ -109,21 +113,21 @@ export default class {
 
         // Parameter 4 - Type of change.Here you decide and enter what kind of value will be modified: is it a float(e.g.a translation), a vector(e.g.a direction), or a quaternion.Exact values are:
 
-        let cameraAnimation = new BABYLON.Animation("cameraAnimation", "position", 30, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
-        let nextPos = this.camera.position.add(new BABYLON.Vector3(-1, -1, 1));
+        let cameraAnimation = new BABYLON.Animation("cameraAnimation", "position", 30, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+        let nextPos = this.camera.position.add(new BABYLON.Vector3(0, -2, 2));
         let finalPos = this.camera.position.add(new BABYLON.Vector3(0, 0, 0));
-        // let finalPos = this.camera.position.add(new BABYLON.Vector3(-1, -1, 1));
 
         // Animation keys
         var keysCameraShake = [];
         keysCameraShake.push({ frame: 0, value: this.camera.position });
         keysCameraShake.push({ frame: 120, value: nextPos });
         keysCameraShake.push({ frame: 240, value: finalPos });
-        keysCameraShake.push({ frame: 480, value: nextPos });
-        keysCameraShake.push({ frame: 660, value: finalPos });
+        // keysCameraShake.push({ frame: 480, value: nextPos });
+        // keysCameraShake.push({ frame: 660, value: finalPos });
         cameraAnimation.setKeys(keysCameraShake);
 
-        var easingFunction = new BABYLON.ElasticEase();
+        // var easingFunction = new BABYLON.ElasticEase();
+        var easingFunction = new BABYLON.BounceEase();
 
         // For each easing function, you can choose beetween EASEIN (default), EASEOUT, EASEINOUT
         easingFunction.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
@@ -142,11 +146,15 @@ export default class {
                 {
                     playbackRate: 1,
                     volume: 1,
-                    loop: false,
+                    loop: loop,
                     autoplay: true
                 });
         }
 
+    }
+
+    stopShake(){
+        this.scene.stopAnimation(this.camera);
     }
 
 }

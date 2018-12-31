@@ -282,14 +282,14 @@ export default class {
 
             // Shake M-Key
             if (code == 77) {
-                this.game.cameraManager.shake();
+                // this.game.cameraManager.shake();
             }
 
             // Shake L-Key
             if (code == 76) {
                 this.game.jumpGate.startJumpGate();
                 setTimeout(() => {
-                    this.game.cameraManager.shake(true);
+                    // this.game.cameraManager.shake(true);
                     // setInterval(() => {
                     //     var elapsed = this.engine.getDeltaTime() / 1000;
                     //     for (let i = 0; i < this.cockpitParts.length; i++) {
@@ -328,6 +328,10 @@ export default class {
 
     disableKeys(){
         this.disableMovementKeys = true;
+    }
+
+    enableKeys(){
+        this.disableMovementKeys = false;
     }
 
     checkKeys(engine) {

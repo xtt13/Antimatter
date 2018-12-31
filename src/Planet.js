@@ -144,5 +144,10 @@ export default class {
         }
     }
 
+    deletePlanet(){
+        this.planet.dispose();
+        this.atmosphere.dispose();
+    }
+
 
 }
