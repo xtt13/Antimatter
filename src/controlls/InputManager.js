@@ -364,7 +364,6 @@ export default class {
                 // let handleValue = (this.airSpeed / this.maxSpeed) * 10;
                 // this.cockpitParts[3].position.x -= handleValue;
 
-                console.log(handleValue, 'speedup');
 
                 this.airSpeed += this.accValue;
                 let newVal = this.engineSound._playbackRate += 0.01;
