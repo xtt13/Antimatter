@@ -280,9 +280,9 @@ export default class {
                 // this.game.cameraManager.camera.attachControl(this.game.canvas, true);
             }
 
-            // Shake M-Key
+            // Shake M-Key Wormhole
             if (code == 77) {
-                // this.game.cameraManager.shake();
+                this.game.cockpit.createSpaceTunnel(false, this.cameraManager, this, this.game);
             }
 
             // Shake L-Key
@@ -361,7 +361,10 @@ export default class {
                     this.ship.engineSystem1.start();
                 }
 
-                console.log('speedup');
+                // let handleValue = (this.airSpeed / this.maxSpeed) * 10;
+                // this.cockpitParts[3].position.x -= handleValue;
+
+                console.log(handleValue, 'speedup');
 
                 this.airSpeed += this.accValue;
                 let newVal = this.engineSound._playbackRate += 0.01;

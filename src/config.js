@@ -5,7 +5,7 @@ export default {
 	// ##################
 	// Show Debug Layer
 	// ##################
-	showDebugLayer: false,
+	showDebugLayer: true,
 
 	// ##################
 	// Diable Music
@@ -74,7 +74,7 @@ export default {
 	// ##################
 	// Enable Wormhole
 	// ##################
-	createSpaceTunnel: true,
+	createSpaceTunnel: false,
 	// spaceTunnelQuality: 2048,
 	spaceTunnelQuality: 512,
 

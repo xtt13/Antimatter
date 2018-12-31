@@ -157,7 +157,12 @@ export default class {
 		}
 
 		if(config.createSpaceTunnel){
-			this.cockpit.createSpaceTunnel(this.cameraManager, this.inputManager, this);
+			// for (let i = 0; i < this.cockpit.cockpitParts.length; i++) {
+			// 	// console.log('S');
+			// 	this.cockpitParts[i].rotation.x = 11;
+            //     // this.cockpitParts[i].rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
+            // }
+			this.cockpit.createSpaceTunnel(true, this.cameraManager, this.inputManager, this);
 		}
 
 

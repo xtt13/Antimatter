@@ -58,7 +58,7 @@ export default class {
 
     }
 
-    createSpaceTunnel(cameraManager, inputManager, game) {
+    createSpaceTunnel(viaconfig = false, cameraManager, inputManager, game) {
 
         // 
         var spaceScale = 50.0;
@@ -79,11 +79,18 @@ export default class {
         starfieldPT.beta = 0.1;
 
         space.material = starfieldMaterial;
+        space.material.alpha = 0;
 
         // Rotation Cockpit
         for (let i = 0; i < this.CockpitParts.length; i++) {
             this.CockpitParts[i].position = new BABYLON.Vector3(0, 0, 0);
-            this.CockpitParts[i].rotation = new BABYLON.Vector3(11, 11, 0);
+            // 
+            if(viaconfig){
+                this.CockpitParts[i].rotation = new BABYLON.Vector3(11, 11, 0);
+            } else {
+                this.CockpitParts[i].rotation = new BABYLON.Vector3(11, 0, 0);
+            }
+            
         }
 
         // Shake Camera (Sound, Loop)
@@ -97,6 +104,7 @@ export default class {
 
         // Speed Up Sound
         let speedUpSoundInterval = setInterval(() => {
+            if(space.material.alpha < 1) space.material.alpha += 0.04;
             let newVal = game.SoundManager.engineSound._playbackRate += 0.01;
             game.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
         }, 60);
