@@ -15,7 +15,7 @@ export default class {
 
         this.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui1");
 
-        this.numberOfAsteroid = 300;
+        // this.numberOfAsteroid = 300;
         this.outlineScalingValue = 2;
         this.min = 1;
         this.max = 30;
@@ -130,6 +130,8 @@ export default class {
                 this.asteroids.push(asteroidInstance);
 
             }
+
+            var allAsteroids = BABYLON.Mesh.MergeMeshes(this.asteroids);  
 
             loadAsteroid.onError = function (task, message, exception) {
                 // console.log(message, exception);

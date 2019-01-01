@@ -37,9 +37,19 @@ export default class {
 		this.canvas = document.getElementById("canvasZone");
 
 		// Init Engine
-		this.engine = new BABYLON.Engine(this.canvas, true, {
-			// stencil: true
-		});
+		this.engine = new BABYLON.Engine(
+			this.canvas,
+
+			// antialias
+			true,
+
+			{
+				// stencil: true
+			},
+
+			// Adapt to Device Ratio
+			false
+		);
 
 		// Disable Manifest Model Warning
 		this.engine.disableManifestCheck = true;
@@ -51,6 +61,9 @@ export default class {
 		this.scene.checkCollisions = true;
 		this.scene.gravity = new BABYLON.Vector3(0, 0, 0);
 		this.scene.collisionsEnabled = true;
+
+		this.scene.autoClear = false; // Color buffer
+		this.scene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
 
 		// Backside Shadow Color
 		this.scene.ambientColor = new BABYLON.Color3(0.2, 0.2, 0.2);
@@ -156,12 +169,12 @@ export default class {
 			}
 		}
 
-		if(config.createSpaceTunnel){
+		if (config.createSpaceTunnel) {
 			// for (let i = 0; i < this.cockpit.cockpitParts.length; i++) {
 			// 	// console.log('S');
 			// 	this.cockpitParts[i].rotation.x = 11;
-            //     // this.cockpitParts[i].rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
-            // }
+			//     // this.cockpitParts[i].rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
+			// }
 			this.cockpit.createSpaceTunnel(true, this.cameraManager, this.inputManager, this);
 		}
 
@@ -203,7 +216,7 @@ export default class {
 		// this.shadowGenerator.getShadowMap().renderList.push(this.spaceStation.StationRing);
 		this.shadowGenerator.getShadowMap().renderList.push(this.spaceStation.StationMiddle);
 
-		
+
 
 		// Better Blur => More Costs
 		// this.shadowGenerator.useBlurExponentialShadowMap = true;
@@ -213,6 +226,7 @@ export default class {
 
 
 		console.log(this.scene);
+			
 
 		this.engine.runRenderLoop(() => {
 

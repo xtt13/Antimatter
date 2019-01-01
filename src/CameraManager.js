@@ -161,6 +161,7 @@ export default class {
     initPointerLock() {
         // Request pointer lock
         var canvas = this.scene.getEngine().getRenderingCanvas();
+
         // On click event, request pointer lock
         canvas.addEventListener("click", function (evt) {
             canvas.requestPointerLock = canvas.requestPointerLock || canvas.msRequestPointerLock || canvas.mozRequestPointerLock || canvas.webkitRequestPointerLock;
@@ -170,18 +171,18 @@ export default class {
         }, false);
 
         // Event listener when the pointerlock is updated (or removed by pressing ESC for example).
-        var pointerlockchange = function (event) {
-            _this.controlEnabled = (
+        var pointerlockchange = (event) => {
+            this.controlEnabled = (
                 document.mozPointerLockElement === canvas
                 || document.webkitPointerLockElement === canvas
                 || document.msPointerLockElement === canvas
                 || document.pointerLockElement === canvas);
 
             // If the user is already locked
-            if (!_this.controlEnabled) {
-                _this.camera.detachControl(canvas);
+            if (!this.controlEnabled) {
+                this.camera.detachControl(this.canvas);
             } else {
-                _this.camera.attachControl(canvas);
+                this.camera.attachControl(this.canvas);
             }
         };
 

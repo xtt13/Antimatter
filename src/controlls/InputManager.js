@@ -213,9 +213,9 @@ export default class {
 
         // window.myobj = this.keys;
 
-        // window.onclick = () => {
-        //     this.launchFullscreen();
-        // }
+        window.onclick = () => {
+            this.launchFullscreen();
+        }
 
         this.keys.handleKeyDown = (event) => {
             this.keysDown[event.keyCode] = true;
@@ -235,6 +235,13 @@ export default class {
             // Fullscreen 1-Key
             if (code === 49) {
                 this.launchFullscreen();
+            }
+
+            // Tab-Key
+            if (code === 9) {
+                console.log('Goo');
+                
+                this.game.GUIClass.createAsteroidScreen();
             }
 
             if (code === 50) {
@@ -326,11 +333,11 @@ export default class {
         };
     }
 
-    disableKeys(){
+    disableKeys() {
         this.disableMovementKeys = true;
     }
 
-    enableKeys(){
+    enableKeys() {
         this.disableMovementKeys = false;
     }
 
@@ -435,7 +442,7 @@ export default class {
                 // console.log('A');
                 this.cockpitParts[i].rotate(BABYLON.Axis.Z, -this.turnSpeed, BABYLON.Space.LOCAL);
             }
-            
+
             //  this.cameraManager.camera.cameraRotation.y = -0.01;
         }
 
@@ -500,6 +507,14 @@ export default class {
     }
 
     launchFullscreen() {
+        if (
+            document.fullscreenElement ||
+            document.webkitFullscreenElement ||
+            document.mozFullScreenElement ||
+            document.msFullscreenElement
+        ) {
+            return;
+        }
         var element = document.documentElement;
         if (element.requestFullscreen) {
             element.requestFullscreen();

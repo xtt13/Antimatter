@@ -5,14 +5,19 @@ import 'babylonjs-inspector';
 export default class {
     constructor(scene) {
         this.scene = scene;
-        
+
         // this.showFPS();
         // this.showWorldAxis(3000);
 
-        if(config.showDebugLayer){
+        if (config.showDebugLayer) {
             this.scene.debugLayer.show();
+
+            this.scene.debugLayer.show({
+                popup: false,
+                initialTab: 3
+            });
         }
-        
+
         // this.scene.debugLayer.show({
         //     popup:false, 
         //     initialTab : 1, 

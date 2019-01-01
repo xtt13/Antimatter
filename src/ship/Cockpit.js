@@ -60,7 +60,19 @@ export default class {
 
     createSpaceTunnel(viaconfig = false, cameraManager, inputManager, game) {
 
-        // 
+        // FadeOut Music
+        game.MusicManager.fadeOutMusic();
+
+        // Dim Light
+        let dimmInterval = setInterval(() => {
+            game.sun.intensity -= 5000000;
+
+            if(game.sun.intensity <= 100000000){
+                clearInterval(dimmInterval);
+            }
+        }, 10);
+
+        //  Scale Value
         var spaceScale = 50.0;
 
         // Create Cylinder Mesh
@@ -81,7 +93,7 @@ export default class {
         space.material = starfieldMaterial;
         space.material.alpha = 0;
 
-        // Rotation Cockpit
+        // Rotate Cockpit
         for (let i = 0; i < this.CockpitParts.length; i++) {
             this.CockpitParts[i].position = new BABYLON.Vector3(0, 0, 0);
             // 
