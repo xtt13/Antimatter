@@ -5,7 +5,15 @@ deploy/
 *.log
 package-lock.json
 *.DS_Store
+<<<<<<< HEAD
 newstruct-darwin-x64/
+<<<<<<< HEAD
 electron/assets/*
 electron/index.html
 electron/bundle.js
+=======
+electron/*
+=======
+newstruct-darwin-x64/
+>>>>>>> npm electron-packer
+>>>>>>> npm electron-packer
