@@ -84,7 +84,7 @@ export default class {
         this.labels.push(label);
     }
 
-    createAsteroidScreen() {
+    enableAsteroidScreen() {
         var n = document.createElement('div');
         n.setAttribute('class', 'scanlines ui-block asteroidsUI');
 
@@ -95,6 +95,11 @@ export default class {
         document.body.appendChild(n);
 
 
+    }
+
+    disableAsteroidScreen(){
+        let elem = document.querySelector('.asteroidsUI');
+        elem.parentNode.removeChild(elem);
     }
 
 

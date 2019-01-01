@@ -180,7 +180,7 @@ export default class {
 
             // If the user is already locked
             if (!this.controlEnabled) {
-                this.camera.detachControl(this.canvas);
+                // this.camera.detachControl(this.canvas);
             } else {
                 this.camera.attachControl(this.canvas);
             }

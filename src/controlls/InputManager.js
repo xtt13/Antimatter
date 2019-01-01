@@ -18,6 +18,7 @@ export default class {
         this.keysDown = {};
 
         this.disableMovementKeys = false;
+        this.asteroidUIenabled = false;
 
         this.airSpeed = config.airSpeed;
         this.maxSpeed = config.maxSpeed;
@@ -239,9 +240,13 @@ export default class {
 
             // Tab-Key
             if (code === 9) {
-                console.log('Goo');
-                
-                this.game.GUIClass.createAsteroidScreen();
+                if (this.asteroidUIenabled) {
+                    this.game.GUIClass.disableAsteroidScreen();
+                    this.asteroidUIenabled = false;
+                } else {
+                    this.game.GUIClass.enableAsteroidScreen();
+                    this.asteroidUIenabled = true;
+                }
             }
 
             if (code === 50) {
