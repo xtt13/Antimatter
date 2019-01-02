@@ -6,3 +6,6 @@ deploy/
 package-lock.json
 *.DS_Store
 newstruct-darwin-x64/
+electron/assets/*
+electron/index.html
+electron/bundle.js
