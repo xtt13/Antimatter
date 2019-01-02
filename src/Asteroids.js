@@ -42,8 +42,8 @@ export default class {
     }
 
     createAsteroids() {
-        var loadAsteroid = this.assetsManager.addMeshTask("loadAsteroid", "Asteroid", "/assets/models/asteroids/", "asteroid.babylon");
-        var loadBumpMap = this.assetsManager.addTextureTask("loadBumpMap", "/assets/models/asteroids/asteroid_normalmap.jpg");
+        var loadAsteroid = this.assetsManager.addMeshTask("loadAsteroid", "Asteroid", "./assets/models/asteroids/", "asteroid.babylon");
+        var loadBumpMap = this.assetsManager.addTextureTask("loadBumpMap", "./assets/models/asteroids/asteroid_normalmap.jpg");
 
         loadAsteroid.onSuccess = (task) => {
 

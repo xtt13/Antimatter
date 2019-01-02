@@ -12,7 +12,7 @@ export default class {
     }
 
     loadStation() {
-        var loadStation = this.assetsManager.addMeshTask("gangut", "", "/assets/models/spacestation/", "gangut.babylon");
+        var loadStation = this.assetsManager.addMeshTask("gangut", "", "./assets/models/spacestation/", "gangut.babylon");
 
         loadStation.onSuccess = (task) => {
 

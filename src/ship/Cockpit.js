@@ -12,7 +12,7 @@ export default class {
     }
 
     loadCockpit() {
-        var loadCockpit = this.assetsManager.addMeshTask("loadCockpit", "", "/assets/models/cockpit/", "Cockpit.glb");
+        var loadCockpit = this.assetsManager.addMeshTask("loadCockpit", "", "./assets/models/cockpit/", "Cockpit.glb");
 
         loadCockpit.onSuccess = (task) => {
 

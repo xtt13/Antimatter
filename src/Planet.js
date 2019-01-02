@@ -63,16 +63,16 @@ export default class {
 
         // Old
         if(this.type == "Menu"){
-            this.planetMaterial.diffuseTexture = new BABYLON.Texture("/assets/textures/planets/8k_mars.jpg", this.scene);
+            this.planetMaterial.diffuseTexture = new BABYLON.Texture("./assets/textures/planets/8k_mars.jpg", this.scene);
         }
         
         // var loadPlanetTexture = this.assetsManager.addTextureTask("planetTexture", "/assets/textures/planets/2k_mars.jpg");
 
         if (this.isMobileDevice()) {
             console.log('mob');
-            var loadPlanetTexture = this.assetsManager.addTextureTask("planetTexture", "/assets/textures/planets/2k_mars.jpg");
+            var loadPlanetTexture = this.assetsManager.addTextureTask("planetTexture", "./assets/textures/planets/2k_mars.jpg");
         } else {
-            var loadPlanetTexture = this.assetsManager.addTextureTask("planetTexture", "/assets/textures/planets/8k_mars.jpg");
+            var loadPlanetTexture = this.assetsManager.addTextureTask("planetTexture", "./assets/textures/planets/8k_mars.jpg");
         }
 
         // var loadPlanetBumpTexture = this.assetsManager.addTextureTask("bumpTexture", "/assets/textures/planets/earthUV.jpg");

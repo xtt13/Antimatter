@@ -47,7 +47,7 @@ export default class {
     }
 
     loadJumpGate() {
-        var loadJumpGate = this.assetsManager.addMeshTask("JumpGate", "", "/assets/models/jumpgate/", "JumpGate.glb");
+        var loadJumpGate = this.assetsManager.addMeshTask("JumpGate", "", "./assets/models/jumpgate/", "JumpGate.glb");
 
         loadJumpGate.onSuccess = (task) => {
 

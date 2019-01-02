@@ -17,7 +17,7 @@ export default class {
     }
 
     loadFirefly() {
-        var loadSpaceship = this.assetsManager.addMeshTask("loadSpaceship", "FireFly", "/assets/models/spaceship/", "firefly.babylon");
+        var loadSpaceship = this.assetsManager.addMeshTask("loadSpaceship", "FireFly", "./assets/models/spaceship/", "firefly.babylon");
 
         loadSpaceship.onSuccess = (task) => {
             this.currentShip = "Firefly";
@@ -45,7 +45,7 @@ export default class {
 
     loadValcon() {
         this.currentShip = "Valcon";
-        var loadSpaceship = this.assetsManager.addMeshTask("loadSpaceship", "ship", "/assets/models/spaceship/", "ship.babylon");
+        var loadSpaceship = this.assetsManager.addMeshTask("loadSpaceship", "ship", "./assets/models/spaceship/", "ship.babylon");
 
         loadSpaceship.onSuccess = (task) => {
 
