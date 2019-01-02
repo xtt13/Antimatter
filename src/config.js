@@ -2,6 +2,12 @@
 import * as BABYLON from 'babylonjs';
 
 export default {
+
+	// ##################
+	// Current State
+	// ##################
+	currentState: "Menu",
+
 	// ##################
 	// Show Debug Layer
 	// ##################

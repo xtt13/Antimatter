@@ -16,6 +16,9 @@ import SoundManager from './audio/SoundManager';
 // Import Input Manager
 import InputManager from './controlls/InputManager';
 
+// Import Menu
+import Menu from './Menu';
+
 // Import GUI
 import GUI from './GUI';
 
@@ -50,6 +53,8 @@ export default class {
 			// Adapt to Device Ratio
 			false
 		);
+
+		this.currentState = config.currentState;
 
 		// Disable Manifest Model Warning
 		this.engine.disableManifestCheck = true;
@@ -93,20 +98,47 @@ export default class {
 		this.cockpit = new Cockpit(this.scene, this.assetsManager, this.ship.ship, this.engine);
 
 		this.spaceStation = new Spacestation(this.scene, this.engine, this.assetsManager);
-		this.planet = new Planet(this.scene, this.engine, this.assetsManager);
+		this.planet = new Planet(this.scene, this.engine, this.assetsManager, "Game");
 		this.asteroids = new Asteroids(this.scene, this.assetsManager);
-		this.jumpGate = new JumpGate(this.scene, this.engine, this.assetsManager)
+		this.jumpGate = new JumpGate(this.scene, this.engine, this.assetsManager);
+
+		this.menu = new Menu(this.engine, this.canvas, this.assetsManager);
 
 
 		// When all assets are loaded =>
 		this.assetsManager.onFinish = (tasks) => {
 
-			// Run Setup
-			this.setup();
+			switch (this.currentState) {
+				case "Game":
+					// Run Setup
+					this.setup();
+					break;
+
+				case "Menu":
+					this.menu.setup();
+					break;
+
+				default:
+					break;
+			}
+
 
 			// runRenderLoop => Render Scene
 			this.engine.runRenderLoop(() => {
-				this.scene.render();
+				switch (this.currentState) {
+					case "Game":
+						this.scene.render();
+						break;
+
+					case "Menu":
+						this.menu.scene.render();
+						break;
+
+					default:
+						this.scene.render();
+						break;
+				}
+
 			});
 		};
 
@@ -226,7 +258,7 @@ export default class {
 
 
 		console.log(this.scene);
-			
+
 
 		this.engine.runRenderLoop(() => {
 

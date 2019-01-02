@@ -2,12 +2,37 @@ import * as BABYLON from 'babylonjs';
 import config from './config';
 
 export default class {
-    constructor(scene, engine, assetsManager) {
+    constructor(scene, engine, assetsManager, type) {
         this.scene = scene;
         this.engine = engine;
         this.assetsManager = assetsManager;
+        this.type = type;
 
-        this.planetDiameter = 70000;
+        // this.planetDiameter = 2;
+        // this.planet.planet.position.x = 0;
+        // this.planet.planet.position.y = 1;
+        // this.planet.planet.position.z = 0;
+
+        switch (type) {
+            case "Menu":
+                this.planetDiameter = 9;
+                this.x = 0;
+                this.y = 0;
+                this.z = 0;
+                break;
+
+            case "Game":
+                this.planetDiameter = 70000;
+                this.x = 50000;
+                this.y = 0;
+                this.z = 50;
+                break;
+
+            default:
+                break;
+        }
+
+
 
         // // - Zu Mir, + Weg von mir
         // this.x = 25000;
@@ -18,9 +43,7 @@ export default class {
         // // + Nach Link, - Nach Rechts
         // this.z = 0;
 
-        this.x = 50000;
-        this.y = 0;
-        this.z = 50;
+
 
         this.segments = 128;
 
@@ -38,18 +61,26 @@ export default class {
         this.planetMaterial.diffuseColor = new BABYLON.Color3(0.8, 1, 0.6);
         this.planetMaterial.emissiveColor = new BABYLON.Color3(0.15, 0.05, 0.05);
 
+        // Old
+        if(this.type == "Menu"){
+            this.planetMaterial.diffuseTexture = new BABYLON.Texture("/assets/textures/planets/8k_mars.jpg", this.scene);
+        }
+        
+        // var loadPlanetTexture = this.assetsManager.addTextureTask("planetTexture", "/assets/textures/planets/2k_mars.jpg");
 
-        if(this.isMobileDevice()){
+        if (this.isMobileDevice()) {
             console.log('mob');
             var loadPlanetTexture = this.assetsManager.addTextureTask("planetTexture", "/assets/textures/planets/2k_mars.jpg");
         } else {
             var loadPlanetTexture = this.assetsManager.addTextureTask("planetTexture", "/assets/textures/planets/8k_mars.jpg");
         }
-        
+
         // var loadPlanetBumpTexture = this.assetsManager.addTextureTask("bumpTexture", "/assets/textures/planets/earthUV.jpg");
 
         loadPlanetTexture.onSuccess = (task) => {
+            
             this.planetMaterial.diffuseTexture = task.texture;
+            console.log('loaded', task, this.planetMaterial);
         }
 
         // loadPlanetBumpTexture.onSuccess = (task) => {
@@ -71,7 +102,7 @@ export default class {
             // diameterX: this.planetDiameter
         }, this.scene);
 
-        if (config.planetInfiniteDistance) {
+        if (config.planetInfiniteDistance && this.type == "Game") {
             this.planet.infiniteDistance = true;
             // this.planet.renderingGroupId = 1;
         }
@@ -92,22 +123,22 @@ export default class {
         fresnelMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
 
         fresnelMaterial.alpha = 0;
-        fresnelMaterial.specularPower = 10;
+        fresnelMaterial.specularPower = 13;
 
 
         fresnelMaterial.opacityFresnelParameters = new BABYLON.FresnelParameters();
-        fresnelMaterial.opacityFresnelParameters.bias = 0.55;
+        fresnelMaterial.opacityFresnelParameters.bias = 0.5;
         fresnelMaterial.opacityFresnelParameters.power = 5;
         fresnelMaterial.opacityFresnelParameters.leftColor = BABYLON.Color3.White();
         fresnelMaterial.opacityFresnelParameters.rightColor = BABYLON.Color3.Black();
 
-        this.atmosphere = BABYLON.MeshBuilder.CreateSphere("earth", {
+        this.atmosphere = BABYLON.MeshBuilder.CreateSphere("athmosphere", {
             segments: this.segments,
             diameter: this.planetDiameter,
             // diameterX: this.planetDiameter
         }, this.scene);
 
-        if (config.planetInfiniteDistance) {
+        if (config.planetInfiniteDistance && this.type == "Game") {
             this.atmosphere.infiniteDistance = true;
             // this.atmosphere.renderingGroupId = 2;
         }
@@ -124,8 +155,8 @@ export default class {
         // gizmoManager.attachableMeshes = [this.planet, this.atmosphere];
 
         this.engine.runRenderLoop(() => {
-            this.planet.rotate(BABYLON.Axis.Y, -0.00005, BABYLON.Space.LOCAL);
-            this.atmosphere.rotate(BABYLON.Axis.Y, -0.00005, BABYLON.Space.LOCAL);
+            this.planet.rotate(BABYLON.Axis.Y, -0.0002, BABYLON.Space.LOCAL);
+            this.atmosphere.rotate(BABYLON.Axis.Y, -0.0002, BABYLON.Space.LOCAL);
         });
 
     }
@@ -144,7 +175,7 @@ export default class {
         }
     }
 
-    deletePlanet(){
+    deletePlanet() {
         this.planet.dispose();
         this.atmosphere.dispose();
     }
