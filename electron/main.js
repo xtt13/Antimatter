@@ -6,16 +6,25 @@ const { app, BrowserWindow } = require('electron')
 
 let win
 
-function createWindow () {
+function createWindow() {
   // Erstellen des Browser-Fensters.
-  win = new BrowserWindow({ width: 800, height: 600 })
+  win = new BrowserWindow(
+    {
+      width: 800, 
+      height: 600,
+      webPreferences: {
+        webSecurity: true
+      }
+    }
+  )
 
   // und Laden der index.html der App.
-  win.loadFile('index.html')
-  // win.loadFile('../dist/index.html')
+  console.log(__dirname);
+  // win.loadFile('file://' + __dirname + '/index.html')
+  win.loadFile(__dirname + '/index.html')
 
   // Öffnen der DevTools.
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 
   // Ausgegeben, wenn das Fenster geschlossen wird.
   win.on('closed', () => {
