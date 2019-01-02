@@ -10,8 +10,10 @@ function createWindow() {
   // Erstellen des Browser-Fensters.
   win = new BrowserWindow(
     {
-      width: 800, 
+      width: 1000,
       height: 600,
+      backgroundColor: '#000000',
+      titleBarStyle: 'hidden',
       webPreferences: {
         webSecurity: true
       }
@@ -19,8 +21,6 @@ function createWindow() {
   )
 
   // und Laden der index.html der App.
-  console.log(__dirname);
-  // win.loadFile('file://' + __dirname + '/index.html')
   win.loadFile(__dirname + '/index.html')
 
   // Öffnen der DevTools.

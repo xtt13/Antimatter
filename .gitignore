@@ -6,19 +6,6 @@ deploy/
 package-lock.json
 *.DS_Store
 newstruct-darwin-x64/
-<<<<<<< HEAD
-<<<<<<< HEAD
 electron/assets/*
 electron/index.html
 electron/bundle.js
-=======
-electron/*
-=======
-newstruct-darwin-x64/
->>>>>>> npm electron-packer
->>>>>>> npm electron-packer
-=======
-electron/assets/*
-electron/bundle.js
-electron/index.html
->>>>>>> Rebase
