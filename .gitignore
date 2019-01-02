@@ -6,3 +6,4 @@ deploy/
 package-lock.json
 *.DS_Store
 newstruct-darwin-x64/
+electron/*
