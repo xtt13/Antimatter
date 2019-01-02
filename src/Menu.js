@@ -3,11 +3,12 @@ import Planet from './Planet';
 import config from './config';
 
 export default class {
-    constructor(engine, canvas, assetsManager) {
+    constructor(engine, canvas, assetsManager, game) {
 
         this.assetsManager = assetsManager;
         this.engine = engine;
         this.canvas = canvas;
+        this.game = game;
 
         this.scene = new BABYLON.Scene(this.engine);
         this.scene.ambientColor = new BABYLON.Color3(0, 0, 0);
@@ -22,34 +23,22 @@ export default class {
         element.classList.add("scanlines");
         
 
-        var camera = new BABYLON.FreeCamera("menuCamera", new BABYLON.Vector3(0, 5, -10), this.scene);
+        this.camera = new BABYLON.FreeCamera("menuCamera", new BABYLON.Vector3(0, 5, -10), this.scene);
 
-        camera.setTarget(BABYLON.Vector3.Zero());
+        this.camera.setTarget(BABYLON.Vector3.Zero());
 
-        // camera.attachControl(this.canvas, true);
 
-        // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
-        // var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), this.scene);
 
 
         let sun = new BABYLON.PointLight("sunMenu", new BABYLON.Vector3(-7, 3, -7), this.scene);
 		sun.diffuse = new BABYLON.Color3(1, 0.9, 0.9);
 		sun.specular = new BABYLON.Color3(0, 0, 0);
 		sun.intensity = 3;
-		// sun.shadowMinZ = 30;
-		// sun.shadowMaxZ = 1800000;
-
-        // Default intensity is 1. Let's dim the light a small amount
-        // light.intensity = 0.7;
-
-        
-        // Our built-in 'sphere' shape. Params: name, subdivs, size, scene
-        // var sphere = BABYLON.Mesh.CreateSphere("sphere1", 16, 2, this.scene);
-        // sphere.position.y = 1;
 
 
 
-        this.skybox = BABYLON.Mesh.CreateBox("skyBox", 30, this.scene);
+
+        this.skybox = BABYLON.Mesh.CreateBox("skyBox", 20, this.scene);
         this.skybox.position = new BABYLON.Vector3(0, 0, 0);
 
         this.skyboxMaterial = new BABYLON.StandardMaterial("skyboxMaterial", this.scene);
@@ -75,14 +64,14 @@ export default class {
     }
 
     createLogo(){
-        var n = document.createElement('h1');
-        n.setAttribute('class', 'logo');
+        this.logo = document.createElement('h1');
+        this.logo.setAttribute('class', 'logo');
 
         let content = `Antimatter`;
 
-        n.innerHTML = content;
+        this.logo.innerHTML = content;
 
-        document.body.appendChild(n);
+        document.body.appendChild(this.logo);
 
         this.createStartText();
     }
@@ -95,7 +84,60 @@ export default class {
 
         n.innerHTML = content;
 
+        n.addEventListener("click", () => {
+            this.fadeOut();
+            this.fadeOutText(n);
+            this.fadeOutText(this.logo);
+
+            setTimeout(() => {
+                var element = document.querySelector("body");
+                element.classList.remove("scanlines");
+                this.game.currentState = "Game";
+                this.game.setup();
+            }, 3000);
+        });
+
         document.body.appendChild(n);
+
+        
+    }
+
+    fadeOutText(el) {
+        el.style.opacity = 1;
+      
+        let fadeInterval = setInterval(() => {
+            el.style.opacity -= 0.01;
+
+            if(el.style.opacity <= 0){
+                clearInterval(fadeInterval);
+            }
+        }, 10);
+      }
+
+    fadeOut() {
+        BABYLON.Effect.ShadersStore["fadePixelShader"] =
+            "precision highp float;" +
+            "varying vec2 vUV;" +
+            "uniform sampler2D textureSampler; " +
+            "uniform float fadeLevel; " +
+            "void main(void){" +
+            "vec4 baseColor = texture2D(textureSampler, vUV) * fadeLevel;" +
+            "baseColor.a = 1.0;" +
+            "gl_FragColor = baseColor;" +
+            "}";
+
+        var fadeLevel = 1.0;
+        var postProcess = new BABYLON.PostProcess("Fade", "fade", ["fadeLevel"], null, 1.0, this.camera);
+        postProcess.onApply = (effect) => {
+            effect.setFloat("fadeLevel", fadeLevel);
+        };
+
+        var alpha = 1;
+        this.scene.registerBeforeRender(function () {
+            //fadeLevel = Math.abs(Math.cos(alpha));
+            fadeLevel = (alpha <= 1 ? alpha : 0);;
+            alpha -= 0.01;
+        });
     }
 
 }

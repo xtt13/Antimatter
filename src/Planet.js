@@ -155,8 +155,8 @@ export default class {
         // gizmoManager.attachableMeshes = [this.planet, this.atmosphere];
 
         this.engine.runRenderLoop(() => {
-            this.planet.rotate(BABYLON.Axis.Y, -0.0002, BABYLON.Space.LOCAL);
-            this.atmosphere.rotate(BABYLON.Axis.Y, -0.0002, BABYLON.Space.LOCAL);
+            this.planet.rotate(BABYLON.Axis.Y, -0.0001, BABYLON.Space.LOCAL);
+            this.atmosphere.rotate(BABYLON.Axis.Y, -0.0001, BABYLON.Space.LOCAL);
         });
 
     }

@@ -102,7 +102,7 @@ export default class {
 		this.asteroids = new Asteroids(this.scene, this.assetsManager);
 		this.jumpGate = new JumpGate(this.scene, this.engine, this.assetsManager);
 
-		this.menu = new Menu(this.engine, this.canvas, this.assetsManager);
+		this.menu = new Menu(this.engine, this.canvas, this.assetsManager, this);
 
 
 		// When all assets are loaded =>
