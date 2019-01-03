@@ -102,6 +102,7 @@ export default class {
         this.atmosphere.position = this.planet.position;
         this.atmosphere.material = fresnelMaterial;
         this.atmosphere.isBlocker = true;
+        this.atmosphere.isVisible = false;
 
 
         // var gizmoManager = new BABYLON.GizmoManager(this.scene);

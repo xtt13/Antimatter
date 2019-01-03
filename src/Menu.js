@@ -12,7 +12,7 @@ export default class {
 
         this.scene = new BABYLON.Scene(this.engine);
         this.scene.ambientColor = new BABYLON.Color3(0, 0, 0);
-        // this.scene.clearColor = BABYLON.Color3.Black();
+        this.scene.clearColor = BABYLON.Color3.Black();
     }
 
     setup() {
@@ -21,9 +21,9 @@ export default class {
 
         // var element = document.querySelector("body");
         // element.classList.add("scanlines");
-        
 
-        this.camera = new BABYLON.FreeCamera("menuCamera", new BABYLON.Vector3(0, 5, -10), this.scene);
+
+        this.camera = new BABYLON.FreeCamera("menuCamera", new BABYLON.Vector3(0, 3, -10), this.scene);
 
         this.camera.setTarget(BABYLON.Vector3.Zero());
 
@@ -31,9 +31,9 @@ export default class {
 
 
         let sun = new BABYLON.PointLight("sunMenu", new BABYLON.Vector3(-7, 3, -7), this.scene);
-		sun.diffuse = new BABYLON.Color3(1, 0.9, 0.9);
-		sun.specular = new BABYLON.Color3(0, 0, 0);
-		sun.intensity = 3;
+        sun.diffuse = new BABYLON.Color3(1, 0.9, 0.9);
+        sun.specular = new BABYLON.Color3(0, 0, 0);
+        sun.intensity = 3;
 
 
 
@@ -45,7 +45,19 @@ export default class {
         this.skyboxMaterial.backFaceCulling = false;
         // this.skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/space/space", this.scene);
 
-        this.skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/stars", this.scene);
+
+        // var loadSpaceTexture = this.assetsManager.addTextureTask("loadSpaceTexture", "./assets/models/asteroids/asteroid_normalmap.jpg");
+
+
+        // OS and Navigator Detection (Chrome/Mac Texture Limitation Bug)
+        if (navigator.platform.indexOf('Mac') > -1 && navigator.userAgent.indexOf("Chrome") > -1) {
+            console.log('Low-Res Skybox (macOS & Chrome');
+            this.skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/stars", this.scene);
+        } else {
+            this.skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/space/space", this.scene);
+        }
+
+        // this.skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/stars", this.scene);
 
         this.skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
         this.skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
@@ -62,9 +74,13 @@ export default class {
 
         this.createLogo();
         // this.initGlitchEffect();
+
+        window.onclick = () => {
+            this.launchFullscreen();
+        }
     }
 
-    createLogo(){
+    createLogo() {
         this.logo = document.createElement('h1');
         this.logo.setAttribute('class', 'logo');
 
@@ -77,7 +93,7 @@ export default class {
         this.createStartText();
     }
 
-    createStartText(){
+    createStartText() {
         var n = document.createElement('p');
         n.setAttribute('class', 'startText');
 
@@ -100,20 +116,20 @@ export default class {
 
         document.body.appendChild(n);
 
-        
+
     }
 
     fadeOutText(el) {
         el.style.opacity = 1;
-      
+
         let fadeInterval = setInterval(() => {
             el.style.opacity -= 0.01;
 
-            if(el.style.opacity <= 0){
+            if (el.style.opacity <= 0) {
                 clearInterval(fadeInterval);
             }
         }, 10);
-      }
+    }
 
     fadeOut() {
         BABYLON.Effect.ShadersStore["fadePixelShader"] =
@@ -202,6 +218,27 @@ export default class {
             effect.setTexture('noiseRef0', noiseTexture0);
             effect.setTexture('noiseRef1', noiseTexture1);
         };
+    }
+
+    launchFullscreen() {
+        if (
+            document.fullscreenElement ||
+            document.webkitFullscreenElement ||
+            document.mozFullScreenElement ||
+            document.msFullscreenElement
+        ) {
+            return;
+        }
+        var element = document.documentElement;
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen();
+        }
     }
 
 }

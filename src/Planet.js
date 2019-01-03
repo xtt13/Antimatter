@@ -15,7 +15,7 @@ export default class {
 
         switch (type) {
             case "Menu":
-                this.planetDiameter = 9;
+                this.planetDiameter = 8;
                 this.x = 0;
                 this.y = 0;
                 this.z = 0;

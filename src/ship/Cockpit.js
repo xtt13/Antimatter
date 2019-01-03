@@ -131,9 +131,6 @@ export default class {
             // Stop Speed Up Sound
             clearInterval(speedUpSoundInterval);
 
-            game.arc.ship.isVisible = true;
-            game.arc.moveShip();
-
             // Speed Down
             let speedDownSoundInterval = setInterval(() => {
 
@@ -160,6 +157,8 @@ export default class {
             // After 10s enable Keys
             setTimeout(() => {
                 inputManager.enableKeys();
+                game.arc.ship.isVisible = true;
+                game.arc.moveShip();
             }, 10000);
 
 
@@ -177,6 +176,7 @@ export default class {
 
         setTimeout(() => {
             game.centauri.planet.isVisible = true;
+            game.centauri.athmosphere.isVisible = true;
         }, 3000);
 
 
