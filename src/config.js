@@ -11,7 +11,7 @@ export default {
 	// ##################
 	// forceBestQuality / No Adaption
 	// ##################
-	forceBestQuality: true,
+	forceBestQuality: false,
 
 	// ##################
 	// Show Debug Layer

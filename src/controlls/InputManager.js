@@ -258,12 +258,12 @@ export default class {
                 // this.ship.ship.isVisible = true;
                 // this.game.cockpit.cockpit.isVisible = false;
 
-                this.cameraManager.followCamera(this.ship.ship);
+                // this.cameraManager.followCamera(this.ship.ship);
             }
 
             if (code === 51) {
                 // SWITCH TO COCKPIT CAMERA 3-Key
-                this.cameraManager.cockpitCamera();
+                // this.cameraManager.cockpitCamera();
             }
 
             // Scan Asteroids P-Key

@@ -28,9 +28,11 @@ import Cockpit from './ship/Cockpit';
 
 // Import Space
 import Planet from './Planet';
+import Centauri from './Centauri';
 import Asteroids from './Asteroids';
 import Spacestation from './Spacestation';
 import JumpGate from './JumpGate';
+import Arc from './Arc';
 
 
 export default class {
@@ -99,6 +101,8 @@ export default class {
 
 		this.spaceStation = new Spacestation(this.scene, this.engine, this.assetsManager);
 		this.planet = new Planet(this.scene, this.engine, this.assetsManager, "Game");
+		this.centauri = new Centauri(this.scene, this.engine, this.assetsManager);
+		this.arc = new Arc(this.scene, this.engine, this.assetsManager);
 		this.asteroids = new Asteroids(this.scene, this.assetsManager);
 		this.jumpGate = new JumpGate(this.scene, this.engine, this.assetsManager);
 

@@ -1,6 +1,5 @@
 import * as BABYLON from 'babylonjs';
 import config from './../config';
-import Centauri from '../Centauri';
 
 export default class {
     constructor(scene, assetsManager, ship, engine) {
@@ -68,7 +67,7 @@ export default class {
         let dimmInterval = setInterval(() => {
             game.sun.intensity -= 5000000;
 
-            if(game.sun.intensity <= 100000000){
+            if (game.sun.intensity <= 100000000) {
                 clearInterval(dimmInterval);
             }
         }, 10);
@@ -98,12 +97,12 @@ export default class {
         for (let i = 0; i < this.CockpitParts.length; i++) {
             this.CockpitParts[i].position = new BABYLON.Vector3(0, 0, 0);
             // 
-            if(viaconfig){
+            if (viaconfig) {
                 this.CockpitParts[i].rotation = new BABYLON.Vector3(11, 11, 0);
             } else {
                 this.CockpitParts[i].rotation = new BABYLON.Vector3(11, 0, 0);
             }
-            
+
         }
 
         // Shake Camera (Sound, Loop)
@@ -117,7 +116,7 @@ export default class {
 
         // Speed Up Sound
         let speedUpSoundInterval = setInterval(() => {
-            if(space.material.alpha < 1) space.material.alpha += 0.04;
+            if (space.material.alpha < 1) space.material.alpha += 0.04;
             let newVal = game.SoundManager.engineSound._playbackRate += 0.01;
             game.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
         }, 60);
@@ -127,13 +126,17 @@ export default class {
 
         // After 50s
         setTimeout(() => {
-            
+
+
             // Stop Speed Up Sound
             clearInterval(speedUpSoundInterval);
 
+            game.arc.ship.isVisible = true;
+            game.arc.moveShip();
+
             // Speed Down
             let speedDownSoundInterval = setInterval(() => {
-                
+
                 // Speed Down Sound
                 let newVal = game.SoundManager.engineSound._playbackRate -= 0.01;
                 game.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
@@ -145,7 +148,7 @@ export default class {
                 cameraManager.shakeSound.setVolume(shakeSoundVolume);
 
                 // Decr. Var
-                if(shakeSoundVolume > 0) shakeSoundVolume -= 0.01;
+                if (shakeSoundVolume > 0) shakeSoundVolume -= 0.01;
 
             }, 30);
 
@@ -167,12 +170,16 @@ export default class {
         });
     }
 
-    wormholePreperations(game){
+    wormholePreperations(game) {
         game.asteroids.deleteAllAsteroids();
         game.spaceStation.deleteSpaceStation();
         game.planet.deletePlanet();
 
-        this.centauri = new Centauri(this.scene, this.engine);
+        setTimeout(() => {
+            game.centauri.planet.isVisible = true;
+        }, 3000);
+
+
     }
 
 }

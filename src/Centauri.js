@@ -2,9 +2,10 @@ import * as BABYLON from 'babylonjs';
 import config from './config';
 
 export default class {
-    constructor(scene, engine) {
+    constructor(scene, engine, assetsManager) {
         this.scene = scene;
         this.engine = engine;
+        this.assetsManager = assetsManager;
 
 
         this.planetDiameter = 40000;
@@ -14,7 +15,6 @@ export default class {
         this.z = 50;
 
         this.segments = 128;
-
 
 
         // // - Zu Mir, + Weg von mir
@@ -32,12 +32,24 @@ export default class {
     }
 
     loadPlanet() {
+
+        var loadPlanetTexture = this.assetsManager.addTextureTask("centauriTexture", "./assets/textures/planets/Planet_Beta_Hydri.jpg");
+
+        loadPlanetTexture.onSuccess = (task) => {
+
+            this.planetMaterial.diffuseTexture = task.texture;
+        }
+
+        loadPlanetTexture.onError = function (task, message, exception) {
+            console.log(message, exception);
+        }
+
         this.planetMaterial = new BABYLON.StandardMaterial('planetMaterial', this.scene);
         this.planetMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
         this.planetMaterial.diffuseColor = new BABYLON.Color3(0.8, 1, 0.6);
         this.planetMaterial.emissiveColor = new BABYLON.Color3(0.15, 0.05, 0.05);
 
-        this.planetMaterial.diffuseTexture = new BABYLON.Texture("./assets/textures/planets/Planet_Beta_Hydri.jpg", this.scene);
+        // this.planetMaterial.diffuseTexture = new BABYLON.Texture("./assets/textures/planets/Planet_Beta_Hydri.jpg", this.scene);
 
 
         this.planet = BABYLON.MeshBuilder.CreateSphere("planet", {
@@ -58,6 +70,8 @@ export default class {
         this.planet.checkCollisions = true;
         this.planet.isPickable = true;
         this.planet.isBlocker = true;
+
+        this.planet.isVisible = false;
 
         var fresnelMaterial = new BABYLON.StandardMaterial('athmosphereMaterial', this.scene);
 
