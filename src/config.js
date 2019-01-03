@@ -6,7 +6,12 @@ export default {
 	// ##################
 	// Current State
 	// ##################
-	currentState: "Menu",
+	currentState: "Game",
+
+	// ##################
+	// forceBestQuality / No Adaption
+	// ##################
+	forceBestQuality: true,
 
 	// ##################
 	// Show Debug Layer
@@ -21,7 +26,7 @@ export default {
 	// ##################
 	// Diable Post Process
 	// ##################
-	disablePostProcess: false,
+	disablePostProcess: true,
 
 	// ##################
 	// Diable Asteroids

@@ -1,5 +1,6 @@
 import * as BABYLON from 'babylonjs';
 import config from './../config';
+import Centauri from '../Centauri';
 
 export default class {
     constructor(scene, assetsManager, ship, engine) {
@@ -169,7 +170,9 @@ export default class {
     wormholePreperations(game){
         game.asteroids.deleteAllAsteroids();
         game.spaceStation.deleteSpaceStation();
+        game.planet.deletePlanet();
 
+        this.centauri = new Centauri(this.scene, this.engine);
     }
 
 }

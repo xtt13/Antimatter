@@ -51,7 +51,7 @@ export default class {
 			},
 
 			// Adapt to Device Ratio
-			false
+			config.forceBestQuality
 		);
 
 		this.currentState = config.currentState;
