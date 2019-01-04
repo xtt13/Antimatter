@@ -21,12 +21,14 @@ export default class {
             console.log(task);
 
             this.ship = task.loadedMeshes[1];
-            this.ship.position = new BABYLON.Vector3(1000, 0, 0);
+            this.ship.position = new BABYLON.Vector3(1000, -6000, 0);
             this.ship.rotation.y = -7.8;
             this.ship.rotation.x = 4.8;
             this.ship.receiveShadows = true;
 
             this.ship.isVisible = false;
+            // this.moveShip();
+
             this.ship.isBlocker = true;
 
             // var gizmoManager = new BABYLON.GizmoManager(this.scene);
