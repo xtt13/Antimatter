@@ -65,9 +65,6 @@ export default class {
 		this.scene = new BABYLON.Scene(this.engine);
 		this.scene.clearColor = BABYLON.Color3.Black();
 
-		this.scene.checkCollisions = true;
-		this.scene.gravity = new BABYLON.Vector3(0, 0, 0);
-		this.scene.collisionsEnabled = true;
 
 		this.scene.autoClear = false; // Color buffer
 		this.scene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
@@ -75,6 +72,12 @@ export default class {
 		// Backside Shadow Color
 		this.scene.ambientColor = new BABYLON.Color3(0.2, 0.2, 0.2);
 		// this.scene.ambientColor = new BABYLON.Color3(1, 1, 1);
+
+		// this.scene.collisionsEnabled = true;
+		// this.scene.gravity = new BABYLON.Vector3(0, 0, 0);
+		// this.scene.collisionsEnabled = true;
+		// this.scene.enablePhysics(new BABYLON.Vector3(0, -1, 0), new BABYLON.OimoJSPlugin());
+
 
 		// Init Variables
 		this.ship = null;
@@ -260,8 +263,32 @@ export default class {
 		this.shadowGenerator.useKernelBlur = true;
 		this.shadowGenerator.blurKernel = 64;
 
+		this.scene.registerBeforeRender(() => {
+            if (this.cockpit.cockpit.intersectsMesh(this.jumpGate.jumpGate, true)) {
 
-		console.log(this.scene);
+				console.log('COLLISION !!!');
+
+				this.inputManager.airSpeed = -0.5;
+
+				let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
+				this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
+
+				// this.cockpit.explode(this.cockpit.cockpit.position);
+
+				// for (let i = 0; i < this.cockpit.cockpitParts.length; i++) {
+				// 	this.cockpit.cockpitParts[i].translate(BABYLON.Axis.Z, 0 + this.airSpeed, BABYLON.Space.GLOBAL);
+				// }
+
+				// let expl = new BABYLON.ParticleHelper.CreateAsync("explosion", this.scene).then((set) => {
+				// 	// set.systems.forEach(s => {
+				// 	// 	s.disposeOnStop = true;
+				// 	// });
+				// 	console.log(set);
+				// 	set.start();
+				// });
+
+			}
+        });
 
 
 		this.engine.runRenderLoop(() => {

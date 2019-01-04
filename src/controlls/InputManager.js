@@ -26,6 +26,9 @@ export default class {
         this.accValue = config.accValue
         this.autocoord = false;
 
+        this.turnSpeedFrontBack = 0;
+        this.turnSpeedSide = 0;
+
         // this.initMobileUI();
 
         this.gamepadManager = new BABYLON.GamepadManager();
@@ -166,7 +169,7 @@ export default class {
             slider.value = 0;
             slider.height = "40px";
             slider.width = "200px";
-            slider.rotation = -Math.PI / 2;;
+            slider.rotation = -Math.PI / 2;
             slider.onValueChangedObservable.add((value) => {
                 this.airSpeed = value;
             });
@@ -395,7 +398,7 @@ export default class {
         if (this.disableMovementKeys) return;
 
         if (this.cameraManager.camera.name == "CockpitCamera") {
-            this.cockpitControlls(engine);
+            this.newCockpitControlls(engine);
 
         } else {
             this.spaceshipControlls(engine);
@@ -405,6 +408,79 @@ export default class {
         // this.spaceshipControlls(engine);
 
 
+    }
+
+    newCockpitControlls(engine) {
+        var elapsed = engine.getDeltaTime() / 1000;
+
+
+
+        //==========================================================
+
+        if (this.keysDown[83]) {
+            // S, rotate in the negative direction about the x axis
+            this.turnSpeedFrontBack -= 0.001;
+        }
+
+
+        if (this.keysDown[87]) {
+            // W, rotate in the positive direction about the x axis
+            this.turnSpeedFrontBack += 0.001;
+        }
+
+        for (let i = 0; i < this.cockpitParts.length; i++) {
+            this.cockpitParts[i].rotate(BABYLON.Axis.X, this.turnSpeedFrontBack, BABYLON.Space.LOCAL);
+        }
+
+        // Slow Stabilisation
+        if (this.turnSpeedFrontBack > 0) this.turnSpeedFrontBack -= 0.00005;
+        if (this.turnSpeedFrontBack < 0) this.turnSpeedFrontBack += 0.00005;
+
+        //==========================================================
+
+        //==========================================================
+
+        if (this.keysDown[68]) {
+            // D, rotate in the positive direction about the z axis
+            this.turnSpeedSide += 0.001;
+        }
+
+        if (this.keysDown[65]) {
+            // A, rotate in the negative direction about the z axis
+            this.turnSpeedSide -= 0.001;
+        }
+
+        for (let i = 0; i < this.cockpitParts.length; i++) {
+            this.cockpitParts[i].rotate(BABYLON.Axis.Z, this.turnSpeedSide, BABYLON.Space.LOCAL);
+        }
+
+        // Slow Stabilisation
+        if (this.turnSpeedSide > 0) this.turnSpeedSide -= 0.00005;
+        if (this.turnSpeedSide < 0) this.turnSpeedSide += 0.00005;
+
+        //==========================================================
+
+        // OLD
+
+        if (this.keysDown[69]) {
+            // E rotate left
+            for (let i = 0; i < this.cockpitParts.length; i++) {
+                // console.log('E');
+                this.cockpitParts[i].rotate(BABYLON.Axis.Y, -this.turnSpeed, BABYLON.Space.LOCAL);
+            }
+        }
+
+        if (this.keysDown[81]) {
+            // Q, rotate right
+            for (let i = 0; i < this.cockpitParts.length; i++) {
+                // console.log('Q');
+                this.cockpitParts[i].rotate(BABYLON.Axis.Y, this.turnSpeed, BABYLON.Space.LOCAL);
+            }
+        }
+
+        for (let i = 0; i < this.cockpitParts.length; i++) {
+            this.cockpitParts[i].translate(BABYLON.Axis.Z, 0 + this.airSpeed, BABYLON.Space.GLOBAL);
+        }
     }
 
     cockpitControlls(engine) {

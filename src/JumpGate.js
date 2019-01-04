@@ -18,6 +18,10 @@ export default class {
         // collSphere.position = new BABYLON.Vector3(-8000, 0, 8000);
         // collSphere.physicsImpostor = new BABYLON.PhysicsImpostor(collSphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 0, restitution: 1 });
 
+        var cone = BABYLON.MeshBuilder.CreateCylinder("cone", {diameterTop:0, height: 500, diameter: 2000, tessellation: 96}, this.scene);
+        cone.position = new BABYLON.Vector3(-8000, 0, 8000);
+        cone.rotation.z = -Math.PI / 2;;
+
         this.sparkleLight = new BABYLON.PointLight("sparkleLight", new BABYLON.Vector3(-8000, 0, 8000), this.scene);
         this.sparkleLight.diffuse = new BABYLON.Color3(1, 0.9, 0.9);
         this.sparkleLight.specular = new BABYLON.Color3(0, 0, 0);
@@ -66,13 +70,16 @@ export default class {
             // this.jumpGate.material.specularColor = new BABYLON.Color3(1, 1, 1);
             // this.jumpGateRing1.material.specularColor = new BABYLON.Color3(0, 0, 0);
 
-            
+
             // this.jumpGateRing1.material.specularPower = 1024;
 
             this.jumpGate.isBlocker = true;
             this.jumpGate.receiveShadows = true;
+            // this.jumpGate.checkCollisions = true;
+
             this.jumpGateRing1.isBlocker = true;
             this.jumpGateRing1.receiveShadows = true;
+            
 
             this.jumpGateRing2 = this.jumpGateRing1.clone('jumpGateRing2');
             this.jumpGateRing2.scaling = new BABYLON.Vector3(0.44, 0.44, 0.44);
@@ -87,6 +94,19 @@ export default class {
             this.jumpGate.material.specularColor = new BABYLON.Color3(1, 1, 1);
 
             this.jumpGate.material.specularPower = 1024;
+
+            // this.jumpGate.physicsImpostor = new BABYLON.PhysicsImpostor(this.jumpGate, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 1, friction: 0, restitution: 1 });
+
+            // var collSphere = BABYLON.MeshBuilder.CreateSphere("collSphere", { diameter: 2000, diameterX: 3000 }, this.scene);
+            // collSphere.position = new BABYLON.Vector3(-8000, 0, 8000);
+            // collSphere.physicsImpostor = new BABYLON.PhysicsImpostor(collSphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 0, restitution: 1 });
+            // collSphere.onCollide = () => {
+            //     console.log('I am colliding with something');
+            // }
+// 
+            // var box = BABYLON.MeshBuilder.CreateBox("myBox", {height: 5, width: 2, depth: 0.5}, this.scene);
+            // box.position = new BABYLON.Vector3(-8500, 0, 8000);
+            // box.physicsImpostor = new BABYLON.PhysicsImpostor(box, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, friction: 0, restitution: 1 });
 
             // var gizmoManager = new BABYLON.GizmoManager(this.scene);
             // gizmoManager.positionGizmoEnabled = true;
@@ -112,7 +132,7 @@ export default class {
 
     }
 
-    viewjumpGateRings(){
+    viewjumpGateRings() {
         this.jumpGateRing1.isVisible = true;
         this.jumpGateRing2.isVisible = true;
     }
@@ -153,7 +173,7 @@ export default class {
             //     let ranVar = Math.round(Math.random());       
             //     lensFlareSystem2.lensFlares[i].color = new BABYLON.Vector3(ranVar, ranVar, ranVar);
             //     console.log(lensFlareSystem2.lensFlares[i].color);
-                
+
             // }
 
             // lensFlareSystem2.isEnabled = Math.round(Math.random());

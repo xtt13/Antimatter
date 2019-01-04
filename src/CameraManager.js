@@ -43,12 +43,16 @@ export default class {
         // this.camera.inputs.addMouse();
 
         this.camera.maxZ = config.CameraMaxZ;
-        this.camera.applyGravity = true;
-        this.camera.ellipsoid = new BABYLON.Vector3(3, 3, 3);
-        this.camera.checkCollisions = true;
+        // this.camera.applyGravity = true;
+
+        // this.camera.checkCollisions = true;
+        // this.camera.ellipsoid = new BABYLON.Vector3(50, 50, 50);
+        
         this.camera.parent = this.cockpit;
         this.scene.activeCamera = this.camera;
         this.camera.attachControl(this.canvas, true);
+
+        
     }
 
     fadeIn() {

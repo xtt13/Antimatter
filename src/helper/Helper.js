@@ -9,6 +9,7 @@ export default class {
         // this.showFPS();
         // this.showWorldAxis(3000);
 
+
         if (config.showDebugLayer) {
             this.scene.debugLayer.show();
 
