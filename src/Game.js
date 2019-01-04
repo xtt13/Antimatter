@@ -204,7 +204,7 @@ export default class {
 
 			if (config.skyBoxInfiniteDistance) {
 				this.skybox.infiniteDistance = true;
-				this.skybox.renderingGroupId = 0;
+				// this.skybox.renderingGroupId = 0;
 			}
 		}
 
@@ -288,6 +288,47 @@ export default class {
 				// });
 
 			}
+
+			// if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationBottom, true)) {
+
+			// 	console.log('COLLISION !!!');
+
+			// 	this.inputManager.airSpeed = -0.5;
+			// 	let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
+			// 	this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
+
+			// }
+
+			// if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationTop, true)) {
+
+			// 	console.log('COLLISION !!!');
+				
+			// 	this.inputManager.airSpeed = -0.5;
+			// 	let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
+			// 	this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
+
+			// }
+
+			// if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationRing, true)) {
+
+			// 	console.log('COLLISION !!!');
+				
+			// 	this.inputManager.airSpeed = -0.5;
+			// 	let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
+			// 	this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
+
+			// }
+
+			// if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationMiddle, true)) {
+
+			// 	console.log('COLLISION !!!');
+				
+			// 	this.inputManager.airSpeed = -0.5;
+			// 	let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
+			// 	this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
+
+			// }
+
         });
 
 

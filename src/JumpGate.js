@@ -18,9 +18,9 @@ export default class {
         // collSphere.position = new BABYLON.Vector3(-8000, 0, 8000);
         // collSphere.physicsImpostor = new BABYLON.PhysicsImpostor(collSphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 0, restitution: 1 });
 
-        var cone = BABYLON.MeshBuilder.CreateCylinder("cone", {diameterTop:0, height: 500, diameter: 2000, tessellation: 96}, this.scene);
-        cone.position = new BABYLON.Vector3(-8000, 0, 8000);
-        cone.rotation.z = -Math.PI / 2;;
+        // var cone = BABYLON.MeshBuilder.CreateCylinder("cone", {diameterTop:0, height: 500, diameter: 2000, tessellation: 96}, this.scene);
+        // cone.position = new BABYLON.Vector3(-8000, 0, 8000);
+        // cone.rotation.z = -Math.PI / 2;
 
         this.sparkleLight = new BABYLON.PointLight("sparkleLight", new BABYLON.Vector3(-8000, 0, 8000), this.scene);
         this.sparkleLight.diffuse = new BABYLON.Color3(1, 0.9, 0.9);

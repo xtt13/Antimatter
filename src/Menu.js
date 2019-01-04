@@ -67,7 +67,7 @@ export default class {
 
         if (config.skyBoxInfiniteDistance) {
             this.skybox.infiniteDistance = true;
-            this.skybox.renderingGroupId = 0;
+            // this.skybox.renderingGroupId = 0;
         }
 
         this.planet = new Planet(this.scene, this.engine, this.assetsManager, "Menu");

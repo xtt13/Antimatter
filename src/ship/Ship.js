@@ -37,7 +37,6 @@ export default class {
             this.ship.material.specularColor = new BABYLON.Color3(0.6, 0.5, 0.6);
             this.ship.material.specularPower = 2048;
 
-            // this.ship.renderingGroupId = 1;
 
             // this.addEngines();
         }
@@ -66,7 +65,6 @@ export default class {
             // this.ship.material.specularColor = new BABYLON.Color3(0.6, 0.5, 0.6);
             // this.ship.material.specularPower = 2048;
 
-            // this.ship.renderingGroupId = 1;
 
             this.addEngines();
         }

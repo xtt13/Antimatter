@@ -62,10 +62,10 @@ export default class {
         this.planetMaterial.emissiveColor = new BABYLON.Color3(0.15, 0.05, 0.05);
 
         // Old
-        if(this.type == "Menu"){
+        if (this.type == "Menu") {
             this.planetMaterial.diffuseTexture = new BABYLON.Texture("./assets/textures/planets/8k_mars.jpg", this.scene);
         }
-        
+
         // var loadPlanetTexture = this.assetsManager.addTextureTask("planetTexture", "/assets/textures/planets/2k_mars.jpg");
 
         if (this.isMobileDevice()) {
@@ -78,7 +78,7 @@ export default class {
         // var loadPlanetBumpTexture = this.assetsManager.addTextureTask("bumpTexture", "/assets/textures/planets/earthUV.jpg");
 
         loadPlanetTexture.onSuccess = (task) => {
-            
+
             this.planetMaterial.diffuseTexture = task.texture;
             console.log('loaded', task, this.planetMaterial);
         }
@@ -104,9 +104,7 @@ export default class {
 
         if (config.planetInfiniteDistance && this.type == "Game") {
             this.planet.infiniteDistance = true;
-            // this.planet.renderingGroupId = 1;
         }
-        // this.planet.renderingGroupId = 1;
         this.planet.material = this.planetMaterial;
         this.planet.position = new BABYLON.Vector3(this.x, this.y, this.z);
         // this.planet.rotation = new BABYLON.Vector3(20, 0, 0);
@@ -140,11 +138,11 @@ export default class {
 
         if (config.planetInfiniteDistance && this.type == "Game") {
             this.atmosphere.infiniteDistance = true;
-            // this.atmosphere.renderingGroupId = 2;
         }
         this.atmosphere.position = this.planet.position;
         this.atmosphere.material = fresnelMaterial;
         this.atmosphere.isBlocker = true;
+
 
 
         // var gizmoManager = new BABYLON.GizmoManager(this.scene);
@@ -155,8 +153,13 @@ export default class {
         // gizmoManager.attachableMeshes = [this.planet, this.atmosphere];
 
         this.engine.runRenderLoop(() => {
-            this.planet.rotate(BABYLON.Axis.Y, -0.0001, BABYLON.Space.LOCAL);
-            this.atmosphere.rotate(BABYLON.Axis.Y, -0.0001, BABYLON.Space.LOCAL);
+            if (this.type == "Menu") {
+                this.planet.rotate(BABYLON.Axis.Y, -0.0001, BABYLON.Space.LOCAL);
+                this.atmosphere.rotate(BABYLON.Axis.Y, -0.0001, BABYLON.Space.LOCAL);
+            } else {
+                this.planet.rotate(BABYLON.Axis.Y, -0.00005, BABYLON.Space.LOCAL);
+                this.atmosphere.rotate(BABYLON.Axis.Y, -0.00005, BABYLON.Space.LOCAL);
+            }
         });
 
     }

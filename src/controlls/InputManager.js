@@ -28,6 +28,7 @@ export default class {
 
         this.turnSpeedFrontBack = 0;
         this.turnSpeedSide = 0;
+        this.turnSpeedQE = 0;
 
         // this.initMobileUI();
 
@@ -377,7 +378,7 @@ export default class {
                 }
 
                 // let handleValue = (this.airSpeed / this.maxSpeed) * 10;
-                // this.cockpitParts[3].position.x -= handleValue;
+                // this.cockpitParts[3].translate(BABYLON.Axis.Z, handleValue, BABYLON.Space.GLOBAL);
 
 
                 this.airSpeed += this.accValue;
@@ -460,27 +461,34 @@ export default class {
 
         //==========================================================
 
-        // OLD
+        //==========================================================
 
         if (this.keysDown[69]) {
             // E rotate left
-            for (let i = 0; i < this.cockpitParts.length; i++) {
-                // console.log('E');
-                this.cockpitParts[i].rotate(BABYLON.Axis.Y, -this.turnSpeed, BABYLON.Space.LOCAL);
-            }
+            this.turnSpeedQE -= 0.001;
         }
 
         if (this.keysDown[81]) {
             // Q, rotate right
-            for (let i = 0; i < this.cockpitParts.length; i++) {
-                // console.log('Q');
-                this.cockpitParts[i].rotate(BABYLON.Axis.Y, this.turnSpeed, BABYLON.Space.LOCAL);
-            }
+            this.turnSpeedQE += 0.001;
         }
+
+        for (let i = 0; i < this.cockpitParts.length; i++) {
+            this.cockpitParts[i].rotate(BABYLON.Axis.Y, this.turnSpeedQE, BABYLON.Space.LOCAL);
+        }
+
+        // Slow Stabilisation
+        if (this.turnSpeedQE > 0) this.turnSpeedQE -= 0.00005;
+        if (this.turnSpeedQE < 0) this.turnSpeedQE += 0.00005;
+
+        //==========================================================
+
+        //==========================================================
 
         for (let i = 0; i < this.cockpitParts.length; i++) {
             this.cockpitParts[i].translate(BABYLON.Axis.Z, 0 + this.airSpeed, BABYLON.Space.GLOBAL);
         }
+
     }
 
     cockpitControlls(engine) {

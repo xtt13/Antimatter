@@ -13,7 +13,9 @@ export default class {
         // this.followCamera();
         this.initPointerLock();
 
-        this.fadeIn();
+        if(!__DEV__){
+            this.fadeIn();
+        }
 
     }
 
@@ -77,7 +79,7 @@ export default class {
         this.scene.registerBeforeRender(function () {
             //fadeLevel = Math.abs(Math.cos(alpha));
             fadeLevel = (alpha <= 1 ? alpha : 1);;
-            alpha += 0.001;
+            alpha += 0.01;
         });
     }
 

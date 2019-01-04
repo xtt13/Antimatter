@@ -97,7 +97,6 @@ export default class {
 
         if (config.planetInfiniteDistance && this.type == "Game") {
             this.atmosphere.infiniteDistance = true;
-            // this.atmosphere.renderingGroupId = 2;
         }
         this.atmosphere.position = this.planet.position;
         this.atmosphere.material = fresnelMaterial;

@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
+
 module.exports = {
     entry: './src/main.js',
     output: {
@@ -21,6 +22,10 @@ module.exports = {
         //     name: 'vendor',
         //     filename: 'vendor.bundle.js'
         // }),
+        
+        new webpack.DefinePlugin({
+            __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true'))
+        }),
 
         new HtmlWebpackPlugin(
             {
@@ -48,13 +53,13 @@ module.exports = {
                 to: path.resolve(__dirname, 'dist')
             }
         ]),
-                new CopyWebpackPlugin([
+        new CopyWebpackPlugin([
             {
                 from: path.resolve(__dirname, 'src/sw.js'),
                 to: path.resolve(__dirname, 'dist')
             }
         ]),
-                new CopyWebpackPlugin([
+        new CopyWebpackPlugin([
             {
                 from: path.resolve(__dirname, 'src/manifest.json'),
                 to: path.resolve(__dirname, 'dist')

@@ -24,6 +24,8 @@ export default class {
             this.joystick = task.loadedMeshes[4];
             this.thrustLever = task.loadedMeshes[5];
 
+            
+
             //var cockpitSphere = BABYLON.MeshBuilder.CreateSphere("cockpitSphere", { diameter: 40, diameterX: 40 }, this.scene);
             //cockpitSphere.position = this.cockpit.position;
             //cockpitSphere.parent = this.cockpit;
@@ -36,6 +38,7 @@ export default class {
 
                 this.CockpitParts[i].position = config.cockpitPosition;
                 this.CockpitParts[i].rotation = new BABYLON.Vector3(0, 11, 0);
+                this.CockpitParts[i].renderingGroupId = 1;
 
                 if (this.CockpitParts[i].id !== "Spaceship_HUDs_B") {
                     this.CockpitParts[i].isBlocker = true;
@@ -47,6 +50,8 @@ export default class {
                 this.CockpitParts[i].material.metallic = 0.2;
 
             }
+
+            this.createCockpitParticles();
 
             this.cockpit.onCollide = () => {
                 console.log('I am colliding with something');
@@ -472,6 +477,55 @@ export default class {
             movingEmitters[i].emitter = meshToDestoy.position.clone();
         }
         meshToDestoy.dispose();
+    }
+
+    createCockpitParticles(){
+        var fogTexture = new BABYLON.Texture("./assets/textures/fog/smoke.png", this.scene);
+
+        var particleSystem;
+
+        if (BABYLON.GPUParticleSystem.IsSupported) {
+            particleSystem = new BABYLON.GPUParticleSystem("particles", { capacity: 50000 }, this.scene);
+            particleSystem.activeParticleCount = 15000;
+            particleSystem.manualEmitCount = particleSystem.activeParticleCount;
+            particleSystem.minEmitBox = new BABYLON.Vector3(-500, -500, -500); // Starting all from
+            particleSystem.maxEmitBox = new BABYLON.Vector3(500, 500, 500); // To..
+
+        } else {
+            particleSystem = new BABYLON.ParticleSystem("particles", 2000 , this.scene);
+            particleSystem.manualEmitCount = particleSystem.getCapacity();
+            particleSystem.minEmitBox = new BABYLON.Vector3(-1000, -1000, -1000); // Starting all from
+            particleSystem.maxEmitBox = new BABYLON.Vector3(1000, 1000, 1000); // To..
+        }
+
+        console.log('Create Particles');
+        
+
+        particleSystem.particleTexture = fogTexture.clone();
+        particleSystem.emitter = this.cockpit;
+        
+	    // particleSystem.color1 = new BABYLON.Color4(0.8, 0.8, 0.8, 0.1);
+        particleSystem.color2 = new BABYLON.Color4(.95, .95, .95, 0.15);
+        particleSystem.colorDead = new BABYLON.Color4(0.9, 0.9, 0.9, 0.1);
+	    // particleSystem.minSize = 50;
+        particleSystem.maxSize = 1.0;
+        particleSystem.maxLifeTime = 10;
+        particleSystem.emitRate = 50000;
+        particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_STANDARD;
+        particleSystem.gravity = new BABYLON.Vector3(0, 0, 0);
+        particleSystem.direction1 = new BABYLON.Vector3(0, 0, 0);
+        particleSystem.direction2 = new BABYLON.Vector3(0, 0, 0);
+        particleSystem.minAngularSpeed = -2;
+	    particleSystem.maxAngularSpeed = 2;
+        particleSystem.minEmitPower = .5;
+        particleSystem.maxEmitPower = 1;
+        particleSystem.updateSpeed = 0.005;
+    
+        particleSystem.start();
+
+        
+
+
     }
 
 }
