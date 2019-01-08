@@ -21,6 +21,10 @@ module.exports = {
     //     filename: 'vendor.bundle.js'
     // }),
 
+    new webpack.DefinePlugin({
+      __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'false'))
+    }),
+
     new HtmlWebpackPlugin(
       {
         // filename: '../index.html',

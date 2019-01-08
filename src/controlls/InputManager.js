@@ -11,8 +11,6 @@ export default class {
         this.cockpitMode = true;
         this.game = game;
         this.engineSound = this.game.SoundManager.engineSound;
-        console.log(this.engineSound);
-
 
         this.keys = {};
         this.keysDown = {};
@@ -217,10 +215,6 @@ export default class {
     initControll() {
 
         // window.myobj = this.keys;
-
-        window.onclick = () => {
-            this.launchFullscreen();
-        }
 
         this.keys.handleKeyDown = (event) => {
             this.keysDown[event.keyCode] = true;
@@ -595,37 +589,4 @@ export default class {
 
     }
 
-    launchFullscreen() {
-        if (
-            document.fullscreenElement ||
-            document.webkitFullscreenElement ||
-            document.mozFullScreenElement ||
-            document.msFullscreenElement
-        ) {
-            return;
-        }
-        var element = document.documentElement;
-        if (element.requestFullscreen) {
-            element.requestFullscreen();
-        } else if (element.mozRequestFullScreen) {
-            element.mozRequestFullScreen();
-        } else if (element.webkitRequestFullscreen) {
-            element.webkitRequestFullscreen();
-        } else if (element.msRequestFullscreen) {
-            element.msRequestFullscreen();
-        }
-    }
-
-    quitFullscreen() {
-        var element = document.documentElement;
-        if (element.exitFullscreen) {
-            element.exitFullscreen();
-        } else if (element.mozCancelFullScreen) {
-            element.mozCancelFullScreen();
-        } else if (element.webkitCancelFullScreen) {
-            element.webkitCancelFullScreen();
-        } else if (element.msExitFullscreen) {
-            element.msExitFullscreen();
-        }
-    }
 }

@@ -18,7 +18,6 @@ export default class {
         var loadArc = this.assetsManager.addMeshTask("loadArc", "", "./assets/models/arc/", "SF_Frigate-G2.glb");
 
         loadArc.onSuccess = (task) => {
-            console.log(task);
 
             this.ship = task.loadedMeshes[1];
             this.ship.position = new BABYLON.Vector3(1000, -6000, 0);

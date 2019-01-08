@@ -78,6 +78,8 @@ export default class {
 		// this.scene.collisionsEnabled = true;
 		// this.scene.enablePhysics(new BABYLON.Vector3(0, -1, 0), new BABYLON.OimoJSPlugin());
 
+		this.scene.workerCollisions = true;
+
 
 		// Init Variables
 		this.ship = null;
@@ -264,7 +266,7 @@ export default class {
 		this.shadowGenerator.blurKernel = 64;
 
 		this.scene.registerBeforeRender(() => {
-            if (this.cockpit.cockpit.intersectsMesh(this.jumpGate.jumpGate, true)) {
+			if (this.cockpit.cockpit.intersectsMesh(this.jumpGate.jumpGate, true)) {
 
 				console.log('COLLISION !!!');
 
@@ -302,7 +304,7 @@ export default class {
 			// if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationTop, true)) {
 
 			// 	console.log('COLLISION !!!');
-				
+
 			// 	this.inputManager.airSpeed = -0.5;
 			// 	let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
 			// 	this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
@@ -312,7 +314,7 @@ export default class {
 			// if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationRing, true)) {
 
 			// 	console.log('COLLISION !!!');
-				
+
 			// 	this.inputManager.airSpeed = -0.5;
 			// 	let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
 			// 	this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
@@ -322,14 +324,14 @@ export default class {
 			// if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationMiddle, true)) {
 
 			// 	console.log('COLLISION !!!');
-				
+
 			// 	this.inputManager.airSpeed = -0.5;
 			// 	let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
 			// 	this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
 
 			// }
 
-        });
+		});
 
 
 		this.engine.runRenderLoop(() => {

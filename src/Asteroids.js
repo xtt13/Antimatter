@@ -131,7 +131,7 @@ export default class {
 
             }
 
-            var allAsteroids = BABYLON.Mesh.MergeMeshes(this.asteroids);  
+            // var allAsteroids = BABYLON.Mesh.MergeMeshes(this.asteroids);  
 
             loadAsteroid.onError = function (task, message, exception) {
                 // console.log(message, exception);

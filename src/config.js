@@ -31,7 +31,7 @@ export default {
 	// ##################
 	// Diable Asteroids
 	// ##################
-	disableAsteroids: true,
+	disableAsteroids: false,
 
 	// ##################
 	// Diable Skybox

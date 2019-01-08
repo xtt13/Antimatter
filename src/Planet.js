@@ -78,9 +78,7 @@ export default class {
         // var loadPlanetBumpTexture = this.assetsManager.addTextureTask("bumpTexture", "/assets/textures/planets/earthUV.jpg");
 
         loadPlanetTexture.onSuccess = (task) => {
-
             this.planetMaterial.diffuseTexture = task.texture;
-            console.log('loaded', task, this.planetMaterial);
         }
 
         // loadPlanetBumpTexture.onSuccess = (task) => {

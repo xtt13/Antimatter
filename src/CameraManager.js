@@ -13,8 +13,12 @@ export default class {
         // this.followCamera();
         this.initPointerLock();
 
-        if(!__DEV__){
+        if (!__DEV__) {
             this.fadeIn();
+        }
+
+        window.onclick = () => {
+            this.launchFullscreen();
         }
 
     }
@@ -49,12 +53,12 @@ export default class {
 
         // this.camera.checkCollisions = true;
         // this.camera.ellipsoid = new BABYLON.Vector3(50, 50, 50);
-        
+
         this.camera.parent = this.cockpit;
         this.scene.activeCamera = this.camera;
         this.camera.attachControl(this.canvas, true);
 
-        
+
     }
 
     fadeIn() {
@@ -199,6 +203,86 @@ export default class {
         document.addEventListener("mspointerlockchange", pointerlockchange, false);
         document.addEventListener("mozpointerlockchange", pointerlockchange, false);
         document.addEventListener("webkitpointerlockchange", pointerlockchange, false);
+
+        // var isLocked = false;
+
+        // this.scene.onPointerDown = (evt) => {
+
+        //     if (document.pointerLockElement !== this.canvas) {
+        //         console.log('Was Already locked: ', document.pointerLockElement === this.canvas);
+
+        //         if (!isLocked) {
+        //             this.canvas.requestPointerLock = this.canvas.requestPointerLock || this.canvas.msRequestPointerLock || this.canvas.mozRequestPointerLock || this.canvas.webkitRequestPointerLock || false;
+        //             if (this.canvas.requestPointerLock) {
+        //                 this.canvas.requestPointerLock();
+        //             }
+        //         }
+        //     }
+
+        //     //continue with shooting requests or whatever :P
+        //     //evt === 0 (left mouse click)
+        //     //evt === 1 (mouse wheel click (not scrolling))
+        //     //evt === 2 (right mouse click)
+
+        //     console.log(evt);
+        //     var pickResult = this.scene.pick(this.scene.pointerX, this.scene.pointerY);
+        //     console.log(pickResult);
+            
+        // };
+
+        // // Event listener when the pointerlock is updated (or removed by pressing ESC for example).
+        // var pointerlockchange = () => {
+        //     var controlEnabled = document.pointerLockElement || document.mozPointerLockElement || document.webkitPointerLockElement || document.msPointerLockElement || false;
+
+        //     // If the user is already locked
+        //     if (!controlEnabled) {
+        //         this.camera.detachControl(this.canvas);
+        //         isLocked = false;
+        //     } else {
+        //         this.camera.attachControl(this.canvas);
+        //         isLocked = true;
+        //     }
+        // };
+
+        // // Attach events to the document
+        // document.addEventListener("pointerlockchange", pointerlockchange, false);
+        // document.addEventListener("mspointerlockchange", pointerlockchange, false);
+        // document.addEventListener("mozpointerlockchange", pointerlockchange, false);
+        // document.addEventListener("webkitpointerlockchange", pointerlockchange, false);
+    }
+
+    launchFullscreen() {
+        if (
+            document.fullscreenElement ||
+            document.webkitFullscreenElement ||
+            document.mozFullScreenElement ||
+            document.msFullscreenElement
+        ) {
+            return;
+        }
+        var element = document.documentElement;
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen();
+        }
+    }
+
+    quitFullscreen() {
+        var element = document.documentElement;
+        if (element.exitFullscreen) {
+            element.exitFullscreen();
+        } else if (element.mozCancelFullScreen) {
+            element.mozCancelFullScreen();
+        } else if (element.webkitCancelFullScreen) {
+            element.webkitCancelFullScreen();
+        } else if (element.msExitFullscreen) {
+            element.msExitFullscreen();
+        }
     }
 
 }

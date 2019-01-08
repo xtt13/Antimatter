@@ -5,45 +5,11 @@ export default class {
         this.scene = scene;
         this.assetsManager = assetsManager;
         
-
-        this.loadShip();
+        this.loadValcon();
         
     }
 
-    loadShip() {
-        // this.loadFirefly();
-        this.loadValcon();
-        // this.loadDummy();
-    }
-
-    loadFirefly() {
-        var loadSpaceship = this.assetsManager.addMeshTask("loadSpaceship", "FireFly", "./assets/models/spaceship/", "firefly.babylon");
-
-        loadSpaceship.onSuccess = (task) => {
-            this.currentShip = "Firefly";
-            this.ship = task.loadedMeshes[0];
-            // this.ship.position = new BABYLON.Vector3(5498, 4524, 4423);
-            // this.ship.rotation.y = 4.72;
-
-            this.ship.receiveShadows = true;
-            // var reflectionTexture = new BABYLON.CubeTexture("assets/textures/stars", scene);
-            this.ship.material.albedoColor = new BABYLON.Color3.FromHexString("#f00001");
-            // ship.material.reflectionTexture = reflectionTexture;
-            this.ship.material.reflectivityColor = new BABYLON.Color3.FromHexString("#404040");
-            this.ship.material.overloadedAlbedo = new BABYLON.Color3.FromHexString("#a00000");
-            this.ship.material.overloadedAlbedoIntensity = 0.3;
-            this.ship.material.microSurface = 0.3;
-            this.ship.material.metallic = 1.0;
-            this.ship.material.specularColor = new BABYLON.Color3(0.6, 0.5, 0.6);
-            this.ship.material.specularPower = 2048;
-
-
-            // this.addEngines();
-        }
-    }
-
     loadValcon() {
-        this.currentShip = "Valcon";
         var loadSpaceship = this.assetsManager.addMeshTask("loadSpaceship", "ship", "./assets/models/spaceship/", "ship.babylon");
 
         loadSpaceship.onSuccess = (task) => {
@@ -72,13 +38,6 @@ export default class {
         loadSpaceship.onError = function (task, message, exception) {
             console.log(message, exception);
         }
-    }
-
-    loadDummy(){
-        // this.ship = BABYLON.MeshBuilder.CreateSphere("mySphere", {diameter: 2, diameterX: 3}, this.scene);
-        // console.log(this.ship);
-        // this.ship.position = new BABYLON.Vector3(5498, 4524, 4423);
-        // this.ship.receiveShadows = true;
     }
 
     addEngines() {
