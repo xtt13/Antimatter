@@ -14,7 +14,7 @@ export default class {
         this.engineSound = new BABYLON.Sound("engineSound", "assets/audio/sound/engineSound.mp3", this.scene, null,
             {
                 playbackRate: 1,
-                volume: 0.2,
+                volume: 0.5,
                 loop: true,
                 autoplay: true
             }

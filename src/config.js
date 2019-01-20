@@ -94,7 +94,6 @@ export default {
 	// Cockpit Positions
 	// ##################
 
-	// cockpitRotation: new BABYLON.Vector3(4, 0, 0),
 	cockpitPosition: new BABYLON.Vector3(5000, 5000, -8000)
 
 	// Hangar Position

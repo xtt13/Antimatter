@@ -29,10 +29,12 @@ export default class {
         ];
 
         this.position = {
-            x: 3000,
-            y: 3000,
-            z: 3000
+            x: -6000,
+            y: -2000,
+            z: -10000
         }
+
+        console.log(this.position);
 
         this.numberOfAsteroid = 900;
         this.spread = 6000;
@@ -88,7 +90,7 @@ export default class {
                 asteroidInstance.position = new BABYLON.Vector3(
                     this.position.x + Math.round(Math.random() * this.spread) - 0,
                     this.position.y + Math.round(Math.random() * this.spread) - 0,
-                    this.position.y + Math.round(Math.random() * this.spread) - 0
+                    this.position.z + Math.round(Math.random() * this.spread) - 0
                 );
 
                 // Set Rock Type
