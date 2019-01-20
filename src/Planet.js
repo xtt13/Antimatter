@@ -123,7 +123,7 @@ export default class {
 
 
         fresnelMaterial.opacityFresnelParameters = new BABYLON.FresnelParameters();
-        fresnelMaterial.opacityFresnelParameters.bias = 0.5;
+        fresnelMaterial.opacityFresnelParameters.bias = 0.3;
         fresnelMaterial.opacityFresnelParameters.power = 5;
         fresnelMaterial.opacityFresnelParameters.leftColor = BABYLON.Color3.White();
         fresnelMaterial.opacityFresnelParameters.rightColor = BABYLON.Color3.Black();

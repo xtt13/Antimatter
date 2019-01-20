@@ -24,6 +24,9 @@ export default class {
             this.joystick = task.loadedMeshes[4];
             this.thrustLever = task.loadedMeshes[5];
 
+            // UNCOMMENT FOR ONLY FOR HIGH PERFORMANCE
+            //this.cockpit.material.specularTexture = new BABYLON.Texture("./assets/models/cockpit/SF_CockpitB2_Specular.jpg", this.scene);
+            //this.cockpit.material.bumpTexture = new BABYLON.Texture("./assets/models/cockpit/SF_CockpitB2_NormalMap.jpg", this.scene);
             
 
             //var cockpitSphere = BABYLON.MeshBuilder.CreateSphere("cockpitSphere", { diameter: 40, diameterX: 40 }, this.scene);
@@ -37,7 +40,8 @@ export default class {
             for (let i = 0; i < this.CockpitParts.length; i++) {
 
                 this.CockpitParts[i].position = config.cockpitPosition;
-                this.CockpitParts[i].rotation = new BABYLON.Vector3(0, 11, 0);
+                this.CockpitParts[i].rotation = new BABYLON.Vector3(0.7, -0.5, 0);
+                // this.CockpitParts[i].rotation = config.cockpitRotation;
                 this.CockpitParts[i].renderingGroupId = 1;
 
                 if (this.CockpitParts[i].id !== "Spaceship_HUDs_B") {

@@ -89,7 +89,7 @@ export default class {
             // this.hangarLight.intensity = 100000000;
 
             this.engine.runRenderLoop(() => {
-                // this.StationRing.rotate(BABYLON.Axis.Y, -0.0002, BABYLON.Space.LOCAL);
+                this.StationRing.rotate(BABYLON.Axis.Y, -0.0002, BABYLON.Space.LOCAL);
             });
 
         }

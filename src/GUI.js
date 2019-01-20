@@ -11,7 +11,7 @@ export default class {
         this.labels = [];
 
         // Show Textbox
-        // this.createIntroScreen();
+        this.createIntroScreen();
     }
 
     markAsteroids() {
