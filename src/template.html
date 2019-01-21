@@ -134,7 +134,7 @@
             display: block;
 
             position: absolute;
-            bottom: 250px;
+            bottom: 200px;
             margin: auto;
 
             z-index: 10001;
@@ -158,6 +158,42 @@
 
         .startText:hover {
             color: #00FFFF;
+        }
+
+        .qualityOptions {
+            position: absolute;
+            list-style: none; display: flex;
+            font-family: "Futura", Arial, sans-serif;
+            letter-spacing: 2px;
+            font-size: 15px;
+            color: white;
+            bottom: 70px;
+            margin: 0;
+            padding: 0;
+
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .qualityOptions li {
+            padding-bottom: 4px;
+            margin-left: 20px;
+            cursor: pointer;
+            transition-duration: 100ms;
+        }
+
+        .qualityOptions li:hover {
+            padding-bottom: 2px;
+            border-bottom: 2px solid white;
+        }
+
+        .qualityOptionsActive {
+            padding-bottom: 2px !important;
+            border-bottom: 2px solid white;
         }
 
         .asteroidsUI {

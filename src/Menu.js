@@ -91,6 +91,7 @@ export default class {
         document.body.appendChild(this.logo);
 
         this.createStartText();
+        this.createQualityOptions();
     }
 
     createStartText() {
@@ -106,6 +107,9 @@ export default class {
             this.fadeOutText(n);
             this.fadeOutText(this.logo);
 
+            let ul = document.querySelector('ul');
+            this.fadeOutText(ul);
+
             setTimeout(() => {
                 var element = document.querySelector("body");
                 element.classList.remove("scanlines");
@@ -115,6 +119,37 @@ export default class {
         });
 
         document.body.appendChild(n);
+
+
+    }
+
+    createQualityOptions() {
+        var ul = document.createElement('ul');
+        ul.setAttribute('class', 'qualityOptions');
+        ul.innerHTML = "Quality Settings:"
+
+        var li1 = document.createElement('li');
+        var li2 = document.createElement('li');
+
+        li1.innerHTML = 'Automatic';
+        li2.innerHTML = 'High';
+
+        li1.setAttribute('class', 'qualityOptionsActive');
+
+        ul.appendChild(li1);
+        ul.appendChild(li2);
+
+        li1.addEventListener("click", () => {
+            li1.classList.add("qualityOptionsActive");
+            li2.classList.remove("qualityOptionsActive");
+        });
+
+        li2.addEventListener("click", () => {
+            li1.classList.remove("qualityOptionsActive");
+            li2.classList.add("qualityOptionsActive");
+        });
+
+        document.body.appendChild(ul);
 
 
     }

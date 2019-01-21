@@ -268,12 +268,15 @@ export default class {
 		this.scene.registerBeforeRender(() => {
 			if (this.cockpit.cockpit.intersectsMesh(this.jumpGate.jumpGate, true)) {
 
-				console.log('COLLISION !!!');
+				// console.log('COLLISION !!!');
 
-				this.inputManager.airSpeed = -0.5;
+				// this.inputManager.airSpeed = -0.5;
 
-				let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
-				this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
+				// let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
+				// this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
+
+
+				
 
 				// this.cockpit.explode(this.cockpit.cockpit.position);
 

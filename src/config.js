@@ -6,7 +6,7 @@ export default {
 	// ##################
 	// Current State
 	// ##################
-	currentState: "Game",
+	currentState: "Menu",
 
 	// ##################
 	// forceBestQuality / No Adaption
@@ -77,7 +77,7 @@ export default {
 	// ##################
 	// Spaceship Controll Config
 	// ##################
-	airSpeed: 0,
+	airSpeed: 0.5,
 	maxSpeed: 100,
 	turnSpeed: 0.01,
 	accValue: 0.01,
