@@ -29,6 +29,26 @@ export default class {
         this.turnSpeedQE = 0;
 
         // this.initMobileUI();
+        
+        this.turnSoundSwitchW = true;
+        this.turnSoundSwitchA = true;
+        this.turnSoundSwitchS = true;
+        this.turnSoundSwitchD = true;
+        this.turnSoundSwitchQ = true;
+        this.turnSoundSwitchE = true;
+
+        this.turnSound = new BABYLON.Sound("turnSound", "assets/audio/sound/turn.mp3", this.scene, null,
+            {
+                playbackRate: 0.5,
+                volume: 0.1
+                // loop: true,
+                // autoplay: true
+            }
+        );
+
+        // this.turnSound.onended = () => {
+        //     this.turnSoundSwitch = true;
+        // };
 
         this.gamepadManager = new BABYLON.GamepadManager();
 
@@ -415,12 +435,28 @@ export default class {
         if (this.keysDown[83]) {
             // S, rotate in the negative direction about the x axis
             this.turnSpeedFrontBack -= 0.001;
+
+            if (this.turnSoundSwitchS) {
+                this.turnSound.play();
+                this.turnSoundSwitchS = false;
+            }
+
+        } else {
+            this.turnSoundSwitchS = true;
         }
 
 
         if (this.keysDown[87]) {
             // W, rotate in the positive direction about the x axis
             this.turnSpeedFrontBack += 0.001;
+
+            if (this.turnSoundSwitchW) {
+                this.turnSound.play();
+                this.turnSoundSwitchW = false;
+            }
+
+        } else {
+            this.turnSoundSwitchW = true;
         }
 
         for (let i = 0; i < this.cockpitParts.length; i++) {
@@ -438,11 +474,27 @@ export default class {
         if (this.keysDown[68]) {
             // D, rotate in the positive direction about the z axis
             this.turnSpeedSide += 0.001;
+
+            if (this.turnSoundSwitchD) {
+                this.turnSound.play();
+                this.turnSoundSwitchD = false;
+            }
+
+        } else {
+            this.turnSoundSwitchD = true;
         }
 
         if (this.keysDown[65]) {
             // A, rotate in the negative direction about the z axis
             this.turnSpeedSide -= 0.001;
+
+            if (this.turnSoundSwitchA) {
+                this.turnSound.play();
+                this.turnSoundSwitchA = false;
+            }
+
+        } else {
+            this.turnSoundSwitchA = true;
         }
 
         for (let i = 0; i < this.cockpitParts.length; i++) {
@@ -460,11 +512,27 @@ export default class {
         if (this.keysDown[69]) {
             // E rotate left
             this.turnSpeedQE -= 0.001;
+
+            if (this.turnSoundSwitchQ) {
+                this.turnSound.play();
+                this.turnSoundSwitchQ = false;
+            }
+
+        } else {
+            this.turnSoundSwitchQ = true;
         }
 
         if (this.keysDown[81]) {
             // Q, rotate right
             this.turnSpeedQE += 0.001;
+
+            if (this.turnSoundSwitchE) {
+                this.turnSound.play();
+                this.turnSoundSwitchE = false;
+            }
+
+        } else {
+            this.turnSoundSwitchE = true;
         }
 
         for (let i = 0; i < this.cockpitParts.length; i++) {
@@ -516,6 +584,7 @@ export default class {
                 this.cockpitParts[i].rotate(BABYLON.Axis.Z, this.turnSpeed, BABYLON.Space.LOCAL);
             }
 
+
             //  this.cameraManager.camera.cameraRotation.y = 0.01;
         }
 
@@ -525,6 +594,8 @@ export default class {
                 // console.log('A');
                 this.cockpitParts[i].rotate(BABYLON.Axis.Z, -this.turnSpeed, BABYLON.Space.LOCAL);
             }
+
+
 
             //  this.cameraManager.camera.cameraRotation.y = -0.01;
         }

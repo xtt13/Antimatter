@@ -27,7 +27,7 @@ export default class {
 
         // }
 
-        this.music = new BABYLON.Sound("Music", "assets/audio/music/thesesolemnstars.mp3", this.scene, null, { volume: 0.5, loop: true, autoplay: true });
+        this.music = new BABYLON.Sound("Music", "assets/audio/music/music.mp3", this.scene, null, { volume: 0.5, loop: true, autoplay: true });
     }
 
     fadeOutMusic() {
