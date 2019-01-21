@@ -134,7 +134,14 @@ export default class {
         li1.innerHTML = 'Automatic';
         li2.innerHTML = 'High';
 
-        li1.setAttribute('class', 'qualityOptionsActive');
+        let qualitySettings = localStorage.getItem('qualitySettings');
+		if(qualitySettings == undefined || qualitySettings == 'auto'){
+			li1.setAttribute('class', 'qualityOptionsActive');
+		} else if (qualitySettings == 'high'){
+			li2.setAttribute('class', 'qualityOptionsActive');
+		}
+
+        
 
         ul.appendChild(li1);
         ul.appendChild(li2);
@@ -142,11 +149,17 @@ export default class {
         li1.addEventListener("click", () => {
             li1.classList.add("qualityOptionsActive");
             li2.classList.remove("qualityOptionsActive");
+            localStorage.setItem('qualitySettings', 'auto');
+            window.location.reload();
+
         });
 
         li2.addEventListener("click", () => {
             li1.classList.remove("qualityOptionsActive");
             li2.classList.add("qualityOptionsActive");
+            localStorage.setItem('qualitySettings', 'high');
+            window.location.reload();
+
         });
 
         document.body.appendChild(ul);

@@ -38,6 +38,15 @@ import Arc from './Arc';
 export default class {
 	constructor() {
 
+		let qualitySettings = localStorage.getItem('qualitySettings');
+		if(qualitySettings == undefined || qualitySettings == 'auto'){
+			qualitySettings = false;
+		} else if (qualitySettings == 'high'){
+			qualitySettings = true;
+		}
+
+		console.log('QualitySettings: ' + qualitySettings);
+
 		// Get Canvas
 		this.canvas = document.getElementById("canvasZone");
 
@@ -53,7 +62,8 @@ export default class {
 			},
 
 			// Adapt to Device Ratio
-			config.forceBestQuality
+			// config.forceBestQuality
+			qualitySettings
 		);
 
 		this.currentState = config.currentState;
@@ -276,7 +286,7 @@ export default class {
 				// this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
 
 
-				
+
 
 				// this.cockpit.explode(this.cockpit.cockpit.position);
 
