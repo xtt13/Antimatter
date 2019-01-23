@@ -287,19 +287,21 @@ export default class {
 
 			for (let i = 0; i < this.asteroidsMoving.length; i++) {
 				let element = this.asteroidsMoving[i];
-				// element.rotation = this.cockpit.cockpit.rotation;
 				element.translate(BABYLON.Axis.Y, 0.04, BABYLON.Space.WORLD);
 				element.rotate(BABYLON.Axis.X, 0.003, BABYLON.Space.WORLD);
-				
+
 				// setTimeout(() => {
-				// 	this.asteroidsMoving.splice()
+				// 	console.log('splice');
+				// 	this.asteroidsMoving.splice(this.asteroidsMoving.indexOf(element), 1 );
 				// }, 15000);
 			}
 
 			for (let i = 0; i < this.asteroidsArr.length; i++) {
 				let element = this.asteroidsArr[i];
 				if (this.cockpit.cockpit.intersectsMesh(element, true)) {
+
 					this.asteroidsMoving.push(element);
+
 					this.inputManager.airSpeed = -0.5;
 					let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
 					this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
@@ -308,9 +310,7 @@ export default class {
 						this.collisionSoundSwitch = false;
 						this.collisionSound = new BABYLON.Sound("collisionSound", "assets/audio/sound/collision.mp3", this.scene, null,
 							{
-								// playbackRate: 0.5,
 								volume: 0.5,
-								// loop: true,
 								autoplay: true
 							}
 						);
