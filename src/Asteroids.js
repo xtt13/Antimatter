@@ -45,7 +45,7 @@ export default class {
 
     createAsteroids() {
         var loadAsteroid = this.assetsManager.addMeshTask("loadAsteroid", "Asteroid", "./assets/models/asteroids/", "asteroid.babylon");
-        var loadBumpMap = this.assetsManager.addTextureTask("loadBumpMap", "./assets/models/asteroids/asteroid_normalmap.jpg");
+        // var loadBumpMap = this.assetsManager.addTextureTask("loadBumpMap", "./assets/models/asteroids/asteroid_normalmap.jpg");
 
         loadAsteroid.onSuccess = (task) => {
 
@@ -53,9 +53,9 @@ export default class {
             var asteroid = this.scene.getMeshByName("Asteroid");
 
             // After Texture Loading
-            loadBumpMap.onSuccess = (task) => {
+            // loadBumpMap.onSuccess = (task) => {
                 // asteroid.material.bumpTexture = task.texture;
-            }
+            // }
 
             // asteroid.material = null;
 
@@ -117,7 +117,7 @@ export default class {
                 );
 
                 //Any subsequent changes to position / rotation / scaling will then be ignore:
-                asteroidInstance.freezeWorldMatrix();
+                // asteroidInstance.freezeWorldMatrix();
 
                 // asteroidInstance.checkCollisions = true;
                 // asteroidInstance.physicsImpostor = new BABYLON.PhysicsImpostor(asteroidInstance, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 0, friction: 0, restitution: 0.3 });
@@ -130,6 +130,7 @@ export default class {
                 this.initTargetableActions(asteroidInstance, this.customOutline);
 
                 this.asteroids.push(asteroidInstance);
+
 
             }
 

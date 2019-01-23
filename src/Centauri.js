@@ -33,7 +33,7 @@ export default class {
 
     loadPlanet() {
 
-        var loadPlanetTexture = this.assetsManager.addTextureTask("centauriTexture", "./assets/textures/planets/Planet_Beta_Hydri.jpg");
+        var loadPlanetTexture = this.assetsManager.addTextureTask("loadCentauriTexture", "./assets/textures/planets/Planet_Beta_Hydri.jpg");
 
         loadPlanetTexture.onSuccess = (task) => {
 

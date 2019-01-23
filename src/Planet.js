@@ -70,9 +70,9 @@ export default class {
 
         if (this.isMobileDevice()) {
             console.log('mob');
-            var loadPlanetTexture = this.assetsManager.addTextureTask("planetTexture", "./assets/textures/planets/2k_mars.jpg");
+            var loadPlanetTexture = this.assetsManager.addTextureTask("loadPlanetTexture", "./assets/textures/planets/2k_mars.jpg");
         } else {
-            var loadPlanetTexture = this.assetsManager.addTextureTask("planetTexture", "./assets/textures/planets/8k_mars.jpg");
+            var loadPlanetTexture = this.assetsManager.addTextureTask("loadPlanetTexture", "./assets/textures/planets/8k_mars.jpg");
         }
 
         // var loadPlanetBumpTexture = this.assetsManager.addTextureTask("bumpTexture", "/assets/textures/planets/earthUV.jpg");

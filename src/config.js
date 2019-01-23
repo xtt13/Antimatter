@@ -6,7 +6,7 @@ export default {
 	// ##################
 	// Current State
 	// ##################
-	currentState: "Menu",
+	currentState: "Game",
 
 	// ##################
 	// forceBestQuality / No Adaption

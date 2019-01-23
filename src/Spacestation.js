@@ -12,7 +12,7 @@ export default class {
     }
 
     loadStation() {
-        var loadStation = this.assetsManager.addMeshTask("gangut", "", "./assets/models/spacestation/", "gangut.babylon");
+        var loadStation = this.assetsManager.addMeshTask("loadGangut", "", "./assets/models/spacestation/", "gangut.babylon");
 
         loadStation.onSuccess = (task) => {
 
@@ -99,7 +99,7 @@ export default class {
         }
 
     }
-
+    
     deleteSpaceStation(){
         for (let i = 0; i < this.station.length; i++) {
             this.station[i].dispose();

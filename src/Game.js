@@ -39,9 +39,9 @@ export default class {
 	constructor() {
 
 		let qualitySettings = localStorage.getItem('qualitySettings');
-		if(qualitySettings == undefined || qualitySettings == 'auto'){
+		if (qualitySettings == undefined || qualitySettings == 'auto') {
 			qualitySettings = false;
-		} else if (qualitySettings == 'high'){
+		} else if (qualitySettings == 'high') {
 			qualitySettings = true;
 		}
 
@@ -122,6 +122,10 @@ export default class {
 		this.jumpGate = new JumpGate(this.scene, this.engine, this.assetsManager);
 
 		this.menu = new Menu(this.engine, this.canvas, this.assetsManager, this);
+
+		this.assetsManager.onProgress = (remainingCount, totalCount, task) => {
+			console.log(remainingCount, totalCount, task.name);
+		}
 
 
 		// When all assets are loaded =>
@@ -275,7 +279,53 @@ export default class {
 		this.shadowGenerator.useKernelBlur = true;
 		this.shadowGenerator.blurKernel = 64;
 
+		this.asteroidsArr = this.asteroids.asteroids;
+		this.collisionSoundSwitch = true;
+		this.asteroidsMoving = [];
+
 		this.scene.registerBeforeRender(() => {
+
+			for (let i = 0; i < this.asteroidsMoving.length; i++) {
+				let element = this.asteroidsMoving[i];
+				// element.rotation = this.cockpit.cockpit.rotation;
+				element.translate(BABYLON.Axis.Y, 0.04, BABYLON.Space.WORLD);
+				element.rotate(BABYLON.Axis.X, 0.003, BABYLON.Space.WORLD);
+				
+				// setTimeout(() => {
+				// 	this.asteroidsMoving.splice()
+				// }, 15000);
+			}
+
+			for (let i = 0; i < this.asteroidsArr.length; i++) {
+				let element = this.asteroidsArr[i];
+				if (this.cockpit.cockpit.intersectsMesh(element, true)) {
+					this.asteroidsMoving.push(element);
+					this.inputManager.airSpeed = -0.5;
+					let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
+					this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
+
+					if (this.collisionSoundSwitch) {
+						this.collisionSoundSwitch = false;
+						this.collisionSound = new BABYLON.Sound("collisionSound", "assets/audio/sound/collision.mp3", this.scene, null,
+							{
+								// playbackRate: 0.5,
+								volume: 0.5,
+								// loop: true,
+								autoplay: true
+							}
+						);
+
+						this.collisionSound.onended = () => {
+							this.collisionSoundSwitch = true;
+						};
+					}
+
+				}
+
+
+			}
+
+
 			if (this.cockpit.cockpit.intersectsMesh(this.jumpGate.jumpGate, true)) {
 
 				// console.log('COLLISION !!!');
@@ -352,5 +402,8 @@ export default class {
 			// Check if Keys are pressed
 			this.inputManager.checkKeys(this.engine);
 		});
+
+		// Enable Octree
+		this.scene.createOrUpdateSelectionOctree();
 	}
 }
