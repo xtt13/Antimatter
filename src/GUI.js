@@ -88,7 +88,7 @@ export default class {
         var n = document.createElement('div');
         n.setAttribute('class', 'scanlines ui-block asteroidsUI');
 
-        let content = `Iron 0/5t <br /> Gold 0/10t <br /> Doxtrit 0/8t <br /> Pyresium 0/12t <br /> Perrius 0/8t`;
+        let content = `<span>Iron 0/5t</span> <span>Gold 0/10t</span>  <span>Doxtrit 0/8t</span>  <span>Pyresium 0/12t</span>  <span>Perrius 0/8t</span>`;
 
         n.innerHTML = content;
 

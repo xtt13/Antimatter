@@ -118,7 +118,7 @@ export default class {
 		this.planet = new Planet(this.scene, this.engine, this.assetsManager, "Game");
 		this.centauri = new Centauri(this.scene, this.engine, this.assetsManager);
 		this.arc = new Arc(this.scene, this.engine, this.assetsManager);
-		this.asteroids = new Asteroids(this.scene, this.assetsManager);
+		this.asteroids = new Asteroids(this.scene, this.assetsManager, this.cockpit);
 		this.jumpGate = new JumpGate(this.scene, this.engine, this.assetsManager);
 
 		this.menu = new Menu(this.engine, this.canvas, this.assetsManager, this);
@@ -300,7 +300,12 @@ export default class {
 
 			for (let i = 0; i < this.asteroidsArr.length; i++) {
 				let element = this.asteroidsArr[i];
-				if (this.cockpit.cockpit.intersectsMesh(element, true)) {
+
+				if(this.cockpit.laserMesh.intersectsMesh(element, true)){
+					console.log('INTERSECTION');
+				}
+
+				if (this.cockpit.cockpit.intersectsMesh(element, false)) {
 
 					this.asteroidsMoving.push(element);
 

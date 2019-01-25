@@ -3,9 +3,10 @@ import * as GUI from 'babylonjs-gui';
 import config from './config';
 
 export default class {
-    constructor(scene, assetsManager) {
+    constructor(scene, assetsManager, cockpit) {
         this.scene = scene;
         this.assetsManager = assetsManager;
+        this.cockpit = cockpit;
         // this.baseObject = baseObject.ship;
 
         this.asteroids = [];
@@ -208,6 +209,9 @@ export default class {
                 customOutline.isVisible = true;
 
                 label = this.addLabel(target);
+
+                this.cockpit.shootLaser(target, this.scene)
+
 
                 let beepSound = new BABYLON.Sound("beepSound", "assets/audio/sound/beep.mp3", this.scene, null,
                     {

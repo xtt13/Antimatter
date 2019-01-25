@@ -27,7 +27,7 @@ export default class {
             // UNCOMMENT FOR ONLY FOR HIGH PERFORMANCE
             //this.cockpit.material.specularTexture = new BABYLON.Texture("./assets/models/cockpit/SF_CockpitB2_Specular.jpg", this.scene);
             //this.cockpit.material.bumpTexture = new BABYLON.Texture("./assets/models/cockpit/SF_CockpitB2_NormalMap.jpg", this.scene);
-            
+
 
             //var cockpitSphere = BABYLON.MeshBuilder.CreateSphere("cockpitSphere", { diameter: 40, diameterX: 40 }, this.scene);
             //cockpitSphere.position = this.cockpit.position;
@@ -56,6 +56,8 @@ export default class {
             }
 
             this.createCockpitParticles();
+
+            this.createLaser();
 
             this.cockpit.onCollide = () => {
                 console.log('I am colliding with something');
@@ -199,291 +201,8 @@ export default class {
 
     }
 
-    // Explosion particle systems
-    explode(impact) {
-        // Create moving emitter for plume
-        var emitterParent = new BABYLON.AbstractMesh("emitterParent", this.scene);
-        // var emitterParent = new BABYLON.MeshBuilder.CreateBox("emitterParent", {size: 0.5}, this.scene);
-        emitterParent.position = impact.clone();
 
-        // Animate plume from explosion
-        var plumeAnimation = new BABYLON.Animation("plumeAnimation", "position.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
-
-        // Animation keys and values
-        var keys = [];
-        keys.push({
-            frame: 0,
-            value: 0
-        });
-
-        keys.push({
-            frame: 10,
-            value: 2
-        });
-
-        keys.push({
-            frame: 40,
-            value: 8
-        });
-
-        keys.push({
-            frame: 50,
-            value: 9
-        });
-
-        keys.push({
-            frame: 55,
-            value: 9.5
-        });
-
-        keys.push({
-            frame: 60,
-            value: 10
-        });
-
-        // Adding keys to the emitter animation
-        plumeAnimation.setKeys(keys);
-
-        // Add animation to emitter
-        emitterParent.animations.push(plumeAnimation);
-
-        // Flash
-        var flash = BABYLON.ParticleHelper.CreateDefault(impact, 40);
-        flash.particleTexture = new BABYLON.Texture("https://playground.babylonjs.com/textures/FlashParticle.png", this.scene);
-        flash.emitRate = 400;
-        flash.minScaleX = 10;
-        flash.minScaleY = 70;
-        flash.maxScaleX = 20;
-        flash.maxScaleY = 100;
-        flash.minLifeTime = 0.2;
-        flash.maxLifeTime = 0.4;
-        flash.minEmitPower = 0;
-        flash.maxEmitPower = 0;
-        flash.addColorGradient(0, new BABYLON.Color4(1.0, .8960, 0.0, 1.0));
-        flash.addColorGradient(0.4, new BABYLON.Color4(0.7547, 0.1219, 0.0391, 1.0));
-        flash.addColorGradient(0.8, new BABYLON.Color4(0.3679, 0.0721, 0.0295, 0.0));
-        flash.minInitialRotation = -0.78539816;
-        flash.maxInitialRotation = 0.78539816;
-        flash.blendMode = BABYLON.ParticleSystem.BLENDMODE_ADD;
-        flash.targetStopDuration = .2;
-
-        // Fireball
-        var fireball = BABYLON.ParticleHelper.CreateDefault(emitterParent, 1000);
-        this.setupAnimationSheet(fireball, "https://playground.babylonjs.com/textures/Smoke_SpriteSheet_8x8.png", 1024, 1024, 8, 8, 1, true, true);
-        var fireballHemisphere = fireball.createHemisphericEmitter(0.2);
-        fireballHemisphere.radiusRange = 1;
-        fireball.emitRate = 400;
-        fireball.minSize = 1;
-        fireball.maxSize = 3;
-        fireball.addStartSizeGradient(0.0, 2, 4);
-        fireball.addStartSizeGradient(0.3, 0.5, 1);
-        fireball.addStartSizeGradient(0.6, 1, 3);
-        fireball.addStartSizeGradient(1.0, 1.7, 3.7);
-        fireball.minLifeTime = 6;
-        fireball.maxLifeTime = 8;
-        fireball.addLifeTimeGradient(0, 3);
-        fireball.addLifeTimeGradient(1, 1.75);
-        fireball.minEmitPower = 30;
-        fireball.maxEmitPower = 60;
-        fireball.addLimitVelocityGradient(0.0, 5);
-        fireball.addLimitVelocityGradient(0.15, 3);
-        fireball.addLimitVelocityGradient(0.25, 2);
-        fireball.addLimitVelocityGradient(1.0, 1);
-        fireball.limitVelocityDamping = 0.7;
-        fireball.addColorGradient(0.0, new BABYLON.Color4(1, 1, 1, 0.8));
-        fireball.addColorGradient(0.4, new BABYLON.Color4(1, 1, 1, 0.6));
-        fireball.addColorGradient(1.0, new BABYLON.Color4(1, 1, 1, 0));
-        fireball.addRampGradient(0.0, new BABYLON.Color3(1, 1, 1));
-        fireball.addRampGradient(0.09, new BABYLON.Color3(209 / 255, 204 / 255, 15 / 255));
-        fireball.addRampGradient(0.18, new BABYLON.Color3(221 / 255, 120 / 255, 14 / 255));
-        fireball.addRampGradient(0.28, new BABYLON.Color3(200 / 255, 43 / 255, 18 / 255));
-        fireball.addRampGradient(0.47, new BABYLON.Color3(115 / 255, 22 / 255, 15 / 255));
-        fireball.addRampGradient(0.88, new BABYLON.Color3(14 / 255, 14 / 255, 14 / 255));
-        fireball.addRampGradient(1.0, new BABYLON.Color3(14 / 255, 14 / 255, 14 / 255));
-        fireball.useRampGradients = true;
-        fireball.addColorRemapGradient(0, 0, 0.8);
-        fireball.addColorRemapGradient(0.2, 0.1, 0.8);
-        fireball.addColorRemapGradient(0.3, 0.2, 0.85);
-        fireball.addColorRemapGradient(0.35, 0.4, 0.85);
-        fireball.addColorRemapGradient(0.4, 0.5, 0.9);
-        fireball.addColorRemapGradient(0.5, 0.95, 1.0);
-        fireball.addColorRemapGradient(1.0, 0.95, 1.0);
-        fireball.blendMode = BABYLON.ParticleSystem.BLENDMODE_MULTIPLYADD;
-        fireball.targetStopDuration = 1;
-
-        // Shockwave smoke
-        var shockwave = BABYLON.ParticleHelper.CreateDefault(new BABYLON.Vector3(impact.x, 2, impact.z), 500);
-        this.setupAnimationSheet(shockwave, "https://playground.babylonjs.com/textures/Smoke_SpriteSheet_8x8.png", 1024, 1024, 8, 8, 1, true, true);
-        shockwave.createCylinderEmitter(1, .5, 0, 0);
-        shockwave.emitRate = 3000;
-        shockwave.minSize = 0.2;
-        shockwave.maxSize = 2;
-        shockwave.addSizeGradient(0.0, 2.0, 3.0);
-        shockwave.addSizeGradient(1.0, 5.0, 8.0);
-        shockwave.minLifeTime = 3;
-        shockwave.maxLifeTime = 3;
-        shockwave.minInitialRotation = -Math.PI / 2;
-        shockwave.maxInitialRotation = Math.PI / 2;
-        shockwave.addAngularSpeedGradient(0, 0);
-        shockwave.addAngularSpeedGradient(1.0, -0.4, 0.4);
-        shockwave.minEmitPower = 40;
-        shockwave.maxEmitPower = 90;
-        shockwave.addLimitVelocityGradient(0.0, 70);
-        shockwave.addLimitVelocityGradient(0.15, 10);
-        shockwave.addLimitVelocityGradient(0.25, 2);
-        shockwave.addLimitVelocityGradient(1.0, 1.5);
-        shockwave.limitVelocityDamping = 0.9;
-        shockwave.addColorGradient(0.0, new BABYLON.Color4(1, 1, 1, 0.15));
-        shockwave.addColorGradient(0.6, new BABYLON.Color4(1, 1, 1, 0.15));
-        shockwave.addColorGradient(1.0, new BABYLON.Color4(1, 1, 1, 0));
-        shockwave.addRampGradient(0.0, new BABYLON.Color3(1, 1, 1));
-        shockwave.addRampGradient(0.09, new BABYLON.Color3(209 / 255, 204 / 255, 190 / 255));
-        shockwave.addRampGradient(0.18, new BABYLON.Color3(221 / 255, 200 / 255, 190 / 255));
-        shockwave.addRampGradient(0.28, new BABYLON.Color3(200 / 255, 190 / 255, 180 / 255));
-        shockwave.addRampGradient(0.47, new BABYLON.Color3(115 / 255, 90 / 255, 80 / 255));
-        shockwave.addRampGradient(0.88, new BABYLON.Color3(50 / 255, 50 / 255, 50 / 255));
-        shockwave.addRampGradient(1.0, new BABYLON.Color3(50 / 255, 50 / 255, 50 / 255));
-        shockwave.useRampGradients = true;
-        shockwave.addColorRemapGradient(0, 0, 0.8);
-        shockwave.addColorRemapGradient(0.2, 0.1, 0.8);
-        shockwave.addColorRemapGradient(0.3, 0.2, 0.85);
-        shockwave.addColorRemapGradient(0.35, 0.4, 0.85);
-        shockwave.addColorRemapGradient(0.4, 0.5, 0.9);
-        shockwave.addColorRemapGradient(0.5, 0.95, 1.0);
-        shockwave.addColorRemapGradient(1.0, 0.95, 1.0);
-        shockwave.blendMode = BABYLON.ParticleSystem.BLENDMODE_MULTIPLYADD;
-        shockwave.targetStopDuration = 0.5;
-
-        var fireSubEmitter = new BABYLON.SubEmitter(new BABYLON.ParticleHelper.CreateDefault(impact, 200));
-        this.setupAnimationSheet(fireSubEmitter.particleSystem, "https://playground.babylonjs.com/textures/FlameBlastSpriteSheet.png", 1024, 1024, 4, 4, 1, false, true);
-        var fireSubEmitterMesh = fireSubEmitter.particleSystem.emitter = new BABYLON.AbstractMesh("fireSubEmitterMesh", this.scene);
-        fireSubEmitter.particleSystem.minLifeTime = 0.5;
-        fireSubEmitter.particleSystem.maxLifeTime = 0.8;
-        fireSubEmitter.particleSystem.minEmitPower = 0;
-        fireSubEmitter.particleSystem.maxEmitPower = 0;
-        fireSubEmitter.particleSystem.emitRate = 130;
-        fireSubEmitter.particleSystem.minSize = 0.8;
-        fireSubEmitter.particleSystem.maxSize = 1.2;
-        fireSubEmitter.particleSystem.addStartSizeGradient(0, 1);
-        fireSubEmitter.particleSystem.addStartSizeGradient(0.7, 1);
-        fireSubEmitter.particleSystem.addStartSizeGradient(1, 0.2);
-        fireSubEmitter.particleSystem.minInitialRotation = -(Math.PI / 2);
-        fireSubEmitter.particleSystem.maxInitialRotation = Math.PI / 2;
-        fireSubEmitter.particleSystem.addColorGradient(0.0, new BABYLON.Color4(0.9245, 0.6540, 0.0915, 1));
-        fireSubEmitter.particleSystem.addColorGradient(0.04, new BABYLON.Color4(0.9062, 0.6132, 0.0942, 1));
-        fireSubEmitter.particleSystem.addColorGradient(0.29, new BABYLON.Color4(0.7968, 0.3685, 0.1105, 1));
-        fireSubEmitter.particleSystem.addColorGradient(0.53, new BABYLON.Color4(0.6886, 0.1266, 0.1266, 1));
-        fireSubEmitter.particleSystem.addColorGradient(0.9, new BABYLON.Color4(0.3113, 0.0367, 0.0367, 1));
-        fireSubEmitter.particleSystem.addColorGradient(1.0, new BABYLON.Color4(0.3113, 0.0367, 0.0367, 1));
-        fireSubEmitter.type = BABYLON.SubEmitterType.ATTACHED;
-        fireSubEmitter.inheritDirection = true;
-        fireSubEmitter.particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ADD;
-        fireSubEmitter.particleSystem.targetStopDuration = 1.2;
-
-        var smokeSubEmitter = new BABYLON.SubEmitter(new BABYLON.ParticleHelper.CreateDefault(impact, 600));
-        this.setupAnimationSheet(smokeSubEmitter.particleSystem, "https://playground.babylonjs.com/textures/Smoke_SpriteSheet_8x8.png", 1024, 1024, 8, 8, 1, true, true);
-        var smokeSubEmitterMesh = smokeSubEmitter.particleSystem.emitter = new BABYLON.AbstractMesh("smokeSubEmitterMesh", this.scene);
-        smokeSubEmitter.particleSystem.minLifeTime = 1;
-        smokeSubEmitter.particleSystem.maxLifeTime = 3;
-        smokeSubEmitter.particleSystem.addLifeTimeGradient(0, 3);
-        smokeSubEmitter.particleSystem.addLifeTimeGradient(1, 1.75);
-        smokeSubEmitter.particleSystem.minEmitPower = 0;
-        smokeSubEmitter.particleSystem.maxEmitPower = 0;
-        smokeSubEmitter.particleSystem.emitRate = 100;
-        smokeSubEmitter.particleSystem.minSize = 2;
-        smokeSubEmitter.particleSystem.maxSize = 5;
-        smokeSubEmitter.particleSystem.addStartSizeGradient(0, 1);
-        smokeSubEmitter.particleSystem.addStartSizeGradient(0.6, 1);
-        smokeSubEmitter.particleSystem.addStartSizeGradient(1, 0.05);
-        smokeSubEmitter.particleSystem.addSizeGradient(0, 1);
-        smokeSubEmitter.particleSystem.addSizeGradient(1, 3);
-        smokeSubEmitter.particleSystem.addLifeTimeGradient(0, 3);
-        smokeSubEmitter.particleSystem.addLifeTimeGradient(1, 2);
-        smokeSubEmitter.particleSystem.minInitialRotation = -(Math.PI / 2);
-        smokeSubEmitter.particleSystem.maxInitialRotation = Math.PI / 2;
-        smokeSubEmitter.particleSystem.addColorGradient(0.0, new BABYLON.Color4(1, 1, 1, 0.0));
-        smokeSubEmitter.particleSystem.addColorGradient(0.05, new BABYLON.Color4(1, 1, 1, 0.0));
-        smokeSubEmitter.particleSystem.addColorGradient(0.1, new BABYLON.Color4(1, 1, 1, 0.2));
-        smokeSubEmitter.particleSystem.addColorGradient(1.0, new BABYLON.Color4(1, 1, 1, 0));
-        smokeSubEmitter.particleSystem.addRampGradient(0.0, new BABYLON.Color3(1, 1, 1));
-        smokeSubEmitter.particleSystem.addRampGradient(0.09, new BABYLON.Color3(209 / 255, 204 / 255, 190 / 255));
-        smokeSubEmitter.particleSystem.addRampGradient(0.18, new BABYLON.Color3(221 / 255, 200 / 255, 190 / 255));
-        smokeSubEmitter.particleSystem.addRampGradient(0.28, new BABYLON.Color3(200 / 255, 190 / 255, 180 / 255));
-        smokeSubEmitter.particleSystem.addRampGradient(0.47, new BABYLON.Color3(115 / 255, 90 / 255, 80 / 255));
-        smokeSubEmitter.particleSystem.addRampGradient(0.88, new BABYLON.Color3(50 / 255, 50 / 255, 50 / 255));
-        smokeSubEmitter.particleSystem.addRampGradient(1.0, new BABYLON.Color3(50 / 255, 50 / 255, 50 / 255));
-        smokeSubEmitter.particleSystem.useRampGradients = true;
-        smokeSubEmitter.particleSystem.addColorRemapGradient(0, 0, 0.8);
-        smokeSubEmitter.particleSystem.addColorRemapGradient(0.2, 0.1, 0.8);
-        smokeSubEmitter.particleSystem.addColorRemapGradient(0.3, 0.2, 0.85);
-        smokeSubEmitter.particleSystem.addColorRemapGradient(0.35, 0.4, 0.85);
-        smokeSubEmitter.particleSystem.addColorRemapGradient(0.4, 0.5, 0.9);
-        smokeSubEmitter.particleSystem.addColorRemapGradient(0.5, 0.95, 1.0);
-        smokeSubEmitter.particleSystem.addColorRemapGradient(1.0, 0.95, 1.0);
-        smokeSubEmitter.type = BABYLON.SubEmitterType.ATTACHED;
-        smokeSubEmitter.inheritDirection = true;
-        smokeSubEmitter.particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_MULTIPLYADD;
-        smokeSubEmitter.particleSystem.targetStopDuration = 1.2;
-
-        // Debris
-        var debris = BABYLON.ParticleHelper.CreateDefault(impact, 10);
-        debris.createConeEmitter(.2, 2);
-        debris.emitRate = 50;
-        debris.minSize = 5;
-        debris.maxSize = 8;
-        debris.addColorGradient(0, new BABYLON.Color4(0, 0, 0, 0));
-        debris.addColorGradient(1, new BABYLON.Color4(0, 0, 0, 0));
-        debris.minLifeTime = 2;
-        debris.maxLifeTime = 2;
-        debris.minEmitPower = 16;
-        debris.maxEmitPower = 30;
-        debris.gravity = new BABYLON.Vector3(0, -20, 0);
-        debris.subEmitters = [[fireSubEmitter, smokeSubEmitter]];
-        debris.blendMode = BABYLON.ParticleSystem.BLENDMODE_ADD;
-        debris.targetStopDuration = 0.2;
-
-        // Start animation for emitter
-        var movingEmitters = [fireball];
-        this.scene.beginAnimation(emitterParent, 0, 60, false, 1, () => {
-            this.destroyEmitter(emitterParent, movingEmitters)
-        });
-
-        flash.start();
-        shockwave.start(60);
-        fireball.start(60);
-        debris.start(90);
-
-        // Rendering order
-        shockwave.renderingGroupId = 0;
-        smokeSubEmitter.particleSystem.renderingGroupId = 0;
-        fireSubEmitter.particleSystem.renderingGroupId = 1;
-        fireball.renderingGroupId = 1;
-        flash.renderingGroupId = 2;
-    }
-
-    setupAnimationSheet(system, texture, width, height, numSpritesWidth, numSpritesHeight, animationSpeed, isRandom, loop) {
-        // Assign animation parameters
-        system.isAnimationSheetEnabled = true;
-        system.particleTexture = new BABYLON.Texture(texture, this.scene, false, false);
-        system.spriteCellWidth = width / numSpritesWidth;
-        system.spriteCellHeight = height / numSpritesHeight;
-        var numberCells = numSpritesWidth * numSpritesHeight;
-        system.startSpriteCellID = 0;
-        system.endSpriteCellID = numberCells - 1;
-        system.spriteCellChangeSpeed = animationSpeed;
-        system.spriteRandomStartCell = isRandom;
-        system.updateSpeed = 1 / 60;
-        system.spriteCellLoop = loop;
-    }
-
-    destroyEmitter(meshToDestoy, movingEmitters) {
-        for (let i = 0; i < movingEmitters.length; i++) {
-            movingEmitters[i].emitter = meshToDestoy.position.clone();
-        }
-        meshToDestoy.dispose();
-    }
-
-    createCockpitParticles(){
+    createCockpitParticles() {
         var fogTexture = new BABYLON.Texture("./assets/textures/fog/smoke.png", this.scene);
 
         var particleSystem;
@@ -496,22 +215,22 @@ export default class {
             particleSystem.maxEmitBox = new BABYLON.Vector3(500, 500, 500); // To..
 
         } else {
-            particleSystem = new BABYLON.ParticleSystem("particles", 2000 , this.scene);
+            particleSystem = new BABYLON.ParticleSystem("particles", 2000, this.scene);
             particleSystem.manualEmitCount = particleSystem.getCapacity();
             particleSystem.minEmitBox = new BABYLON.Vector3(-1000, -1000, -1000); // Starting all from
             particleSystem.maxEmitBox = new BABYLON.Vector3(1000, 1000, 1000); // To..
         }
 
         console.log('Create Particles');
-        
+
 
         particleSystem.particleTexture = fogTexture.clone();
         particleSystem.emitter = this.cockpit;
-        
-	    // particleSystem.color1 = new BABYLON.Color4(0.8, 0.8, 0.8, 0.1);
+
+        // particleSystem.color1 = new BABYLON.Color4(0.8, 0.8, 0.8, 0.1);
         particleSystem.color2 = new BABYLON.Color4(.95, .95, .95, 0.15);
         particleSystem.colorDead = new BABYLON.Color4(0.9, 0.9, 0.9, 0.1);
-	    // particleSystem.minSize = 50;
+        // particleSystem.minSize = 50;
         particleSystem.maxSize = 1.0;
         particleSystem.maxLifeTime = 10;
         particleSystem.emitRate = 50000;
@@ -520,16 +239,247 @@ export default class {
         particleSystem.direction1 = new BABYLON.Vector3(0, 0, 0);
         particleSystem.direction2 = new BABYLON.Vector3(0, 0, 0);
         particleSystem.minAngularSpeed = -2;
-	    particleSystem.maxAngularSpeed = 2;
+        particleSystem.maxAngularSpeed = 2;
         particleSystem.minEmitPower = .5;
         particleSystem.maxEmitPower = 1;
         particleSystem.updateSpeed = 0.005;
-    
+
         particleSystem.start();
 
-        
 
 
+
+    }
+
+    createLaser() {
+
+
+        BABYLON.Effect.ShadersStore["customVertexShader"] = 'precision highp float;  attribute vec3 position; attribute vec3 normal; attribute vec2 uv;  uniform mat4 worldViewProjection; uniform float time;  varying vec3 vPosition; varying vec3 vNormal; varying vec2 vUV;  void main(void) {     vec3 v = position;     gl_Position = worldViewProjection * vec4(v, 1.0);     vPosition = position;     vNormal = normal;     vUV = uv; }';
+        BABYLON.Effect.ShadersStore["customFragmentShader"] = `
+#extension GL_OES_standard_derivatives : enable
+precision highp float;   
+        	
+// Varying
+varying vec3 vPosition;
+varying vec3 vNormal;
+varying vec2 vUV;
+
+// Refs
+uniform vec3 color;
+uniform vec3 cameraPosition;
+        	
+ 
+void main(void) {          
+    float x = vUV.x;
+    float y = vUV.y;
+    vec2 uv=-1.+2.*vUV;
+    float a=  1.-smoothstep(-.9,0.9,abs(uv.x));//*(1.-vUV.y))*1.);
+    float b=1.-pow(0.1,vUV.y);
+    vec3 col=vec3(0.,b*8.,0.);
+    gl_FragColor = vec4(col,a);
+}`;
+
+        var laserMaterial = new BABYLON.ShaderMaterial("shader", this.scene, {
+            vertex: "custom",
+            fragment: "custom",
+        },
+            {
+                needAlphaBlending: true,
+                attributes: ["position", "normal", "uv"],
+                uniforms: ["time", "worldViewProjection"]
+            });
+
+
+        var laserlen = 400;
+
+        console.log('create laser');
+
+        this.laserMesh = BABYLON.MeshBuilder.CreatePlane("pl", { width: 14, height: laserlen }, this.scene);
+
+        this.laserMesh.rotation.y = Math.PI / 2;
+        this.laserMesh.rotation.x = Math.PI / 2;
+        this.laserMesh.rotation.z = Math.PI / 2;
+
+        this.laserMesh.parent = this.hudB;
+        this.laserMesh.translate(BABYLON.Axis.Y, laserlen/2 + 50, BABYLON.Space.LOCAL) 
+        this.laserMesh.translate(BABYLON.Axis.Z, -40, BABYLON.Space.LOCAL) 
+        this.laserMesh.rotate(BABYLON.Axis.X, -0.2, BABYLON.Space.LOCAL) 
+
+        // var matrix = BABYLON.Matrix.Translation(laserlen, 0, 0);
+        // plane2.setPivotMatrix(matrix);
+
+        laserMaterial.setColor3('color', new BABYLON.Color3(0, 1, 0));
+        laserMaterial.setVector3('cameraPosition', BABYLON.Vector3.Zero());
+        laserMaterial.setFloat('time', 0.0);
+
+        laserMaterial.alphaMode = BABYLON.Engine.ALPHA_ADD;
+        laserMaterial.alpha = 0.99999;
+        laserMaterial.backFaceCulling = false;
+
+        this.laserMesh.material = laserMaterial;
+    }
+
+    shootLaser(target, scene) {
+        console.log('laser');
+
+        var laserMaterial = new BABYLON.StandardMaterial('laserMaterial', scene);
+        laserMaterial.emissiveColor = new BABYLON.Color3(1, 0.7, 0.7);
+        laserMaterial.diffuseColor = new BABYLON.Color3(1, 0, 0);
+        laserMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+        laserMaterial.alpha = 1;
+
+        var outerLaserMaterial = new BABYLON.StandardMaterial('laserMaterial', scene);
+        outerLaserMaterial.emissiveColor = new BABYLON.Color3(1, 0.4, 0.4);
+        outerLaserMaterial.diffuseColor = new BABYLON.Color3(1, 0, 0);
+        outerLaserMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+        outerLaserMaterial.alpha = 0.67
+
+        var laser = BABYLON.Mesh.CreateBox('laser', 50, scene);
+        laser.material = laserMaterial;
+
+        var outerLaser = BABYLON.Mesh.CreateBox('laser', 50, scene, false, BABYLON.Mesh.BACKSIDE);
+        outerLaser.material = outerLaserMaterial;
+
+        var laserEmitterPosition = this.hudB.position;
+        if (this.hudB.laserEmitter) {
+            laserEmitterPosition = this.hudB.laserEmitter.getAbsolutePosition();
+        }
+
+        var axis1 = laserEmitterPosition.subtract(target.position);
+        var axis2 = BABYLON.Vector3.Cross(axis1, new BABYLON.Vector3(0, 1, 0));
+        var axis3 = BABYLON.Vector3.Cross(axis1, axis2);
+
+        laser.rotation = BABYLON.Vector3.RotationFromAxis(axis1, axis2, axis3);
+        laser.scaling.x = axis1.length();
+        laser.scaling.y = laser.scaling.z = 50;
+        laser.position = target.position.add(laserEmitterPosition).scale(50);
+
+        outerLaser.position = laser.position;
+        outerLaser.rotation = laser.rotation;
+        outerLaser.scaling = laser.scaling.clone();
+        outerLaser.scaling.y = outerLaser.scaling.z = 50;
+
+
+        // =============================================
+        // =============================================
+
+
+        // =============================================
+        // =============================================
+
+
+
+
+
+
+        // Create a particle system for emitting the laser
+        var particleSystemEmit = new BABYLON.ParticleSystem("particles", 1000, scene);
+
+        //Texture of each particle
+        particleSystemEmit.particleTexture = new BABYLON.Texture("./assets/textures/laser/star.png", scene);
+
+        // Where the particles come from
+        particleSystemEmit.emitter = laserEmitterPosition; // the starting object, the emitter
+        particleSystemEmit.minEmitBox = new BABYLON.Vector3(0, 0, 0); // Starting all from
+        particleSystemEmit.maxEmitBox = new BABYLON.Vector3(0, 0, 0); // To...
+
+        // Colors of all particles
+        particleSystemEmit.color1 = new BABYLON.Color4(1, 0.5, 0.5, 1.0);
+        particleSystemEmit.color2 = new BABYLON.Color4(1, 0, 0, 1.0);
+        particleSystemEmit.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
+
+        // Size of each particle (random between...
+        particleSystemEmit.minSize = 5;
+        particleSystemEmit.maxSize = 50;
+
+        // Life time of each particle (random between...
+        particleSystemEmit.minLifeTime = 0.3;
+        particleSystemEmit.maxLifeTime = 0.4;
+
+        // Emission rate
+        particleSystemEmit.emitRate = 100;
+
+        // manually emit
+        //particleSystem.manualEmitCount = 3000;
+        // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
+        particleSystemEmit.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+        // Direction of each particle after it has been emitted
+
+        var baseEmitDirection = target.position.subtract(this.hudB.position).normalize().scale(5);
+        particleSystemEmit.direction1 = baseEmitDirection.add(new BABYLON.Vector3(5, 5, 5));
+        particleSystemEmit.direction2 = baseEmitDirection.subtract(new BABYLON.Vector3(5, 5, 5));
+
+        // Angular speed, in radians
+        particleSystemEmit.minAngularSpeed = 0;
+        particleSystemEmit.maxAngularSpeed = Math.PI;
+
+        // Speed
+        particleSystemEmit.minEmitPower = 0.1;
+        particleSystemEmit.maxEmitPower = 0.2;
+        particleSystemEmit.updateSpeed = 0.04;
+
+        // Start the particle system
+        particleSystemEmit.start();
+
+        // Create a particle system for hit
+        var impactPoint = target.position.add(axis1.normalize().scale(0.8));
+
+        var particleSystemHit = new BABYLON.ParticleSystem("particles", 1000, scene);
+
+        //Texture of each particle
+        particleSystemHit.particleTexture = new BABYLON.Texture("./assets/textures/laser/flare.png", scene);
+
+        // Where the particles come from
+        particleSystemHit.emitter = impactPoint; // the starting object, the emitter
+        particleSystemHit.minEmitBox = new BABYLON.Vector3(0, 0, 0); // Starting all from
+        particleSystemHit.maxEmitBox = new BABYLON.Vector3(0, 0, 0); // To...
+
+        // Colors of all particles
+        particleSystemHit.color1 = new BABYLON.Color4(1, 0, 0, 1.0);
+        particleSystemHit.color2 = new BABYLON.Color4(1, 0.5, 0, 0.8);
+        particleSystemHit.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
+
+        // Size of each particle (random between...
+        particleSystemHit.minSize = 5;
+        particleSystemHit.maxSize = 50;
+
+        // Life time of each particle (random between...
+        particleSystemHit.minLifeTime = 0.3;
+        particleSystemHit.maxLifeTime = 1;
+
+        // Emission rate
+        particleSystemHit.emitRate = 300;
+
+        // manually emit
+        //particleSystemHit.manualEmitCount = 3000;
+        // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
+        particleSystemHit.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+
+        // Direction of each particle after it has been emitted
+        var baseImpactReactionDirection = this.hudB.position.subtract(target.position).normalize().scale(5);
+        particleSystemHit.direction1 = baseImpactReactionDirection.add(new BABYLON.Vector3(5, 5, 5));
+        particleSystemHit.direction2 = baseImpactReactionDirection.subtract(new BABYLON.Vector3(5, 5, 5));
+
+        // Angular speed, in radians
+        particleSystemHit.minAngularSpeed = 0;
+        particleSystemHit.maxAngularSpeed = Math.PI;
+
+        // Speed
+        particleSystemHit.minEmitPower = 0.3;
+        particleSystemHit.maxEmitPower = 0.7;
+        particleSystemHit.updateSpeed = 0.01;
+
+        // Start the particle system
+        particleSystemHit.start();
+
+        setTimeout(function () {
+            laser.dispose();
+            outerLaser.dispose();
+            particleSystemHit.stop();
+            particleSystemEmit.stop();
+        }, 5000);
+
+        return laser;
     }
 
 }
