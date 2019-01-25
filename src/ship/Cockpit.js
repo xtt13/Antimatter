@@ -275,7 +275,7 @@ void main(void) {
     vec2 uv=-1.+2.*vUV;
     float a=  1.-smoothstep(-.9,0.9,abs(uv.x));//*(1.-vUV.y))*1.);
     float b=1.-pow(0.1,vUV.y);
-    vec3 col=vec3(0.,b*8.,0.);
+    vec3 col=vec3(b*8.,0.,0.);
     gl_FragColor = vec4(col,a);
 }`;
 
@@ -290,12 +290,12 @@ void main(void) {
             });
 
 
-        var laserlen = 400;
+        this.laserlen = 400;
 
         console.log('create laser');
 
-        this.laserMesh = BABYLON.MeshBuilder.CreatePlane("pl", { width: 14, height: laserlen }, this.scene);
-        this.laserMesh2 = BABYLON.MeshBuilder.CreatePlane("pl2", { width: 14, height: laserlen }, this.scene);
+        this.laserMesh = BABYLON.MeshBuilder.CreatePlane("pl", { width: 14, height: 1 }, this.scene);
+        this.laserMesh2 = BABYLON.MeshBuilder.CreatePlane("pl2", { width: 14, height: 1 }, this.scene);
 
         this.laserMesh.rotation.x = Math.PI / 2;
         this.laserMesh.rotation.y = Math.PI / 2;
@@ -309,30 +309,65 @@ void main(void) {
         this.laserMesh.parent = this.hudB;
         this.laserMesh2.parent = this.hudB;
 
-        this.laserMesh.translate(BABYLON.Axis.Y, laserlen/2 + 50, BABYLON.Space.LOCAL) 
-        this.laserMesh2.translate(BABYLON.Axis.Y, laserlen/2 + 50, BABYLON.Space.LOCAL) 
+        // Front - Back
+        this.laserMesh.translate(BABYLON.Axis.Y, 50, BABYLON.Space.LOCAL)
+        this.laserMesh2.translate(BABYLON.Axis.Y, 50, BABYLON.Space.LOCAL)
 
-        this.laserMesh.translate(BABYLON.Axis.Z, -40, BABYLON.Space.LOCAL) 
-        this.laserMesh2.translate(BABYLON.Axis.Z, -40, BABYLON.Space.LOCAL) 
+        // Up - Down
+        this.laserMesh.translate(BABYLON.Axis.Z, -20, BABYLON.Space.LOCAL)
+        this.laserMesh2.translate(BABYLON.Axis.Z, -20, BABYLON.Space.LOCAL)
 
-        this.laserMesh.rotate(BABYLON.Axis.X, -0.2, BABYLON.Space.LOCAL) 
-        this.laserMesh2.rotate(BABYLON.Axis.X, -0.2, BABYLON.Space.LOCAL) 
+        // Rotate
+        this.laserMesh.rotate(BABYLON.Axis.X, -0.3, BABYLON.Space.LOCAL)
+        this.laserMesh2.rotate(BABYLON.Axis.X, -0.3, BABYLON.Space.LOCAL)
 
-        this.laserMesh2.rotate(BABYLON.Axis.Y, Math.PI / 2, BABYLON.Space.LOCAL) 
+        this.laserMesh2.rotate(BABYLON.Axis.Y, Math.PI / 2, BABYLON.Space.LOCAL)
 
-        // var matrix = BABYLON.Matrix.Translation(laserlen, 0, 0);
+        // var matrix = BABYLON.Matrix.Translation(this.laserlen, 0, 0);
         // plane2.setPivotMatrix(matrix);
 
-        laserMaterial.setColor3('color', new BABYLON.Color3(0, 1, 0));
+        laserMaterial.setColor3('color', new BABYLON.Color3(1, 0, 0));
         laserMaterial.setVector3('cameraPosition', BABYLON.Vector3.Zero());
         laserMaterial.setFloat('time', 0.0);
 
         laserMaterial.alphaMode = BABYLON.Engine.ALPHA_ADD;
-        laserMaterial.alpha = 0.99999;
+        laserMaterial.alpha = 0.77777;
         laserMaterial.backFaceCulling = false;
 
         this.laserMesh.material = laserMaterial;
         this.laserMesh2.material = laserMaterial;
+
+        this.laserMesh.setPivotMatrix(BABYLON.Matrix.Translation(0.5, 0.5, 0.5));
+        this.laserMesh2.setPivotMatrix(BABYLON.Matrix.Translation(0.5, 0.5, 0.5));
+
+        console.log(this.laserMesh);
+    }
+
+    startMining() {
+        var keys = [];
+
+        keys.push({
+            frame: 0,
+            value: 0
+        });
+
+        keys.push({
+            frame: 100,
+            value: this.laserlen
+        });
+
+        // this.laserMesh.height = 0;
+        // this.laserMesh2.height = 0;
+
+        var laserAnimation = new BABYLON.Animation("laserAnimation", "scaling.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+
+        laserAnimation.setKeys(keys);
+
+        this.laserMesh.animations.push(laserAnimation);
+        this.laserMesh2.animations.push(laserAnimation);
+
+        this.scene.beginAnimation(this.laserMesh, 0, 100, true);
+        this.scene.beginAnimation(this.laserMesh2, 0, 100, true);
     }
 
     shootLaser(target, scene) {

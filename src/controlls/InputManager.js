@@ -6,6 +6,7 @@ export default class {
     constructor(scene, ship, cockpit, cameraManager, game) {
         this.scene = scene;
         this.ship = ship;
+        this.cockpit = cockpit;
         this.cockpitParts = cockpit.CockpitParts;
         this.cameraManager = cameraManager;
         this.cockpitMode = true;
@@ -308,6 +309,12 @@ export default class {
 
                 // This attaches the camera to the canvas
                 // this.game.cameraManager.camera.attachControl(this.game.canvas, true);
+            }
+
+            // Space Key - Mining
+            if(code == 32){
+                console.log('Start Mining');
+                this.cockpit.startMining();
             }
 
             // Shake M-Key Wormhole
