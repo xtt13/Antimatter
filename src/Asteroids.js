@@ -68,14 +68,14 @@ export default class {
             asteroid.isTargetable = true;
             asteroid.receiveShadows = true;
 
-            this.customOutline = asteroid.clone('customAsteroidOutline');
-            this.customOutline.isVisible = false;
-            this.customOutline.scaling = new BABYLON.Vector3(1.1, 1.1, 1.1);
-            this.customOutline.material = new BABYLON.StandardMaterial('outlineMaterial', this.scene);
-            this.customOutline.material.diffuseColor = new BABYLON.Color3(0, 1, 1);
-            this.customOutline.material.emissiveColor = new BABYLON.Color3(0, 1, 1);
-            this.customOutline.material.specularColor = new BABYLON.Color3(0, 1, 1);
-            this.customOutline.material.alpha = 1;
+            asteroid.customOutline = asteroid.clone('customAsteroidOutline');
+            asteroid.customOutline.isVisible = false;
+            asteroid.customOutline.scaling = new BABYLON.Vector3(1.1, 1.1, 1.1);
+            asteroid.customOutline.material = new BABYLON.StandardMaterial('outlineMaterial', this.scene);
+            asteroid.customOutline.material.diffuseColor = new BABYLON.Color3(0, 1, 1);
+            asteroid.customOutline.material.emissiveColor = new BABYLON.Color3(0, 1, 1);
+            asteroid.customOutline.material.specularColor = new BABYLON.Color3(0, 1, 1);
+            asteroid.customOutline.material.alpha = 1;
 
 
 
@@ -117,6 +117,15 @@ export default class {
                     rndNumber
                 );
 
+                asteroidInstance.customOutline = asteroid.clone('customAsteroidOutline');
+                asteroidInstance.customOutline.isVisible = false;
+                asteroidInstance.customOutline.scaling = new BABYLON.Vector3(1.1, 1.1, 1.1);
+                asteroidInstance.customOutline.material = new BABYLON.StandardMaterial('outlineMaterial', this.scene);
+                asteroidInstance.customOutline.material.diffuseColor = new BABYLON.Color3(0, 1, 1);
+                asteroidInstance.customOutline.material.emissiveColor = new BABYLON.Color3(0, 1, 1);
+                asteroidInstance.customOutline.material.specularColor = new BABYLON.Color3(0, 1, 1);
+                asteroidInstance.customOutline.material.alpha = 1;
+
                 //Any subsequent changes to position / rotation / scaling will then be ignore:
                 // asteroidInstance.freezeWorldMatrix();
 
@@ -128,7 +137,7 @@ export default class {
                 // asteroidInstance.isTargetable = true;
 
                 // console.log(this.baseObject);
-                this.initTargetableActions(asteroidInstance, this.customOutline);
+                this.initTargetableActions(asteroidInstance, asteroidInstance.customOutline);
 
                 this.asteroids.push(asteroidInstance);
 
@@ -161,7 +170,7 @@ export default class {
         this.advancedTexture.addControl(label);
 
         label.linkWithMesh(mesh);
-        label.linkOffsetY = -30;
+        label.linkOffsetY = -90;
 
         var text = new GUI.TextBlock();
         text.text = mesh.type;
@@ -185,6 +194,15 @@ export default class {
     removeLabel(mesh, label) {
         label.isVisible = false;
         this.line.isVisible = false;
+    }
+
+    addCustomOutline(mesh){
+        mesh.customOutline.parent = mesh;
+        mesh.customOutline.isVisible = true;
+    }
+
+    removeCustomOutline(mesh){
+        mesh.customOutline.isVisible = false;
     }
 
     initTargetableActions(target, customOutline) {

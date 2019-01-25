@@ -295,15 +295,30 @@ void main(void) {
         console.log('create laser');
 
         this.laserMesh = BABYLON.MeshBuilder.CreatePlane("pl", { width: 14, height: laserlen }, this.scene);
+        this.laserMesh2 = BABYLON.MeshBuilder.CreatePlane("pl2", { width: 14, height: laserlen }, this.scene);
 
-        this.laserMesh.rotation.y = Math.PI / 2;
         this.laserMesh.rotation.x = Math.PI / 2;
+        this.laserMesh.rotation.y = Math.PI / 2;
         this.laserMesh.rotation.z = Math.PI / 2;
 
+
+        this.laserMesh2.rotation.x = Math.PI / 2;
+        this.laserMesh2.rotation.y = Math.PI / 2;
+        this.laserMesh2.rotation.z = Math.PI / 2;
+
         this.laserMesh.parent = this.hudB;
+        this.laserMesh2.parent = this.hudB;
+
         this.laserMesh.translate(BABYLON.Axis.Y, laserlen/2 + 50, BABYLON.Space.LOCAL) 
+        this.laserMesh2.translate(BABYLON.Axis.Y, laserlen/2 + 50, BABYLON.Space.LOCAL) 
+
         this.laserMesh.translate(BABYLON.Axis.Z, -40, BABYLON.Space.LOCAL) 
+        this.laserMesh2.translate(BABYLON.Axis.Z, -40, BABYLON.Space.LOCAL) 
+
         this.laserMesh.rotate(BABYLON.Axis.X, -0.2, BABYLON.Space.LOCAL) 
+        this.laserMesh2.rotate(BABYLON.Axis.X, -0.2, BABYLON.Space.LOCAL) 
+
+        this.laserMesh2.rotate(BABYLON.Axis.Y, Math.PI / 2, BABYLON.Space.LOCAL) 
 
         // var matrix = BABYLON.Matrix.Translation(laserlen, 0, 0);
         // plane2.setPivotMatrix(matrix);
@@ -317,6 +332,7 @@ void main(void) {
         laserMaterial.backFaceCulling = false;
 
         this.laserMesh.material = laserMaterial;
+        this.laserMesh2.material = laserMaterial;
     }
 
     shootLaser(target, scene) {

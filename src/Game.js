@@ -303,6 +303,9 @@ export default class {
 
 				if(this.cockpit.laserMesh.intersectsMesh(element, true)){
 					console.log('INTERSECTION');
+					this.asteroids.addCustomOutline(element);
+				} else {
+					this.asteroids.removeCustomOutline(element);
 				}
 
 				if (this.cockpit.cockpit.intersectsMesh(element, false)) {
@@ -464,7 +467,6 @@ export default class {
 			// }
 
 		});
-
 
 		this.engine.runRenderLoop(() => {
 
