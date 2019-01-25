@@ -196,14 +196,15 @@ export default class {
 
                 var scalingValue = BABYLON.Vector3.Distance(this.scene.activeCamera.globalPosition, mesh.position) / 500;
 
-                customOutline.position = mesh.position;
-                customOutline.scaling = new BABYLON.Vector3(
-                    mesh.scaling.x + scalingValue,
-                    mesh.scaling.y + scalingValue,
-                    mesh.scaling.z + scalingValue
-                );
+                customOutline.parent = mesh;
+                // customOutline.position = mesh.position;
+                // customOutline.scaling = new BABYLON.Vector3(
+                //     mesh.scaling.x + scalingValue,
+                //     mesh.scaling.y + scalingValue,
+                //     mesh.scaling.z + scalingValue
+                // );
 
-                customOutline.rotation = mesh.rotation;
+                // customOutline.rotation = mesh.rotation;
                 customOutline.isVisible = true;
 
                 label = this.addLabel(target);

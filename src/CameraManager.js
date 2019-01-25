@@ -113,7 +113,7 @@ export default class {
         });
     }
 
-    shake(sound = false, loop = false) {
+    shake(sound = false, loop = false, duration = 660) {
 
         // Keine Animation auf die Rotation weil ich sonst meine Kamera nicht mehr bewegen kann!
         // Daher Animation auf die Position!
@@ -152,7 +152,7 @@ export default class {
         this.camera.animations.push(cameraAnimation);
 
         //Finally, launch animations on torus, from key 0 to key 120 with loop activated
-        this.scene.beginAnimation(this.camera, 0, 660, true);
+        this.scene.beginAnimation(this.camera, 0, duration, true);
 
         if (sound) {
             this.shakeSound = new BABYLON.Sound("shakeSound", "assets/audio/sound/shake.mp3", this.scene, null,

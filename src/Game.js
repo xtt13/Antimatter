@@ -235,8 +235,10 @@ export default class {
 
 
 
-
 		// Create Sun
+
+
+		// Create Sun Light
 		this.sun = new BABYLON.PointLight("sun", new BABYLON.Vector3(-30000, 0, 50), this.scene);
 		this.sun.diffuse = new BABYLON.Color3(1, 0.9, 0.9);
 		this.sun.specular = new BABYLON.Color3(0, 0, 0);
@@ -314,6 +316,68 @@ export default class {
 								autoplay: true
 							}
 						);
+
+						this.alarmSound = new BABYLON.Sound("alarmSound", "assets/audio/sound/alarm.mp3", this.scene, null,
+						{
+							playbackRate: 1,
+							volume: 0.3,
+							loop: true,
+							autoplay: true
+						})
+
+						setTimeout(() => {
+							this.boardComputerDamages = new BABYLON.Sound("boardComputerDamages", "assets/audio/sound/boardComputerDamages.mp3", this.scene, null,
+							{
+								playbackRate: 1,
+								volume: 1,
+								autoplay: true
+							})
+						}, 3000);
+
+						let hudAInterval = setInterval(() => {
+							if(this.cockpit.hudA.material.pointsCloud == false){
+								this.cockpit.hudA.material.pointsCloud = true;
+							} else {
+								this.cockpit.hudA.material.pointsCloud = false;
+							}
+						}, 50);
+
+						let hudBInterval = setInterval(() => {
+							if(this.cockpit.hudB.material.alpha == 0){
+								this.cockpit.hudB.material.alpha = 1;
+							} else {
+								this.cockpit.hudB.material.alpha = 0;
+							}
+						}, 80);
+
+						setTimeout(() => {
+							clearInterval(hudAInterval);
+							clearInterval(hudBInterval);
+
+							this.alarmSound.stop();
+
+							this.cockpit.hudA.material.pointsCloud = true;
+							this.cockpit.hudB.material.alpha = 0;
+							
+							this.bootUp = new BABYLON.Sound("bootUp", "assets/audio/sound/bootup.mp3", this.scene, null,
+							{
+								playbackRate: 1,
+								volume: 0.5,
+								autoplay: true
+							});
+							setTimeout(() => {
+								let hudBIntervalAlpha = setInterval(() => {
+									if(this.cockpit.hudB.material.alpha < 1){
+										this.cockpit.hudB.material.alpha += 0.005;
+									} else {
+										clearInterval(hudBIntervalAlpha);
+										this.cockpit.hudA.material.pointsCloud = false;
+									}
+								}, 10);
+							}, 3000);
+						}, 5000);
+
+						// this.cameraManager.shake(false, false, 100);
 
 						this.collisionSound.onended = () => {
 							this.collisionSoundSwitch = true;
