@@ -2,13 +2,16 @@ import * as BABYLON from 'babylonjs';
 import * as GUI from 'babylonjs-gui';
 
 export default class {
-    constructor(scene, camera, asteroids) {
+    constructor(scene, camera, asteroids, cockpit) {
         this.scene = scene;
         this.camera = camera;
         this.asteroids = asteroids.asteroids;
+        this.cockpit = cockpit;
 
         this.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui1");
         this.labels = [];
+
+        this.asteroidScreenEnabled = false;
 
         // Show Textbox
         // this.createIntroScreen();
@@ -84,20 +87,50 @@ export default class {
         this.labels.push(label);
     }
 
+    createGUIData(){
+        let string = '';
+
+        let store = this.cockpit.store;
+
+        for (let i = 0; i < store.length; i++) {
+            const element = store[i];
+
+            let classValue;
+            if(element.amount == element.max){
+                classValue = " class='full' ";
+            } else {
+                classValue = '';
+            }
+
+            string += `<span${classValue}>${element.name} ${element.amount}/${element.max}t</span> `;
+        }
+
+        return string;
+    }
+
+    updateGUI(){
+        if(this.asteroidScreenEnabled){
+            let screen = document.querySelector('.asteroidsUI');
+            screen.innerHTML = this.createGUIData();
+        }
+    }
+
     enableAsteroidScreen() {
+        this.asteroidScreenEnabled = true;
+
         var n = document.createElement('div');
         n.setAttribute('class', 'scanlines ui-block asteroidsUI');
 
-        let content = `<span>Iron 0/5t</span> <span>Gold 0/10t</span>  <span>Doxtrit 0/8t</span>  <span>Pyresium 0/12t</span>  <span>Perrius 0/8t</span>`;
+        // let content = `<span>Iron 0/5t</span> <span>Gold 0/10t</span>  <span>Doxtrit 0/8t</span>  <span>Pyresium 0/12t</span>  <span>Perrius 0/8t</span>`;
 
-        n.innerHTML = content;
+        n.innerHTML = this.createGUIData();
 
         document.body.appendChild(n);
-
 
     }
 
     disableAsteroidScreen(){
+        this.asteroidScreenEnabled = false;
         let elem = document.querySelector('.asteroidsUI');
         elem.parentNode.removeChild(elem);
     }

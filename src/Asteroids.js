@@ -21,13 +21,37 @@ export default class {
         this.min = 1;
         this.max = 30;
 
+        // this.types = [
+        //     'Iron 5 t',
+        //     'Gold 10 t',
+        //     'Doxtrit 3 t',
+        //     'Pyresium 12 t',
+        //     'Perrius 8 t'
+        // ];
+
         this.types = [
-            'Iron 5 t',
-            'Gold 10 t',
-            'Doxtrit 3 t',
-            'Pyresium 12 t',
-            'Perrius 8 t'
+            {
+                name: 'Iron',
+                amount: 5
+            },
+            {
+                name: 'Gold',
+                amount: 10
+            },
+            {
+                name: 'Doxtrit',
+                amount: 3
+            },
+            {
+                name: 'Pyresium',
+                amount: 12
+            },
+            {
+                name: 'Perrius',
+                amount: 8
+            }
         ];
+
 
         this.position = {
             x: -6000,
@@ -126,6 +150,8 @@ export default class {
                 asteroidInstance.customOutline.material.specularColor = new BABYLON.Color3(0, 1, 1);
                 asteroidInstance.customOutline.material.alpha = 1;
 
+                asteroidInstance.currentlyMining = false;
+
                 //Any subsequent changes to position / rotation / scaling will then be ignore:
                 // asteroidInstance.freezeWorldMatrix();
 
@@ -154,7 +180,7 @@ export default class {
     }
 
     addLabel(mesh) {
-        var label = new GUI.Rectangle("label for " + mesh.name);
+        var label = new GUI.Rectangle("label for " + mesh.type);
 
         // label.background = "black"
         label.height = "35px";
@@ -173,7 +199,7 @@ export default class {
         label.linkOffsetY = -90;
 
         var text = new GUI.TextBlock();
-        text.text = mesh.type;
+        text.text = mesh.type.name + ' ' + mesh.type.amount + 't';
         text.color = "cyan";
         label.addControl(text);
 

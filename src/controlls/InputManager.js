@@ -314,7 +314,7 @@ export default class {
             // Space Key - Mining
             if(code == 32){
                 console.log('Start Mining');
-                this.cockpit.startMining();
+                this.cockpit.startLaser();
             }
 
             // Shake M-Key Wormhole

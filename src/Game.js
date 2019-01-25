@@ -112,7 +112,7 @@ export default class {
 		this.SoundManager = new SoundManager(this.scene, this.assetsManager);
 
 		this.ship = new Ship(this.scene, this.assetsManager);
-		this.cockpit = new Cockpit(this.scene, this.assetsManager, this.ship.ship, this.engine);
+		this.cockpit = new Cockpit(this.scene, this.assetsManager, this.ship.ship, this.engine, this);
 
 		this.spaceStation = new Spacestation(this.scene, this.engine, this.assetsManager);
 		this.planet = new Planet(this.scene, this.engine, this.assetsManager, "Game");
@@ -188,7 +188,7 @@ export default class {
 		this.PostProcess = new PostProcesses(this.scene, this.cameraManager.camera);
 
 		// Init GUI
-		this.GUIClass = new GUI(this.scene, this.cameraManager, this.asteroids);
+		this.GUIClass = new GUI(this.scene, this.cameraManager, this.asteroids, this.cockpit);
 
 
 
@@ -301,11 +301,27 @@ export default class {
 			for (let i = 0; i < this.asteroidsArr.length; i++) {
 				let element = this.asteroidsArr[i];
 
-				if(this.cockpit.laserMesh.intersectsMesh(element, true)){
+				if(this.cockpit.laserMesh.intersectsMesh(element, true) && !element.currentlyMining){
 					console.log('INTERSECTION');
+
+					element.currentlyMining = true;
+
 					this.asteroids.addCustomOutline(element);
+
+					this.cockpit.startMining(element);
+
 				} else {
-					this.asteroids.removeCustomOutline(element);
+
+					if(!this.cockpit.laserMesh.intersectsMesh(element, true) && element.currentlyMining){
+						element.currentlyMining = false;
+
+						console.log('Stop');
+
+						this.asteroids.removeCustomOutline(element);
+
+						this.cockpit.stopMining();
+					}
+
 				}
 
 				if (this.cockpit.cockpit.intersectsMesh(element, false)) {

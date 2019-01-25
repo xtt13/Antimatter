@@ -2,11 +2,43 @@ import * as BABYLON from 'babylonjs';
 import config from './../config';
 
 export default class {
-    constructor(scene, assetsManager, ship, engine) {
+    constructor(scene, assetsManager, ship, engine, game) {
         this.scene = scene;
         this.assetsManager = assetsManager;
         this.ship = ship;
         this.engine = engine;
+        this.game = game;
+
+        this.currentlyMining = false;
+        this.currentlyMiningSwitch = true;
+
+        this.store = [
+            {
+                name: 'Iron',
+                amount: 0,
+                max: 5
+            },
+            {
+                name: 'Gold',
+                amount: 0,
+                max: 10
+            },
+            {
+                name: 'Doxtrit',
+                amount: 0,
+                max: 8
+            },
+            {
+                name: 'Pyresium',
+                amount: 0,
+                max: 12
+            },
+            {
+                name: 'Perrius',
+                amount: 0,
+                max: 8
+            }
+        ];
 
         this.loadCockpit();
     }
@@ -343,7 +375,73 @@ void main(void) {
         console.log(this.laserMesh);
     }
 
-    startMining() {
+    startMining(asteroid){
+        if (this.currentlyMining) {
+            console.log(asteroid.type.name, asteroid.type.amount);
+            
+            this.laserSound = new BABYLON.Sound("laserSound", "assets/audio/sound/laser.mp3", this.scene, null,
+                {
+                    loop: true,
+                    volume: 0.5,
+                    autoplay: true
+                }
+            );
+
+            setTimeout(() => {
+
+                if(!this.currentlyMining) return;
+
+                let rock = asteroid.type.name;
+                let amount = asteroid.type.amount;
+
+                let miningInterval = setInterval(() => {
+
+                    console.log(this.store);
+
+                    if(!this.currentlyMining){
+                        clearInterval(miningInterval);
+                    } else {
+                        
+                        for (let i = 0; i < this.store.length; i++) {
+                            const element = this.store[i];
+
+                            if(element.name == rock){
+                                if(element.amount < element.max){
+                                    if(amount > 0){
+                                        amount -= 1;
+                                        asteroid.type.amount -= 1;
+
+                                        this.store[i].amount += 1;
+
+                                        // Update GUI
+                                        this.game.GUIClass.updateGUI();
+
+                                    } else {
+                                        // Destroy Asteroid
+
+                                        this.currentlyMining = false;
+                                        clearInterval(miningInterval);
+
+                                    }
+                                }
+                            }
+                            
+                        }
+
+
+
+
+
+                    }
+                }, 2000);
+                
+            }, 2000);
+
+        }
+    }
+
+    startLaser() {
+
         var keys = [];
 
         keys.push({
@@ -368,6 +466,39 @@ void main(void) {
 
         this.scene.beginAnimation(this.laserMesh, 0, 100, true);
         this.scene.beginAnimation(this.laserMesh2, 0, 100, true);
+
+        this.currentlyMining = true;
+    }
+
+    stopMining() {
+
+        if (!this.currentlyMining) return;
+        this.currentlyMining = false;
+
+        var keys = [];
+
+        keys.push({
+            frame: 0,
+            value: 0
+        });
+
+        keys.push({
+            frame: 50,
+            value: this.laserlen
+        });
+
+        // this.laserMesh.height = 0;
+        // this.laserMesh2.height = 0;
+
+        var laserAnimation = new BABYLON.Animation("laserAnimation", "scaling.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+
+        laserAnimation.setKeys(keys);
+
+        this.laserMesh.animations.push(laserAnimation);
+        this.laserMesh2.animations.push(laserAnimation);
+
+        this.scene.beginAnimation(this.laserMesh, 50, 0, true);
+        this.scene.beginAnimation(this.laserMesh2, 50, 0, true);
     }
 
     shootLaser(target, scene) {
