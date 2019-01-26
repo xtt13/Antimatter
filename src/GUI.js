@@ -127,12 +127,29 @@ export default class {
 
         document.body.appendChild(n);
 
+        this.showGUISound = new BABYLON.Sound("showGUISound", "assets/audio/sound/popup.mp3", this.scene, null,
+        {
+            loop: false,
+            volume: 0.5,
+            autoplay: true
+        }
+    );
+
     }
 
     disableAsteroidScreen(){
+
         this.asteroidScreenEnabled = false;
         let elem = document.querySelector('.asteroidsUI');
         elem.parentNode.removeChild(elem);
+
+        this.removeGUISound = new BABYLON.Sound("removeGUISound", "assets/audio/sound/popaway.mp3", this.scene, null,
+        {
+            loop: false,
+            volume: 0.5,
+            autoplay: true
+        });
+
     }
 
 

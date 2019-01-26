@@ -245,7 +245,7 @@ export default class {
 		this.sun.intensity = 1000000000;
 		this.sun.shadowMinZ = 30;
 		this.sun.shadowMaxZ = 1800000;
-		// this.sun.excludedMeshes = [planet.atmosphere];
+		this.sun.excludedMeshes = [this.cockpit.cylinder];
 
 		// Create Lensflares
 		var lensFlareSystem = new BABYLON.LensFlareSystem("lensFlareSystem", this.sun, this.scene);
@@ -299,34 +299,34 @@ export default class {
 			}
 
 			for (let i = 0; i < this.asteroidsArr.length; i++) {
-				let element = this.asteroidsArr[i];
+				let asteroid = this.asteroidsArr[i];
 
-				if(this.cockpit.laserMesh.intersectsMesh(element, true) && !element.currentlyMining){
+				if(this.cockpit.laserMesh.intersectsMesh(asteroid, true) && !asteroid.currentlyMining){
 					console.log('INTERSECTION');
 
-					element.currentlyMining = true;
+					asteroid.currentlyMining = true;
 
-					this.asteroids.addCustomOutline(element);
+					this.asteroids.addCustomOutline(asteroid);
 
-					this.cockpit.startMining(element);
+					this.cockpit.startMining(asteroid);
 
 				} else {
 
-					if(!this.cockpit.laserMesh.intersectsMesh(element, true) && element.currentlyMining){
-						element.currentlyMining = false;
+					if(!this.cockpit.laserMesh.intersectsMesh(asteroid, true) && asteroid.currentlyMining){
+						asteroid.currentlyMining = false;
 
 						console.log('Stop');
 
-						this.asteroids.removeCustomOutline(element);
+						this.asteroids.removeCustomOutline(asteroid);
 
 						this.cockpit.stopMining();
 					}
 
 				}
 
-				if (this.cockpit.cockpit.intersectsMesh(element, false)) {
+				if (this.cockpit.cockpit.intersectsMesh(asteroid, false)) {
 
-					this.asteroidsMoving.push(element);
+					this.asteroidsMoving.push(asteroid);
 
 					this.inputManager.airSpeed = -0.5;
 					let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;

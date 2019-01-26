@@ -59,7 +59,6 @@ export default class {
             z: -10000
         }
 
-        console.log(this.position);
 
         this.numberOfAsteroid = 900;
         this.spread = 6000;
@@ -109,7 +108,7 @@ export default class {
             // Create numberOfAsteroids
             for (var i = 0; i < this.numberOfAsteroid; i++) {
 
-                var asteroidInstance = asteroid.createInstance('Asteroid-' + i);
+                var asteroidInstance = asteroid.createInstance(i + '');
 
                 // Set Asteroid Position
                 asteroidInstance.position = new BABYLON.Vector3(
@@ -180,7 +179,7 @@ export default class {
     }
 
     addLabel(mesh) {
-        var label = new GUI.Rectangle("label for " + mesh.type);
+        var label = new GUI.Rectangle("label for " + mesh.type.name);
 
         // label.background = "black"
         label.height = "35px";
@@ -203,23 +202,12 @@ export default class {
         text.color = "cyan";
         label.addControl(text);
 
-        var points = [
-            mesh.position,
-            this.scene.activeCamera.globalPosition
-        ];
-
-        this.line = BABYLON.MeshBuilder.CreateLines("lines", { points: points }, this.scene);
-        this.line.color = new BABYLON.Color3(0, 1, 1);
-
-        console.log(this.line);
-        console.log(label);
 
         return label;
     }
 
     removeLabel(mesh, label) {
         label.isVisible = false;
-        this.line.isVisible = false;
     }
 
     addCustomOutline(mesh){
@@ -242,6 +230,9 @@ export default class {
                 var scalingValue = BABYLON.Vector3.Distance(this.scene.activeCamera.globalPosition, mesh.position) / 500;
 
                 customOutline.parent = mesh;
+
+                console.log(mesh.type);
+
                 // customOutline.position = mesh.position;
                 // customOutline.scaling = new BABYLON.Vector3(
                 //     mesh.scaling.x + scalingValue,
@@ -254,9 +245,6 @@ export default class {
 
                 label = this.addLabel(target);
 
-                this.cockpit.shootLaser(target, this.scene)
-
-
                 let beepSound = new BABYLON.Sound("beepSound", "assets/audio/sound/beep.mp3", this.scene, null,
                     {
                         playbackRate: 1,
@@ -265,7 +253,6 @@ export default class {
                         autoplay: true
                     })
 
-                // shootLaser(ship, mesh, scene);
             })
         );
 

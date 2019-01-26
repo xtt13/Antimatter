@@ -38,6 +38,8 @@ export default class {
             this.StationRing = this.scene.getMeshByName("StationRing");
             this.StationMiddle = this.scene.getMeshByName("StationMiddle");
 
+            console.log(this.StationMiddle);
+
             this.StationBottom.scaling = new BABYLON.Vector3(config.spaceStationScaling, config.spaceStationScaling, config.spaceStationScaling);
             this.StationTop.scaling = new BABYLON.Vector3(config.spaceStationScaling, config.spaceStationScaling, config.spaceStationScaling);
             this.StationRing.scaling = new BABYLON.Vector3(config.spaceStationScaling, config.spaceStationScaling, config.spaceStationScaling);

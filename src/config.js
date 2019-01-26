@@ -16,7 +16,7 @@ export default {
 	// ##################
 	// Show Debug Layer
 	// ##################
-	showDebugLayer: false,
+	showDebugLayer: true,
 
 	// ##################
 	// Diable Music
