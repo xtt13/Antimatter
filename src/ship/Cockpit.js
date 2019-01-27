@@ -98,6 +98,8 @@ export default class {
             this.cylinder = BABYLON.Mesh.CreateCylinder("space", 10 * spaceScale, 0, 6 * spaceScale, 20, 20, this.scene);
             this.cylinder.parent = this.cockpit;
             this.cylinder.rotate(BABYLON.Axis.X, Math.PI / 2, BABYLON.Space.LOCAL);
+            this.cylinder.isVisible = false;
+
 
 
             this.cockpit.onCollide = () => {
@@ -113,6 +115,8 @@ export default class {
     }
 
     createSpaceTunnel(viaconfig = false, cameraManager, inputManager, game) {
+
+        this.cylinder.isVisible = true;
 
         // FadeOut Music
         game.MusicManager.fadeOutMusic();
@@ -350,8 +354,8 @@ void main(void) {
         this.laserMesh2.translate(BABYLON.Axis.Z, -20, BABYLON.Space.LOCAL)
 
         // Rotate
-        this.laserMesh.rotate(BABYLON.Axis.X, -0.3, BABYLON.Space.LOCAL)
-        this.laserMesh2.rotate(BABYLON.Axis.X, -0.3, BABYLON.Space.LOCAL)
+        this.laserMesh.rotate(BABYLON.Axis.X, -0.2, BABYLON.Space.LOCAL)
+        this.laserMesh2.rotate(BABYLON.Axis.X, -0.2, BABYLON.Space.LOCAL)
 
         this.laserMesh2.rotate(BABYLON.Axis.Y, Math.PI / 2, BABYLON.Space.LOCAL)
 
@@ -540,16 +544,75 @@ void main(void) {
         this.currentlyMining = true;
     }
 
+    stopLaser() {
+        this.scene.stopAnimation(this.laserMesh);
+        this.scene.stopAnimation(this.laserMesh2);
+
+        this.startParticles();
+    }
+
+    startParticles() {
+        this.particleSystemHit = new BABYLON.ParticleSystem("particles", 1000, this.scene);
+
+        //Texture of each particle
+        this.particleSystemHit.particleTexture = new BABYLON.Texture("./assets/textures/laser/flare.png", this.scene);
+
+        // Where the particles come from
+        this.particleSystemHit.emitter = this.laserMesh; // the starting object, the emitter
+        this.particleSystemHit.minEmitBox = new BABYLON.Vector3(0, 0, 0); // Starting all from
+        this.particleSystemHit.maxEmitBox = new BABYLON.Vector3(0, 0, 0); // To ...
+
+        // Colors of all particles
+        this.particleSystemHit.color1 = new BABYLON.Color4(1, 0, 0, 1.0);
+        this.particleSystemHit.color2 = new BABYLON.Color4(1, 0.5, 0, 0.8);
+        this.particleSystemHit.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
+
+        // Size of each particle (random between...
+        this.particleSystemHit.minSize = 5;
+        this.particleSystemHit.maxSize = 10;
+
+        // Life time of each particle (random between...
+        this.particleSystemHit.minLifeTime = 0.3;
+        this.particleSystemHit.maxLifeTime = 1;
+
+        // Emission rate
+        this.particleSystemHit.emitRate = 300;
+
+        // manually emit
+        //particleSystemHit.manualEmitCount = 3000;
+        // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
+        this.particleSystemHit.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+
+        // Direction of each particle after it has been emitted
+    //     var baseImpactReactionDirection = this.hudB.position.subtract(target.position).normalize().scale(5);
+    //    this.particleSystemHit.direction1 = baseImpactReactionDirection.add(new BABYLON.Vector3(5, 5, 5));
+    //    this.particleSystemHit.direction2 = baseImpactReactionDirection.subtract(new BABYLON.Vector3(5, 5, 5));
+
+        // Angular speed, in radians
+        this.particleSystemHit.minAngularSpeed = 0;
+        this.particleSystemHit.maxAngularSpeed = Math.PI;
+
+        // Speed
+        this.particleSystemHit.minEmitPower = 0.3;
+        this.particleSystemHit.maxEmitPower = 0.7;
+        this.particleSystemHit.updateSpeed = 0.01;
+
+        // Start the particle system
+        this.particleSystemHit.start();
+    }
+
     stopMining() {
 
-        if(this.laserSound){
+        this.particleSystemHit.stop();
+
+        if (this.laserSound) {
             this.laserSound.stop();
         }
 
         if (!this.currentlyMining) return;
         this.currentlyMining = false;
 
-        
+
 
         var keys = [];
 

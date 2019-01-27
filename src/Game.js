@@ -306,6 +306,8 @@ export default class {
 				if(this.cockpit.laserMesh.intersectsMesh(asteroid, true) && !asteroid.currentlyMining){
 					console.log('INTERSECTION');
 
+					this.cockpit.stopLaser();
+
 					asteroid.currentlyMining = true;
 
 					this.asteroids.addCustomOutline(asteroid);
