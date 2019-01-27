@@ -52,6 +52,8 @@ export default class {
             }
         ];
 
+        this.data = [];
+
 
         this.position = {
             x: -6000,
@@ -78,7 +80,7 @@ export default class {
 
             // After Texture Loading
             // loadBumpMap.onSuccess = (task) => {
-                // asteroid.material.bumpTexture = task.texture;
+            // asteroid.material.bumpTexture = task.texture;
             // }
 
             // asteroid.material = null;
@@ -120,6 +122,8 @@ export default class {
                 // Set Rock Type
                 asteroidInstance.type = this.types[Math.floor(Math.random() * this.types.length)];
 
+                this.data.push({ id: i, amount: asteroidInstance.type.amount });
+
                 // Create random XYZ Values
                 var rndRotX = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
                 var rndRotY = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
@@ -151,6 +155,8 @@ export default class {
 
                 asteroidInstance.currentlyMining = false;
 
+                asteroidInstance.isBlocker = true;
+
                 //Any subsequent changes to position / rotation / scaling will then be ignore:
                 // asteroidInstance.freezeWorldMatrix();
 
@@ -167,7 +173,12 @@ export default class {
                 this.asteroids.push(asteroidInstance);
 
 
+
+
             }
+
+            console.log(this.data);
+            console.log(this.asteroids);
 
             // var allAsteroids = BABYLON.Mesh.MergeMeshes(this.asteroids);  
 
@@ -178,7 +189,7 @@ export default class {
         }
     }
 
-    addLabel(mesh) {
+    addLabel(mesh, amount) {
         var label = new GUI.Rectangle("label for " + mesh.type.name);
 
         // label.background = "black"
@@ -198,7 +209,7 @@ export default class {
         label.linkOffsetY = -90;
 
         var text = new GUI.TextBlock();
-        text.text = mesh.type.name + ' ' + mesh.type.amount + 't';
+        text.text = mesh.type.name + ' ' + amount + 't';
         text.color = "cyan";
         label.addControl(text);
 
@@ -210,12 +221,12 @@ export default class {
         label.isVisible = false;
     }
 
-    addCustomOutline(mesh){
+    addCustomOutline(mesh) {
         mesh.customOutline.parent = mesh;
         mesh.customOutline.isVisible = true;
     }
 
-    removeCustomOutline(mesh){
+    removeCustomOutline(mesh) {
         mesh.customOutline.isVisible = false;
     }
 
@@ -231,7 +242,21 @@ export default class {
 
                 customOutline.parent = mesh;
 
-                console.log(mesh.type);
+                
+
+                let rockStorage;
+                for (let i = 0; i < this.data.length; i++) {
+                    let element = this.data[i];
+
+                    if (parseInt(mesh.id) == element.id) {
+                        rockStorage = element.amount;
+                        break;
+                    }
+
+                }
+
+                console.log('Rocktype: ' + mesh.type.name + ', Amount: ' + rockStorage);
+
 
                 // customOutline.position = mesh.position;
                 // customOutline.scaling = new BABYLON.Vector3(
@@ -243,7 +268,7 @@ export default class {
                 // customOutline.rotation = mesh.rotation;
                 customOutline.isVisible = true;
 
-                label = this.addLabel(target);
+                label = this.addLabel(target, rockStorage);
 
                 let beepSound = new BABYLON.Sound("beepSound", "assets/audio/sound/beep.mp3", this.scene, null,
                     {

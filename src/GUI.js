@@ -116,6 +116,8 @@ export default class {
     }
 
     enableAsteroidScreen() {
+        if(this.asteroidScreenEnabled) return;
+
         this.asteroidScreenEnabled = true;
 
         var n = document.createElement('div');
@@ -138,6 +140,8 @@ export default class {
     }
 
     disableAsteroidScreen(){
+
+        if(!this.asteroidScreenEnabled) return;
 
         this.asteroidScreenEnabled = false;
         let elem = document.querySelector('.asteroidsUI');

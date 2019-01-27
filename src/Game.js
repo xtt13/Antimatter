@@ -38,14 +38,14 @@ import Arc from './Arc';
 export default class {
 	constructor() {
 
-		let qualitySettings = localStorage.getItem('qualitySettings');
-		if (qualitySettings == undefined || qualitySettings == 'auto') {
-			qualitySettings = false;
-		} else if (qualitySettings == 'high') {
-			qualitySettings = true;
+		this.qualitySettings = localStorage.getItem('qualitySettings');
+		if (this.qualitySettings == undefined || this.qualitySettings == 'auto') {
+			this.qualitySettings = false;
+		} else if (this.qualitySettings == 'high') {
+			this.qualitySettings = true;
 		}
 
-		console.log('QualitySettings: ' + qualitySettings);
+		console.log('QualitySettings: ' + this.qualitySettings);
 
 		// Get Canvas
 		this.canvas = document.getElementById("canvasZone");
@@ -63,7 +63,7 @@ export default class {
 
 			// Adapt to Device Ratio
 			// config.forceBestQuality
-			qualitySettings
+			this.qualitySettings
 		);
 
 		this.currentState = config.currentState;
@@ -247,6 +247,8 @@ export default class {
 		this.sun.shadowMaxZ = 1800000;
 		this.sun.excludedMeshes = [this.cockpit.cylinder];
 
+		// var godrays = new BABYLON.VolumetricLightScatteringPostProcess('godrays', 1.0, this.cameraManager.camera, this.sun, 100, BABYLON.Texture.BILINEAR_SAMPLINGMODE, this.engine, false);
+
 		// Create Lensflares
 		var lensFlareSystem = new BABYLON.LensFlareSystem("lensFlareSystem", this.sun, this.scene);
 		var flare00 = new BABYLON.LensFlare(0.1, 0, new BABYLON.Color3(1, 1, 1), "assets/textures/flares/Flare3.png", lensFlareSystem);
@@ -309,6 +311,8 @@ export default class {
 					this.asteroids.addCustomOutline(asteroid);
 
 					this.cockpit.startMining(asteroid);
+
+					this.GUIClass.enableAsteroidScreen();
 
 				} else {
 

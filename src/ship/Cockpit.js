@@ -130,8 +130,15 @@ export default class {
         var hemisphericLight = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 0, 0), this.scene);
         hemisphericLight.excludedMeshes = [this.cockpit, this.hudA, this.hudB, this.joystick, this.thrustLever];
 
+        let spaceTunnelQuality;
+        if (this.game.qualitySettings == 'high') {
+            spaceTunnelQuality = 2048;
+        } else {
+            spaceTunnelQuality = 512;
+        }
+
         // Create Texture
-        var starfieldPT = new BABYLON.StarfieldProceduralTexture("starfieldPT", config.spaceTunnelQuality, this.scene);
+        var starfieldPT = new BABYLON.StarfieldProceduralTexture("starfieldPT", spaceTunnelQuality, this.scene);
 
         // Create Material
         var starfieldMaterial = new BABYLON.StandardMaterial("starfield", this.scene);
@@ -143,7 +150,7 @@ export default class {
         starfieldPT.beta = 0.1;
 
         this.cylinder.material = starfieldMaterial;
-        // this.cylinder.material.alpha = 0;
+        this.cylinder.material.alpha = 0;
         console.log(starfieldMaterial);
 
         // Shake Camera (Sound, Loop)
@@ -152,15 +159,17 @@ export default class {
         // Disable Keys
         inputManager.disableKeys();
 
-        // Remove Orbit Meshes
-        this.wormholePreperations(game);
-
         // Speed Up Sound
         let speedUpSoundInterval = setInterval(() => {
             if (this.cylinder.material.alpha < 1) this.cylinder.material.alpha += 0.04;
             let newVal = game.SoundManager.engineSound._playbackRate += 0.01;
             game.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
         }, 60);
+
+        setTimeout(() => {
+            // Remove Orbit Meshes
+            this.wormholePreperations(game);
+        }, 5000);
 
         // // Shake Sound Volume Var
         let shakeSoundVolume = 1;
@@ -181,6 +190,7 @@ export default class {
 
                 // Remove Tunnel slowly
                 this.cylinder.material.alpha -= 0.002;
+                hemisphericLight.intensity -= 0.01;
 
                 // Fade Out Shake Sound
                 cameraManager.shakeSound.setVolume(shakeSoundVolume);
@@ -366,7 +376,10 @@ void main(void) {
     }
 
     startMining(asteroid) {
+
         if (this.currentlyMining) {
+
+            this.rockVoiceCommand(asteroid.type.name);
 
             this.laserSound = new BABYLON.Sound("laserSound", "assets/audio/sound/laser.mp3", this.scene, null,
                 {
@@ -377,6 +390,25 @@ void main(void) {
                 }
             );
 
+            let dataArray = this.game.asteroids.data;
+            let rockStorage;
+            let rockKey;
+
+            for (let i = 0; i < dataArray.length; i++) {
+                let element = dataArray[i];
+
+                if (parseInt(asteroid.id) == element.id) {
+                    rockStorage = element.amount;
+                    rockKey = i;
+                    break;
+                }
+
+            }
+
+            console.log('Current Asteroid Amount: ' + rockStorage);
+
+            // this.game.asteroids.data[rockKey].amount -= 1;
+
             setTimeout(() => {
 
                 if (!this.currentlyMining) return;
@@ -384,8 +416,6 @@ void main(void) {
                 let rock = asteroid.type.name;
 
                 let miningInterval = setInterval(() => {
-
-                    console.log(this.store);
 
                     if (!this.currentlyMining) {
                         clearInterval(miningInterval);
@@ -404,10 +434,10 @@ void main(void) {
                                 if (element.amount < element.max) {
 
                                     // Is there still more than nothing of the asteroid
-                                    if (asteroid.type.amount > 0) {
+                                    if (this.game.asteroids.data[rockKey].amount > 0) {
 
                                         // Remove 1t of rock
-                                        asteroid.type.amount -= 1;
+                                        this.game.asteroids.data[rockKey].amount -= 1;
 
                                         // Add 1t to the storage
                                         this.store[i].amount += 1;
@@ -425,6 +455,17 @@ void main(void) {
 
                                     } else {
                                         // Destroy Asteroid
+                                        // console.log('DISPOSE ASTEROID');
+
+                                        // let mesh = this.scene.getMeshByName(asteroid.name);
+                                        // mesh.dispose();
+
+                                        this.collisionSound = new BABYLON.Sound("collisionSound", "assets/audio/sound/collision.mp3", this.scene, null,
+                                            {
+                                                volume: 0.5,
+                                                autoplay: true
+                                            }
+                                        );
 
                                         this.stopMining();
                                         clearInterval(miningInterval);
@@ -432,7 +473,22 @@ void main(void) {
 
                                     }
                                 } else {
-                                    // Destroy Asteroid
+
+                                    if (this.game.asteroids.data[rockKey].amount <= 0) {
+                                        // Destroy Asteroid
+                                        // console.log('DISPOSE ASTEROID');
+
+                                        // let mesh = this.scene.getMeshByName(asteroid.name);
+                                        // mesh.dispose();
+
+                                        this.collisionSound = new BABYLON.Sound("collisionSound", "assets/audio/sound/collision.mp3", this.scene, null,
+                                            {
+                                                volume: 0.5,
+                                                autoplay: true
+                                            }
+                                        );
+
+                                    }
 
                                     this.stopMining();
                                     clearInterval(miningInterval);
@@ -486,10 +542,14 @@ void main(void) {
 
     stopMining() {
 
+        if(this.laserSound){
+            this.laserSound.stop();
+        }
+
         if (!this.currentlyMining) return;
         this.currentlyMining = false;
 
-        this.laserSound.stop();
+        
 
         var keys = [];
 
@@ -515,6 +575,63 @@ void main(void) {
 
         this.scene.beginAnimation(this.laserMesh, 50, 0, true);
         this.scene.beginAnimation(this.laserMesh2, 50, 0, true);
+    }
+
+    rockVoiceCommand(type) {
+        switch (type) {
+            case 'Iron':
+                this.storeSound = new BABYLON.Sound("storeSound", "assets/audio/sound/iron.mp3", this.scene, null,
+                    {
+                        loop: false,
+                        volume: 1,
+                        autoplay: true
+                    });
+
+                break;
+
+            case 'Gold':
+                this.storeSound = new BABYLON.Sound("storeSound", "assets/audio/sound/gold.mp3", this.scene, null,
+                    {
+                        loop: false,
+                        volume: 1,
+                        autoplay: true
+                    });
+
+                break;
+
+            case 'Doxtrit':
+                this.storeSound = new BABYLON.Sound("storeSound", "assets/audio/sound/doxtrit.mp3", this.scene, null,
+                    {
+                        loop: false,
+                        volume: 1,
+                        autoplay: true
+                    });
+
+                break;
+
+            case 'Pyresium':
+                this.storeSound = new BABYLON.Sound("storeSound", "assets/audio/sound/pyresium.mp3", this.scene, null,
+                    {
+                        loop: false,
+                        volume: 1,
+                        autoplay: true
+                    });
+
+                break;
+
+            case 'Perrius':
+                this.storeSound = new BABYLON.Sound("storeSound", "assets/audio/sound/perrius.mp3", this.scene, null,
+                    {
+                        loop: false,
+                        volume: 1,
+                        autoplay: true
+                    });
+
+                break;
+
+            default:
+                break;
+        }
     }
 
     shootLaser(target, scene) {

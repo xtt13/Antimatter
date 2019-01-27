@@ -9,14 +9,9 @@ export default {
 	currentState: "Game",
 
 	// ##################
-	// forceBestQuality / No Adaption
-	// ##################
-	forceBestQuality: true,
-
-	// ##################
 	// Show Debug Layer
 	// ##################
-	showDebugLayer: true,
+	showDebugLayer: false,
 
 	// ##################
 	// Diable Music
@@ -81,13 +76,6 @@ export default {
 	maxSpeed: 100,
 	turnSpeed: 0.01,
 	accValue: 0.01,
-
-	// ##################
-	// Enable Wormhole
-	// ##################
-	createSpaceTunnel: false,
-	// spaceTunnelQuality: 2048,
-	spaceTunnelQuality: 512,
 
 
 	// ##################

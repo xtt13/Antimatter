@@ -11,7 +11,9 @@ export default class {
         this.speedVar = 0;
         this.position = new BABYLON.Vector3(8000, 0, 8000);
 
+        this.ready = false;
         this.start = false;
+
         this.visibleRings = false;
 
         // var collSphere = BABYLON.MeshBuilder.CreateSphere("collSphere", {diameter: 2000, diameterX: 3000}, this.scene);
@@ -115,12 +117,18 @@ export default class {
             // gizmoManager.boundingBoxGizmoEnabled = true;
             // gizmoManager.attachableMeshes = [this.jumpGate];
 
+            this.viewjumpGateRings();
 
             this.engine.runRenderLoop(() => {
                 if (this.start) {
                     this.jumpGateRing1.rotate(BABYLON.Axis.Y, this.speedVar, BABYLON.Space.LOCAL);
                     this.jumpGateRing2.rotate(BABYLON.Axis.X, this.speedVar, BABYLON.Space.LOCAL);
                     this.speedVar += 0.001;
+                }
+
+                if(this.ready){
+                    this.jumpGateRing1.rotate(BABYLON.Axis.Y, 0.001, BABYLON.Space.LOCAL);
+                    this.jumpGateRing2.rotate(BABYLON.Axis.X, 0.001, BABYLON.Space.LOCAL);
                 }
             });
 
@@ -135,12 +143,29 @@ export default class {
     viewjumpGateRings() {
         this.jumpGateRing1.isVisible = true;
         this.jumpGateRing2.isVisible = true;
+
+        this.ready = true;
+
+        this.readyJumpGate = new BABYLON.Sound("readyJumpGate", "assets/audio/sound/readyJumpGate.mp3", this.scene, null,
+        {
+            playbackRate: 1,
+            volume: 0.5,
+            loop: true,
+            autoplay: true
+        })
+        
+        this.readyJumpGate.attachToMesh(this.jumpGate);
+
     }
 
     startJumpGate() {
-        this.start = true;
 
-        this.viewjumpGateRings();
+        // Start on Distance
+        // BABYLON.Vector3.Distance(camera.position,mesh.position)
+
+        this.readyJumpGate.stop();
+        this.ready = false;
+        this.start = true;
 
 
         let jumpGateSound = new BABYLON.Sound("jumpGate", "assets/audio/sound/jumpGate.mp3", this.scene, null,
