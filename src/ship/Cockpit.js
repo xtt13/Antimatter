@@ -482,7 +482,12 @@ void main(void) {
                                         );
 
                                         this.stopMining();
+
                                         this.game.asteroids.removeMiningLabel(asteroid);
+                                        this.game.asteroids.removeCustomOutline(asteroid);
+
+                                        this.game.asteroids.asteroids.splice(this.game.asteroids.asteroids.indexOf(asteroid), 1 );
+
                                         clearInterval(miningInterval);
                                         break;
 
@@ -506,7 +511,12 @@ void main(void) {
                                     }
 
                                     this.stopMining();
+
                                     this.game.asteroids.removeMiningLabel(asteroid);
+                                    this.game.asteroids.removeCustomOutline(asteroid);
+
+                                    this.game.asteroids.asteroids.splice(this.game.asteroids.asteroids.indexOf(asteroid), 1 );
+
                                     clearInterval(miningInterval);
                                     break;
                                 }
@@ -538,6 +548,8 @@ void main(void) {
         }
 
         if (finalCheck) {
+
+            this.game.GUIClass.disableAsteroidScreen();
 
             // Voice Command
 
@@ -640,7 +652,7 @@ void main(void) {
                     // (ENTER-Key Start) Instructions
 
 
-                    // this.checkpoint.dispose();
+                    this.checkpoint.isVisible = false;
                 }
 
 

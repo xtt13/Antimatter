@@ -283,7 +283,6 @@ export default class {
 		this.shadowGenerator.useKernelBlur = true;
 		this.shadowGenerator.blurKernel = 64;
 
-		this.asteroidsArr = this.asteroids.asteroids;
 		this.collisionSoundSwitch = true;
 		this.asteroidsMoving = [];
 
@@ -300,8 +299,8 @@ export default class {
 				// }, 15000);
 			}
 
-			for (let i = 0; i < this.asteroidsArr.length; i++) {
-				let asteroid = this.asteroidsArr[i];
+			for (let i = 0; i < this.asteroids.asteroids.length; i++) {
+				let asteroid = this.asteroids.asteroids[i];
 
 				if(this.cockpit.laserMesh.intersectsMesh(asteroid, true) && !asteroid.currentlyMining){
 					console.log('INTERSECTION');
@@ -429,33 +428,33 @@ export default class {
 			}
 
 
-			if (this.cockpit.cockpit.intersectsMesh(this.jumpGate.jumpGate, true)) {
+			// if (this.cockpit.cockpit.intersectsMesh(this.jumpGate.jumpGate, true)) {
 
-				// console.log('COLLISION !!!');
+			// 	// console.log('COLLISION !!!');
 
-				// this.inputManager.airSpeed = -0.5;
+			// 	// this.inputManager.airSpeed = -0.5;
 
-				// let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
-				// this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
-
-
+			// 	// let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
+			// 	// this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
 
 
-				// this.cockpit.explode(this.cockpit.cockpit.position);
 
-				// for (let i = 0; i < this.cockpit.cockpitParts.length; i++) {
-				// 	this.cockpit.cockpitParts[i].translate(BABYLON.Axis.Z, 0 + this.airSpeed, BABYLON.Space.GLOBAL);
-				// }
 
-				// let expl = new BABYLON.ParticleHelper.CreateAsync("explosion", this.scene).then((set) => {
-				// 	// set.systems.forEach(s => {
-				// 	// 	s.disposeOnStop = true;
-				// 	// });
-				// 	console.log(set);
-				// 	set.start();
-				// });
+			// 	// this.cockpit.explode(this.cockpit.cockpit.position);
 
-			}
+			// 	// for (let i = 0; i < this.cockpit.cockpitParts.length; i++) {
+			// 	// 	this.cockpit.cockpitParts[i].translate(BABYLON.Axis.Z, 0 + this.airSpeed, BABYLON.Space.GLOBAL);
+			// 	// }
+
+			// 	// let expl = new BABYLON.ParticleHelper.CreateAsync("explosion", this.scene).then((set) => {
+			// 	// 	// set.systems.forEach(s => {
+			// 	// 	// 	s.disposeOnStop = true;
+			// 	// 	// });
+			// 	// 	console.log(set);
+			// 	// 	set.start();
+			// 	// });
+
+			// }
 
 			// if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationBottom, true)) {
 

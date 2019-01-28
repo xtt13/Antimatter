@@ -191,43 +191,43 @@ export default class {
         // }, 6000);
 
 
-        setInterval(() => {
-            // for (let i = 0; i < lensFlareSystem2.lensFlares.length; i++) {
-            //     // lensFlareSystem2.lensFlares[i].alphaMode = Math.floor(Math.random()*(10-1+1)+1);  
-            //     let ranVar = Math.round(Math.random());       
-            //     lensFlareSystem2.lensFlares[i].color = new BABYLON.Vector3(ranVar, ranVar, ranVar);
-            //     console.log(lensFlareSystem2.lensFlares[i].color);
+        // setInterval(() => {
+        //     // for (let i = 0; i < lensFlareSystem2.lensFlares.length; i++) {
+        //     //     // lensFlareSystem2.lensFlares[i].alphaMode = Math.floor(Math.random()*(10-1+1)+1);  
+        //     //     let ranVar = Math.round(Math.random());       
+        //     //     lensFlareSystem2.lensFlares[i].color = new BABYLON.Vector3(ranVar, ranVar, ranVar);
+        //     //     console.log(lensFlareSystem2.lensFlares[i].color);
 
-            // }
+        //     // }
 
-            // lensFlareSystem2.isEnabled = Math.round(Math.random());
-        }, 500);
+        //     // lensFlareSystem2.isEnabled = Math.round(Math.random());
+        // }, 500);
 
-        let glitchAnimation = new BABYLON.Animation("cameraAnimation", "intensity", 30, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
+        // let glitchAnimation = new BABYLON.Animation("cameraAnimation", "intensity", 30, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT);
 
-        // Animation keys
-        var keysGlitchValues = [];
-        keysGlitchValues.push({ frame: 0, value: 0.5 });
-        keysGlitchValues.push({ frame: 120, value: 1 });
-        keysGlitchValues.push({ frame: 240, value: 0.4 });
-        keysGlitchValues.push({ frame: 480, value: 1 });
-        keysGlitchValues.push({ frame: 660, value: 0.8 });
+        // // Animation keys
+        // var keysGlitchValues = [];
+        // keysGlitchValues.push({ frame: 0, value: 0.5 });
+        // keysGlitchValues.push({ frame: 120, value: 1 });
+        // keysGlitchValues.push({ frame: 240, value: 0.4 });
+        // keysGlitchValues.push({ frame: 480, value: 1 });
+        // keysGlitchValues.push({ frame: 660, value: 0.8 });
 
-        glitchAnimation.setKeys(keysGlitchValues);
+        // glitchAnimation.setKeys(keysGlitchValues);
 
-        var easingFunction = new BABYLON.ElasticEase();
+        // var easingFunction = new BABYLON.ElasticEase();
 
-        // For each easing function, you can choose beetween EASEIN (default), EASEOUT, EASEINOUT
-        easingFunction.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+        // // For each easing function, you can choose beetween EASEIN (default), EASEOUT, EASEINOUT
+        // easingFunction.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
 
-        // Adding easing function to my animation
-        glitchAnimation.setEasingFunction(easingFunction);
+        // // Adding easing function to my animation
+        // glitchAnimation.setEasingFunction(easingFunction);
 
-        // Adding animation to my torus animations collection
-        this.sparkleLight.animations.push(glitchAnimation);
+        // // Adding animation to my torus animations collection
+        // this.sparkleLight.animations.push(glitchAnimation);
 
-        //Finally, launch animations on torus, from key 0 to key 660 with loop activated
-        // this.scene.beginAnimation(this.sparkleLight, 0, 660, true);
+        // //Finally, launch animations on torus, from key 0 to key 660 with loop activated
+        // // this.scene.beginAnimation(this.sparkleLight, 0, 660, true);
     }
 
     createParticles() {

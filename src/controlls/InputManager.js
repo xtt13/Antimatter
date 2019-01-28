@@ -273,12 +273,11 @@ export default class {
 
             if(code === 13){
 
-                this.cockpit.setFinalSpot();
-                // if(this.jumpGateStartApproval){
-                //     this.jumpGateStartApproval = false;
+                if(this.jumpGateStartApproval){
+                    this.jumpGateStartApproval = false;
 
-                //     this.game.jumpGate.startJumpGate();
-                // }
+                    this.game.jumpGate.startJumpGate();
+                }
             }
 
             if (code === 50) {
