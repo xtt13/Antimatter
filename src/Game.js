@@ -235,8 +235,19 @@ export default class {
 
 
 
-		// Create Sun
+		// Create Sun Mesh
+		this.sunMesh = BABYLON.MeshBuilder.CreateSphere("checkpoint", {diameter: 1000}, this.scene);
+		this.sunMesh.position = new BABYLON.Vector3(-30000, 0, 0);
+		// this.sunMesh.infiniteDistance = true;
 
+		var sunMeshMat = new BABYLON.StandardMaterial("sunMeshMat", this.scene);
+
+        sunMeshMat.diffuseColor = new BABYLON.Color3(1, 1, 1);
+        sunMeshMat.emissiveColor = new BABYLON.Color3(1, 1, 1);
+        sunMeshMat.specularColor = new BABYLON.Color3(1, 1, 1);
+
+		this.sunMesh.material = sunMeshMat;
+		
 
 		// Create Sun Light
 		this.sun = new BABYLON.PointLight("sun", new BABYLON.Vector3(-30000, 0, 50), this.scene);
