@@ -346,12 +346,12 @@ void main(void) {
         this.laserMesh2.parent = this.hudB;
 
         // Front - Back
-        this.laserMesh.translate(BABYLON.Axis.Y, 50, BABYLON.Space.LOCAL)
-        this.laserMesh2.translate(BABYLON.Axis.Y, 50, BABYLON.Space.LOCAL)
+        this.laserMesh.translate(BABYLON.Axis.Y, 30, BABYLON.Space.LOCAL)
+        this.laserMesh2.translate(BABYLON.Axis.Y, 30, BABYLON.Space.LOCAL)
 
         // Up - Down
-        this.laserMesh.translate(BABYLON.Axis.Z, -20, BABYLON.Space.LOCAL)
-        this.laserMesh2.translate(BABYLON.Axis.Z, -20, BABYLON.Space.LOCAL)
+        this.laserMesh.translate(BABYLON.Axis.Z, -10, BABYLON.Space.LOCAL)
+        this.laserMesh2.translate(BABYLON.Axis.Z, -10, BABYLON.Space.LOCAL)
 
         // Rotate
         this.laserMesh.rotate(BABYLON.Axis.X, -0.2, BABYLON.Space.LOCAL)
@@ -569,7 +569,7 @@ void main(void) {
 
         // Size of each particle (random between...
         this.particleSystemHit.minSize = 5;
-        this.particleSystemHit.maxSize = 10;
+        this.particleSystemHit.maxSize = 30;
 
         // Life time of each particle (random between...
         this.particleSystemHit.minLifeTime = 0.3;
@@ -584,9 +584,9 @@ void main(void) {
         this.particleSystemHit.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
         // Direction of each particle after it has been emitted
-    //     var baseImpactReactionDirection = this.hudB.position.subtract(target.position).normalize().scale(5);
-    //    this.particleSystemHit.direction1 = baseImpactReactionDirection.add(new BABYLON.Vector3(5, 5, 5));
-    //    this.particleSystemHit.direction2 = baseImpactReactionDirection.subtract(new BABYLON.Vector3(5, 5, 5));
+        //     var baseImpactReactionDirection = this.hudB.position.subtract(target.position).normalize().scale(5);
+        //    this.particleSystemHit.direction1 = baseImpactReactionDirection.add(new BABYLON.Vector3(5, 5, 5));
+        //    this.particleSystemHit.direction2 = baseImpactReactionDirection.subtract(new BABYLON.Vector3(5, 5, 5));
 
         // Angular speed, in radians
         this.particleSystemHit.minAngularSpeed = 0;
@@ -599,11 +599,50 @@ void main(void) {
 
         // Start the particle system
         this.particleSystemHit.start();
+        this.transferStone();
+    }
+
+    transferStone() {
+
+        // Create a particle system
+        this.tranferParticles = new BABYLON.ParticleSystem("particles", 2000, this.scene);
+
+        //Texture of each particle
+        this.tranferParticles.particleTexture = new BABYLON.Texture("./assets/textures/laser/flare.png", this.scene);
+
+        // Where the particles come from
+        this.tranferParticles.emitter = this.laserMesh; // the starting object, the emitter
+        this.tranferParticles.minEmitBox = new BABYLON.Vector3(0, 0, 0); // Starting all from
+        this.tranferParticles.maxEmitBox = new BABYLON.Vector3(0, 0, 0); // To...
+
+        this.tranferParticles.minSize = 15;
+        this.tranferParticles.maxSize = 15;
+
+        this.tranferParticles.emitRate = 4;
+
+        this.tranferParticles.maxLifeTime = 2;
+
+        // Direction of each particle after it has been emitted
+        var baseImpactReactionDirection = this.laserMesh.position.subtract(this.cockpit.position).normalize().scale(5);
+
+        // baseImpactReactionDirection.x *= -1;
+        // baseImpactReactionDirection.y *= -1;
+        // baseImpactReactionDirection.z *= -1;
+
+        this.tranferParticles.direction1 = baseImpactReactionDirection;
+
+        // Start the particle system
+        this.tranferParticles.start();
+
     }
 
     stopMining() {
 
-        this.particleSystemHit.stop();
+        if (this.particleSystemHit) {
+            this.particleSystemHit.stop();
+            this.tranferParticles.stop();
+        }
+
 
         if (this.laserSound) {
             this.laserSound.stop();
@@ -623,7 +662,7 @@ void main(void) {
 
         keys.push({
             frame: 50,
-            value: this.laserlen
+            value: this.laserMesh.scaling.y
         });
 
         // this.laserMesh.height = 0;
@@ -834,9 +873,9 @@ void main(void) {
         particleSystemHit.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
         // Direction of each particle after it has been emitted
-        var baseImpactReactionDirection = this.hudB.position.subtract(target.position).normalize().scale(5);
-        particleSystemHit.direction1 = baseImpactReactionDirection.add(new BABYLON.Vector3(5, 5, 5));
-        particleSystemHit.direction2 = baseImpactReactionDirection.subtract(new BABYLON.Vector3(5, 5, 5));
+        // var baseImpactReactionDirection = this.hudB.position.subtract(target.position).normalize().scale(5);
+        // particleSystemHit.direction1 = baseImpactReactionDirection.add(new BABYLON.Vector3(5, 5, 5));
+        // particleSystemHit.direction2 = baseImpactReactionDirection.subtract(new BABYLON.Vector3(5, 5, 5));
 
         // Angular speed, in radians
         particleSystemHit.minAngularSpeed = 0;

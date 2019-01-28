@@ -38,6 +38,8 @@ export default class {
         this.turnSoundSwitchQ = true;
         this.turnSoundSwitchE = true;
 
+        this.laserEnabled = false;
+
         this.turnSound = new BABYLON.Sound("turnSound", "assets/audio/sound/turn.mp3", this.scene, null,
             {
                 playbackRate: 0.5,
@@ -314,7 +316,14 @@ export default class {
             // Space Key - Mining
             if(code == 32){
                 console.log('Start Mining');
-                this.cockpit.startLaser();
+                if(!this.laserEnabled){
+                    this.laserEnabled = true;
+                    this.cockpit.startLaser();
+                } else {
+                    this.laserEnabled = false;
+                    this.cockpit.stopMining();
+                }
+
             }
 
             // Shake M-Key Wormhole

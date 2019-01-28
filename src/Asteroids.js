@@ -177,8 +177,6 @@ export default class {
 
             }
 
-            console.log(this.data);
-            console.log(this.asteroids);
 
             // var allAsteroids = BABYLON.Mesh.MergeMeshes(this.asteroids);  
 
