@@ -2,11 +2,12 @@ import * as BABYLON from 'babylonjs';
 import * as GUI from 'babylonjs-gui';
 
 export default class {
-    constructor(scene, camera, asteroids, cockpit) {
+    constructor(scene, camera, asteroids, cockpit, game) {
         this.scene = scene;
         this.camera = camera;
         this.asteroids = asteroids.asteroids;
         this.cockpit = cockpit;
+        this.game = game;
 
         this.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui1");
         this.labels = [];
@@ -109,6 +110,7 @@ export default class {
     }
 
     updateGUI(){
+        
         if(this.asteroidScreenEnabled){
             let screen = document.querySelector('.asteroidsUI');
             screen.innerHTML = this.createGUIData();

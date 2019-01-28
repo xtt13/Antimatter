@@ -15,6 +15,8 @@ export default class {
         this.scanning = false;
 
         this.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui1");
+        this.advancedTexture.renderScale = 1.0;
+        this.advancedTexture.hardwareScalingLevel = 0.5;
 
         // this.numberOfAsteroid = 300;
         this.outlineScalingValue = 2;
@@ -204,7 +206,7 @@ export default class {
         this.advancedTexture.addControl(label);
 
         label.linkWithMesh(mesh);
-        label.linkOffsetY = -90;
+        label.linkOffsetY = -120;
 
         var text = new GUI.TextBlock();
         text.text = mesh.type.name + ' ' + amount + 't';
@@ -215,7 +217,7 @@ export default class {
         return label;
     }
 
-    removeLabel(mesh, label) {
+    removeLabel(label) {
         label.isVisible = false;
     }
 
@@ -226,6 +228,34 @@ export default class {
 
     removeCustomOutline(mesh) {
         mesh.customOutline.isVisible = false;
+    }
+
+    addMiningLabel(mesh){
+
+        let rockStorage;
+        for (let i = 0; i < this.data.length; i++) {
+            let element = this.data[i];
+
+            if (parseInt(mesh.id) == element.id) {
+                rockStorage = element.amount;
+                break;
+            }
+        }
+
+        this.addLabel(mesh, rockStorage);
+
+        let beepSound = new BABYLON.Sound("beepSound", "assets/audio/sound/beep.mp3", this.scene, null,
+        {
+            playbackRate: 1,
+            volume: 0.5,
+            loop: false,
+            autoplay: true
+        });
+
+    }  
+    
+    removeMiningLabel(mesh){
+        this.removeLabel(mesh);
     }
 
     initTargetableActions(target, customOutline) {
@@ -274,7 +304,7 @@ export default class {
                         volume: 1,
                         loop: false,
                         autoplay: true
-                    })
+                    });
 
             })
         );
@@ -282,7 +312,7 @@ export default class {
         target.actionManager.registerAction(
             new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger, (e) => {
                 customOutline.isVisible = false;
-                this.removeLabel(target, label);
+                this.removeLabel(label);
             })
         );
     }

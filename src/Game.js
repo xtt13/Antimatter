@@ -188,7 +188,7 @@ export default class {
 		this.PostProcess = new PostProcesses(this.scene, this.cameraManager.camera);
 
 		// Init GUI
-		this.GUIClass = new GUI(this.scene, this.cameraManager, this.asteroids, this.cockpit);
+		this.GUIClass = new GUI(this.scene, this.cameraManager, this.asteroids, this.cockpit, this);
 
 
 
@@ -310,6 +310,7 @@ export default class {
 
 					asteroid.currentlyMining = true;
 
+					this.asteroids.addMiningLabel(asteroid);
 					this.asteroids.addCustomOutline(asteroid);
 
 					this.cockpit.startMining(asteroid);
@@ -323,6 +324,7 @@ export default class {
 
 						console.log('Stop');
 
+						this.asteroids.removeMiningLabel(asteroid);
 						this.asteroids.removeCustomOutline(asteroid);
 
 						this.cockpit.stopMining();
@@ -337,6 +339,8 @@ export default class {
 					this.inputManager.airSpeed = -0.5;
 					let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
 					this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
+
+					this.inputManager.disableKeys();
 
 					if (this.collisionSoundSwitch) {
 						this.collisionSoundSwitch = false;
@@ -404,6 +408,11 @@ export default class {
 										this.cockpit.hudA.material.pointsCloud = false;
 									}
 								}, 10);
+
+								setTimeout(() => {
+									this.inputManager.enableKeys();
+								}, 2000);
+
 							}, 3000);
 						}, 5000);
 

@@ -117,7 +117,6 @@ export default class {
             // gizmoManager.boundingBoxGizmoEnabled = true;
             // gizmoManager.attachableMeshes = [this.jumpGate];
 
-            this.viewjumpGateRings();
 
             this.engine.runRenderLoop(() => {
                 if (this.start) {
@@ -127,8 +126,8 @@ export default class {
                 }
 
                 if(this.ready){
-                    this.jumpGateRing1.rotate(BABYLON.Axis.Y, 0.001, BABYLON.Space.LOCAL);
-                    this.jumpGateRing2.rotate(BABYLON.Axis.X, 0.001, BABYLON.Space.LOCAL);
+                    this.jumpGateRing1.rotate(BABYLON.Axis.Y, 0.002, BABYLON.Space.LOCAL);
+                    this.jumpGateRing2.rotate(BABYLON.Axis.X, 0.002, BABYLON.Space.LOCAL);
                 }
             });
 
@@ -153,8 +152,8 @@ export default class {
             loop: true,
             autoplay: true
         })
-        
-        this.readyJumpGate.attachToMesh(this.jumpGate);
+
+        // this.readyJumpGate.attachToMesh(this.jumpGate);
 
     }
 

@@ -15,27 +15,27 @@ export default class {
         this.store = [
             {
                 name: 'Iron',
-                amount: 0,
+                amount: 5,
                 max: 5
             },
             {
                 name: 'Gold',
-                amount: 0,
+                amount: 10,
                 max: 10
             },
             {
                 name: 'Doxtrit',
                 amount: 0,
-                max: 8
+                max: 3
             },
             {
                 name: 'Pyresium',
-                amount: 0,
+                amount: 12,
                 max: 12
             },
             {
                 name: 'Perrius',
-                amount: 0,
+                amount: 8,
                 max: 8
             }
         ];
@@ -449,6 +449,9 @@ void main(void) {
                                         // Update GUI
                                         this.game.GUIClass.updateGUI();
 
+                                        // Perform Final Check
+                                        this.finalCheck();
+
                                         this.storeSound = new BABYLON.Sound("storeSound", "assets/audio/sound/store.mp3", this.scene, null,
                                             {
                                                 loop: false,
@@ -472,6 +475,7 @@ void main(void) {
                                         );
 
                                         this.stopMining();
+                                        this.game.asteroids.removeMiningLabel(asteroid);
                                         clearInterval(miningInterval);
                                         break;
 
@@ -495,6 +499,7 @@ void main(void) {
                                     }
 
                                     this.stopMining();
+                                    this.game.asteroids.removeMiningLabel(asteroid);
                                     clearInterval(miningInterval);
                                     break;
                                 }
@@ -510,6 +515,57 @@ void main(void) {
                 }, 2000);
 
             }, 2000);
+
+        }
+    }
+
+    finalCheck() {
+
+        let finalCheck = true;
+
+        for (let i = 0; i < this.store.length; i++) {
+            const element = this.store[i];
+            if (element.amount !== element.max) {
+                finalCheck = false;
+            }
+        }
+
+        if (finalCheck) {
+
+            // Voice Command
+
+            this.transmissioncommand = new BABYLON.Sound("transmissioncommand", "assets/audio/sound/transmissioncommand.mp3", this.scene, null,
+                {
+                    loop: false,
+                    volume: 1,
+                    autoplay: true
+                });
+
+            // Building Sound
+
+            setTimeout(() => {
+                this.constructionSound = new BABYLON.Sound("constructionSound", "assets/audio/sound/construction.mp3", this.scene, null,
+                    {
+                        loop: false,
+                        volume: 0.8,
+                        autoplay: true
+                    });
+            }, 4000);
+
+
+
+            // After 80s
+            setTimeout(() => {
+                // View Rings (Set Timeout)
+                this.game.jumpGate.viewjumpGateRings();
+
+
+                // Start Instructions (ENTER-Key Start)
+
+                // ...
+
+            }, 85000);
+
 
         }
     }
