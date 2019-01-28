@@ -91,6 +91,9 @@ export default class {
 
             this.createLaser();
 
+            // this.setFinalSpot();
+
+
             //  Scale Value
             var spaceScale = 50.0;
 
@@ -99,6 +102,10 @@ export default class {
             this.cylinder.parent = this.cockpit;
             this.cylinder.rotate(BABYLON.Axis.X, Math.PI / 2, BABYLON.Space.LOCAL);
             this.cylinder.isVisible = false;
+
+            this.checkpoint = BABYLON.MeshBuilder.CreateSphere("checkpoint", { segments: 2, diameter: 500, diameterX: 500 }, this.scene);
+            this.checkpoint.position = new BABYLON.Vector3(-3000, 0, 9000);
+            this.checkpoint.isVisible = false;
 
 
 
@@ -559,15 +566,87 @@ void main(void) {
                 // View Rings (Set Timeout)
                 this.game.jumpGate.viewjumpGateRings();
 
+                this.setFinalSpot();
 
-                // Start Instructions (ENTER-Key Start)
+                // Fly Instructions Point
 
-                // ...
 
-            }, 85000);
+            }, 83000);
 
 
         }
+    }
+
+    setFinalSpot() {
+
+        var sourceMat = new BABYLON.StandardMaterial("sourceMat", this.scene);
+        sourceMat.wireframe = true;
+        sourceMat.backFaceCulling = false;
+
+        sourceMat.diffuseColor = new BABYLON.Color3(0, 1, 1);
+        sourceMat.emissiveColor = new BABYLON.Color3(0, 1, 1);
+        sourceMat.specularColor = new BABYLON.Color3(0, 1, 1);
+
+        this.checkpoint.material = sourceMat;
+        this.checkpoint.isVisible = true;
+        
+
+        let beepSound = new BABYLON.Sound("beepSound", "assets/audio/sound/beep.mp3", this.scene, null,
+            {
+                playbackRate: 1,
+                volume: 0.5,
+                loop: false,
+                autoplay: true
+            });
+
+
+        let finalSwitch = true;
+        this.scene.registerBeforeRender(() => {
+            if (this.cockpit.intersectsMesh(this.checkpoint, true)) {
+
+                this.game.inputManager.airSpeed = 0;
+                let newVal = this.game.SoundManager.engineSound._playbackRate -= 0.5;
+                this.game.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
+
+                if (finalSwitch) {
+                    finalSwitch = false;
+
+                    this.game.inputManager.disableKeys();
+
+                    var tempQuat = BABYLON.Quaternion.Identity();
+                    var slerpAmount = 0.05;
+
+                    this.rotationQuaternion = BABYLON.Quaternion.Identity();
+
+                    for (let i = 0; i < this.CockpitParts.length; i++) {
+                        this.CockpitParts[i].rotationQuaternion = BABYLON.Quaternion.Identity();
+                    }
+
+                    this.scene.registerBeforeRender(() => {
+
+                        for (let i = 0; i < this.CockpitParts.length; i++) {
+                            tempQuat.copyFrom(this.CockpitParts[i].rotationQuaternion);
+                            this.CockpitParts[i].lookAt(new BABYLON.Vector3(0, 0, 9000));
+                            BABYLON.Quaternion.SlerpToRef(tempQuat, this.CockpitParts[i].rotationQuaternion, slerpAmount, this.CockpitParts[i].rotationQuaternion)
+                        }
+
+
+                    });
+
+                    setTimeout(() => {
+                        this.game.inputManager.jumpGateStartApproval = true;
+                    }, 2000);
+
+                    // (ENTER-Key Start) Instructions
+
+
+                    // this.checkpoint.dispose();
+                }
+
+
+
+            }
+        });
     }
 
     startLaser() {

@@ -18,6 +18,7 @@ export default class {
 
         this.disableMovementKeys = false;
         this.asteroidUIenabled = false;
+        this.jumpGateStartApproval = false;
 
         this.airSpeed = config.airSpeed;
         this.maxSpeed = config.maxSpeed;
@@ -270,6 +271,16 @@ export default class {
                 }
             }
 
+            if(code === 13){
+
+                this.cockpit.setFinalSpot();
+                // if(this.jumpGateStartApproval){
+                //     this.jumpGateStartApproval = false;
+
+                //     this.game.jumpGate.startJumpGate();
+                // }
+            }
+
             if (code === 50) {
                 // SWITCH TO FOLLOW CAM 2-Key
 
@@ -280,6 +291,8 @@ export default class {
                 // this.game.cockpit.cockpit.isVisible = false;
 
                 // this.cameraManager.followCamera(this.ship.ship);
+
+                console.log(this.game.cockpit.cockpit.position);
             }
 
             if (code === 51) {
@@ -429,7 +442,7 @@ export default class {
         if (this.disableMovementKeys) return;
 
         if (this.cameraManager.camera.name == "CockpitCamera") {
-            this.newCockpitControlls(engine);
+            this.cockpitControlls(engine);
 
         } else {
             this.spaceshipControlls(engine);
@@ -441,7 +454,7 @@ export default class {
 
     }
 
-    newCockpitControlls(engine) {
+    cockpitControlls(engine) {
         var elapsed = engine.getDeltaTime() / 1000;
 
 
@@ -569,75 +582,6 @@ export default class {
 
     }
 
-    cockpitControlls(engine) {
-        var elapsed = engine.getDeltaTime() / 1000;
-
-        if (this.keysDown[83]) {
-            // S, rotate in the negative direction about the x axis
-            for (let i = 0; i < this.cockpitParts.length; i++) {
-                // console.log('S');
-                this.cockpitParts[i].rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
-            }
-
-            // this.cameraManager.camera.cameraRotation.x = -0.001;
-        }
-
-        if (this.keysDown[87]) {
-            // W, rotate in the positive direction about the x axis
-            for (let i = 0; i < this.cockpitParts.length; i++) {
-                // console.log('W');
-                this.cockpitParts[i].rotate(BABYLON.Axis.X, this.turnSpeed, BABYLON.Space.LOCAL);
-            }
-
-            // this.cameraManager.camera.cameraRotation.x = 0.001;
-        }
-
-
-        if (this.keysDown[68]) {
-            // D, rotate in the positive direction about the z axis
-            for (let i = 0; i < this.cockpitParts.length; i++) {
-                // console.log('D');
-                this.cockpitParts[i].rotate(BABYLON.Axis.Z, this.turnSpeed, BABYLON.Space.LOCAL);
-            }
-
-
-            //  this.cameraManager.camera.cameraRotation.y = 0.01;
-        }
-
-        if (this.keysDown[65]) {
-            // A, rotate in the negative direction about the z axis
-            for (let i = 0; i < this.cockpitParts.length; i++) {
-                // console.log('A');
-                this.cockpitParts[i].rotate(BABYLON.Axis.Z, -this.turnSpeed, BABYLON.Space.LOCAL);
-            }
-
-
-
-            //  this.cameraManager.camera.cameraRotation.y = -0.01;
-        }
-
-        // OLD
-
-        if (this.keysDown[69]) {
-            // E rotate left
-            for (let i = 0; i < this.cockpitParts.length; i++) {
-                // console.log('E');
-                this.cockpitParts[i].rotate(BABYLON.Axis.Y, -this.turnSpeed, BABYLON.Space.LOCAL);
-            }
-        }
-
-        if (this.keysDown[81]) {
-            // Q, rotate right
-            for (let i = 0; i < this.cockpitParts.length; i++) {
-                // console.log('Q');
-                this.cockpitParts[i].rotate(BABYLON.Axis.Y, this.turnSpeed, BABYLON.Space.LOCAL);
-            }
-        }
-
-        for (let i = 0; i < this.cockpitParts.length; i++) {
-            this.cockpitParts[i].translate(BABYLON.Axis.Z, 0 + this.airSpeed, BABYLON.Space.GLOBAL);
-        }
-    }
 
     spaceshipControlls(engine) {
         var elapsed = engine.getDeltaTime() / 1000;
