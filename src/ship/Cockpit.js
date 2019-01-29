@@ -11,6 +11,7 @@ export default class {
 
         this.currentlyMining = false;
         this.currentlyMiningSwitch = true;
+        this.enableCheckpointRotation = true;
 
         this.store = [
             {
@@ -60,12 +61,6 @@ export default class {
             //this.cockpit.material.specularTexture = new BABYLON.Texture("./assets/models/cockpit/SF_CockpitB2_Specular.jpg", this.scene);
             //this.cockpit.material.bumpTexture = new BABYLON.Texture("./assets/models/cockpit/SF_CockpitB2_NormalMap.jpg", this.scene);
 
-
-            //var cockpitSphere = BABYLON.MeshBuilder.CreateSphere("cockpitSphere", { diameter: 40, diameterX: 40 }, this.scene);
-            //cockpitSphere.position = this.cockpit.position;
-            //cockpitSphere.parent = this.cockpit;
-            //cockpitSphere.physicsImpostor = new BABYLON.PhysicsImpostor(cockpitSphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 0, restitution: 1 });
-
             this.CockpitParts = [this.cockpit, this.hudA, this.hudB, this.joystick, this.thrustLever];
 
 
@@ -73,7 +68,6 @@ export default class {
 
                 this.CockpitParts[i].position = config.cockpitPosition;
                 this.CockpitParts[i].rotation = new BABYLON.Vector3(0.7, -0.5, 0);
-                // this.CockpitParts[i].rotation = config.cockpitRotation;
                 this.CockpitParts[i].renderingGroupId = 1;
 
                 if (this.CockpitParts[i].id !== "Spaceship_HUDs_B") {
@@ -103,7 +97,7 @@ export default class {
             this.cylinder.rotate(BABYLON.Axis.X, Math.PI / 2, BABYLON.Space.LOCAL);
             this.cylinder.isVisible = false;
 
-            this.checkpoint = BABYLON.MeshBuilder.CreateSphere("checkpoint", { segments: 2, diameter: 500, diameterX: 500 }, this.scene);
+            this.checkpoint = BABYLON.MeshBuilder.CreateSphere("checkpoint", { segments: 8, diameter: 500, diameterX: 500 }, this.scene);
             this.checkpoint.position = new BABYLON.Vector3(-3000, 0, 9000);
             this.checkpoint.isVisible = false;
 
@@ -129,13 +123,17 @@ export default class {
         game.MusicManager.fadeOutMusic();
 
         //Dim Light
-        let dimmInterval = setInterval(() => {
-            game.sun.intensity -= 5000000;
+        // let dimmInterval = setInterval(() => {
+        //     game.sun.intensity -= 5000000;
 
-            if (game.sun.intensity <= 100000000) {
-                clearInterval(dimmInterval);
-            }
-        }, 10);
+        //     if (game.sun.intensity <= 100000000) {
+        //         clearInterval(dimmInterval);
+        //     }
+        // }, 10);
+
+        game.lensFlareSystem.isEnabled = false;
+        this.enableCheckpointRotation = false;
+
 
 
         var hemisphericLight = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 0, 0), this.scene);
@@ -145,7 +143,7 @@ export default class {
         setTimeout(() => {
             let fadeInLight = setInterval(() => {
                 hemisphericLight.intensity += 0.05;
-    
+
                 if (hemisphericLight > 1) {
                     clearInterval(fadeInLight);
                 }
@@ -192,6 +190,15 @@ export default class {
         setTimeout(() => {
             // Remove Orbit Meshes
             this.wormholePreperations(game);
+
+            for (let i = 0; i < this.game.cockpit.CockpitParts.length; i++) {
+                this.game.cockpit.CockpitParts[i].rotate(BABYLON.Axis.X, -Math.PI / 2, BABYLON.Space.LOCAL);
+            }
+
+            for (let i = 0; i < this.game.cockpit.CockpitParts.length; i++) {
+                this.game.cockpit.CockpitParts[i].rotate(BABYLON.Axis.Y, Math.PI / 2, BABYLON.Space.LOCAL);
+            }
+
         }, 5000);
 
         // // Shake Sound Volume Var
@@ -213,7 +220,6 @@ export default class {
 
                 // Remove Tunnel slowly
                 this.cylinder.material.alpha -= 0.002;
-                hemisphericLight.intensity -= 0.01;
 
                 // Fade Out Shake Sound
                 cameraManager.shakeSound.setVolume(shakeSoundVolume);
@@ -223,6 +229,23 @@ export default class {
 
             }, 30);
 
+            // let fadeOutLight = setInterval(() => {
+            //     hemisphericLight.intensity -= 0.05;
+
+            //     if (hemisphericLight <= 0) {
+            //         clearInterval(fadeOutLight);
+            //     }
+            // }, 10);
+
+            //Lighten Light
+            // let lightenInterval = setInterval(() => {
+            //     game.sun.intensity += 5000000;
+
+            //     if (game.sun.intensity >= 1000000000) {
+            //         clearInterval(lightenInterval);
+            //     }
+            // }, 10);
+
             // After 5s => Stop Shake
             setTimeout(() => {
                 cameraManager.stopShake();
@@ -230,6 +253,9 @@ export default class {
 
             // After 10s enable Keys
             setTimeout(() => {
+                hemisphericLight.intensity = 0;
+                hemisphericLight.dispose();
+
                 inputManager.enableKeys();
                 game.arc.ship.isVisible = true;
                 game.arc.moveShip();
@@ -247,6 +273,7 @@ export default class {
         game.asteroids.deleteAllAsteroids();
         game.spaceStation.deleteSpaceStation();
         game.planet.deletePlanet();
+        game.jumpGate.deleteJumpGate();
 
         setTimeout(() => {
             game.centauri.planet.isVisible = true;
@@ -498,7 +525,7 @@ void main(void) {
                                         this.game.asteroids.removeMiningLabel(asteroid);
                                         this.game.asteroids.removeCustomOutline(asteroid);
 
-                                        this.game.asteroids.asteroids.splice(this.game.asteroids.asteroids.indexOf(asteroid), 1 );
+                                        this.game.asteroids.asteroids.splice(this.game.asteroids.asteroids.indexOf(asteroid), 1);
 
                                         clearInterval(miningInterval);
                                         break;
@@ -527,7 +554,7 @@ void main(void) {
                                     this.game.asteroids.removeMiningLabel(asteroid);
                                     this.game.asteroids.removeCustomOutline(asteroid);
 
-                                    this.game.asteroids.asteroids.splice(this.game.asteroids.asteroids.indexOf(asteroid), 1 );
+                                    this.game.asteroids.asteroids.splice(this.game.asteroids.asteroids.indexOf(asteroid), 1);
 
                                     clearInterval(miningInterval);
                                     break;
@@ -604,7 +631,8 @@ void main(void) {
     setFinalSpot() {
 
         var sourceMat = new BABYLON.StandardMaterial("sourceMat", this.scene);
-        sourceMat.wireframe = true;
+        sourceMat.pointsCloud = true;
+        sourceMat.pointSize = 5;
         sourceMat.backFaceCulling = false;
 
         sourceMat.diffuseColor = new BABYLON.Color3(0, 1, 1);
@@ -613,7 +641,7 @@ void main(void) {
 
         this.checkpoint.material = sourceMat;
         this.checkpoint.isVisible = true;
-        
+
 
         let beepSound = new BABYLON.Sound("beepSound", "assets/audio/sound/beep.mp3", this.scene, null,
             {
@@ -626,7 +654,10 @@ void main(void) {
 
         let finalSwitch = true;
         this.scene.registerBeforeRender(() => {
+
             if (this.cockpit.intersectsMesh(this.checkpoint, true)) {
+
+
 
                 this.game.inputManager.airSpeed = 0;
                 let newVal = this.game.SoundManager.engineSound._playbackRate -= 0.5;
@@ -647,13 +678,13 @@ void main(void) {
                     }
 
                     this.scene.registerBeforeRender(() => {
-
-                        for (let i = 0; i < this.CockpitParts.length; i++) {
-                            tempQuat.copyFrom(this.CockpitParts[i].rotationQuaternion);
-                            this.CockpitParts[i].lookAt(new BABYLON.Vector3(0, 0, 9000));
-                            BABYLON.Quaternion.SlerpToRef(tempQuat, this.CockpitParts[i].rotationQuaternion, slerpAmount, this.CockpitParts[i].rotationQuaternion)
+                        if (this.enableCheckpointRotation) {
+                            for (let i = 0; i < this.CockpitParts.length; i++) {
+                                tempQuat.copyFrom(this.CockpitParts[i].rotationQuaternion);
+                                this.CockpitParts[i].lookAt(new BABYLON.Vector3(0, 0, 9000));
+                                BABYLON.Quaternion.SlerpToRef(tempQuat, this.CockpitParts[i].rotationQuaternion, slerpAmount, this.CockpitParts[i].rotationQuaternion)
+                            }
                         }
-
 
                     });
 
@@ -670,6 +701,8 @@ void main(void) {
 
 
             }
+
+
         });
     }
 

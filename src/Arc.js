@@ -37,6 +37,9 @@ export default class {
             // gizmoManager.boundingBoxGizmoEnabled = true;
             // gizmoManager.attachableMeshes = [this.ship];
 
+            // this.moveShip();
+            // this.ship.isVisible = true;
+
         }
 
         loadArc.onError = function (task, message, exception) {

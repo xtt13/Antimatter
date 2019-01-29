@@ -339,7 +339,22 @@ export default class {
             }
 
             // Shake M-Key Wormhole
+
+            let codeSwitch = true;
             if (code == 77) {
+
+                if(codeSwitch){
+                    codeSwitch = false;
+
+                    // for (let i = 0; i < this.game.cockpit.CockpitParts.length; i++) {
+                    //     this.game.cockpit.CockpitParts[i].rotate(BABYLON.Axis.X, -Math.PI / 2, BABYLON.Space.LOCAL);
+                    // }
+
+                    // for (let i = 0; i < this.game.cockpit.CockpitParts.length; i++) {
+                    //     this.game.cockpit.CockpitParts[i].rotate(BABYLON.Axis.Y, -Math.PI / 2, BABYLON.Space.LOCAL);
+                    // }
+                }
+
                 this.game.cockpit.createSpaceTunnel(false, this.cameraManager, this, this.game);
             }
 

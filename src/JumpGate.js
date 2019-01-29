@@ -98,26 +98,6 @@ export default class {
 
             this.jumpGate.material.specularPower = 1024;
 
-            // this.jumpGate.physicsImpostor = new BABYLON.PhysicsImpostor(this.jumpGate, BABYLON.PhysicsImpostor.MeshImpostor, { mass: 1, friction: 0, restitution: 1 });
-
-            // var collSphere = BABYLON.MeshBuilder.CreateSphere("collSphere", { diameter: 2000, diameterX: 3000 }, this.scene);
-            // collSphere.position = new BABYLON.Vector3(-8000, 0, 8000);
-            // collSphere.physicsImpostor = new BABYLON.PhysicsImpostor(collSphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, friction: 0, restitution: 1 });
-            // collSphere.onCollide = () => {
-            //     console.log('I am colliding with something');
-            // }
-// 
-            // var box = BABYLON.MeshBuilder.CreateBox("myBox", {height: 5, width: 2, depth: 0.5}, this.scene);
-            // box.position = new BABYLON.Vector3(-8500, 0, 8000);
-            // box.physicsImpostor = new BABYLON.PhysicsImpostor(box, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, friction: 0, restitution: 1 });
-
-            // var gizmoManager = new BABYLON.GizmoManager(this.scene);
-            // gizmoManager.positionGizmoEnabled = true;
-            // gizmoManager.rotationGizmoEnabled = true;
-            // gizmoManager.scaleGizmoEnabled = true;
-            // gizmoManager.boundingBoxGizmoEnabled = true;
-            // gizmoManager.attachableMeshes = [this.jumpGate];
-
 
             this.engine.runRenderLoop(() => {
                 if (this.start) {
@@ -295,6 +275,16 @@ export default class {
         ps1.gravity = new BABYLON.Vector3(0, -5, 0);
 
         ps1.start();
+    }
+
+    deleteJumpGate(){
+        this.lensFlareSystem2.isEnabled = false;
+        this.start = false;
+
+        this.jumpGate.dispose();
+        this.jumpGateRing1.dispose();
+        this.jumpGateRing2.dispose();
+
     }
 
 
