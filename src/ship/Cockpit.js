@@ -140,6 +140,18 @@ export default class {
 
         var hemisphericLight = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 0, 0), this.scene);
         hemisphericLight.excludedMeshes = [this.cockpit, this.hudA, this.hudB, this.joystick, this.thrustLever];
+        hemisphericLight.intensity = 0;
+
+        setTimeout(() => {
+            let fadeInLight = setInterval(() => {
+                hemisphericLight.intensity += 0.05;
+    
+                if (hemisphericLight > 1) {
+                    clearInterval(fadeInLight);
+                }
+            }, 10);
+        }, 2500);
+
 
         let spaceTunnelQuality;
         if (this.game.qualitySettings == 'high') {
@@ -238,7 +250,7 @@ export default class {
 
         setTimeout(() => {
             game.centauri.planet.isVisible = true;
-            game.centauri.athmosphere.isVisible = true;
+            // game.centauri.athmosphere.isVisible = true;
         }, 3000);
 
 

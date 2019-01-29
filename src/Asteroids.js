@@ -230,7 +230,7 @@ export default class {
         mesh.customOutline.isVisible = false;
     }
 
-    addMiningLabel(mesh){
+    addMiningLabel(mesh) {
 
         let rockStorage;
         for (let i = 0; i < this.data.length; i++) {
@@ -245,16 +245,16 @@ export default class {
         this.addLabel(mesh, rockStorage);
 
         let beepSound = new BABYLON.Sound("beepSound", "assets/audio/sound/beep.mp3", this.scene, null,
-        {
-            playbackRate: 1,
-            volume: 0.5,
-            loop: false,
-            autoplay: true
-        });
+            {
+                playbackRate: 1,
+                volume: 0.5,
+                loop: false,
+                autoplay: true
+            });
 
-    }  
-    
-    removeMiningLabel(mesh){
+    }
+
+    removeMiningLabel(mesh) {
         this.removeLabel(mesh);
     }
 
@@ -270,7 +270,7 @@ export default class {
 
                 customOutline.parent = mesh;
 
-                
+
 
                 let rockStorage;
                 for (let i = 0; i < this.data.length; i++) {
@@ -362,11 +362,26 @@ export default class {
     }
 
     deleteAllAsteroids() {
-        for (let i = 0; i < this.asteroids.length; i++) {
-            let element = this.asteroids[i];
-            element.dispose();
-            element = null;
+
+        for (let i = 0; i < this.numberOfAsteroid; i++) {
+            let asteroid = this.scene.getMeshByName(i + '');
+            if (asteroid !== null) {
+                asteroid.alpha = 0;
+                asteroid.dispose();
+            }
+
         }
+
+        for (let i = 0; i < this.asteroids.length; i++) {
+            if (this.asteroids[i] !== null) {
+                this.asteroids[i].dispose();
+                this.asteroids[i] = null;
+            }
+
+        }
+
+        this.asteroids = [];
+
     }
 
 

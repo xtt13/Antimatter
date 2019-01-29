@@ -3,10 +3,11 @@ import 'babylonjs-procedural-textures';
 import config from './config';
 
 export default class {
-    constructor(scene, engine, assetsManager) {
+    constructor(scene, engine, assetsManager, game) {
         this.scene = scene;
         this.engine = engine;
         this.assetsManager = assetsManager;
+        this.game = game;
 
         this.speedVar = 0;
         this.position = new BABYLON.Vector3(8000, 0, 8000);
@@ -176,9 +177,13 @@ export default class {
             })
 
         setTimeout(() => {
-            this.createFlare();
+            // this.createFlare();
             this.lensFlareSystem2.isEnabled = true;
         }, 8000);
+
+        setTimeout(() => {
+            this.game.cockpit.createSpaceTunnel(false, this.game.cameraManager, this.game.inputManager, this.game);
+        }, 12000);
     }
 
 

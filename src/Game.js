@@ -119,7 +119,7 @@ export default class {
 		this.centauri = new Centauri(this.scene, this.engine, this.assetsManager);
 		this.arc = new Arc(this.scene, this.engine, this.assetsManager);
 		this.asteroids = new Asteroids(this.scene, this.assetsManager, this.cockpit);
-		this.jumpGate = new JumpGate(this.scene, this.engine, this.assetsManager);
+		this.jumpGate = new JumpGate(this.scene, this.engine, this.assetsManager, this);
 
 		this.menu = new Menu(this.engine, this.canvas, this.assetsManager, this);
 
@@ -516,6 +516,6 @@ export default class {
 		});
 
 		// Enable Octree
-		this.scene.createOrUpdateSelectionOctree();
+		// this.scene.createOrUpdateSelectionOctree();
 	}
 }
