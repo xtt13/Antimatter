@@ -6,7 +6,7 @@ export default {
 	// ##################
 	// Current State
 	// ##################
-	currentState: "Game",
+	currentState: "Menu",
 
 	// ##################
 	// Show Debug Layer

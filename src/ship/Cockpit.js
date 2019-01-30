@@ -13,33 +13,66 @@ export default class {
         this.currentlyMiningSwitch = true;
         this.enableCheckpointRotation = true;
 
-        this.store = [
-            {
-                name: 'Iron',
-                amount: 5,
-                max: 5
-            },
-            {
-                name: 'Gold',
-                amount: 10,
-                max: 10
-            },
-            {
-                name: 'Doxtrit',
-                amount: 0,
-                max: 3
-            },
-            {
-                name: 'Pyresium',
-                amount: 12,
-                max: 12
-            },
-            {
-                name: 'Perrius',
-                amount: 8,
-                max: 8
-            }
-        ];
+
+        if (__DEV__) {
+            this.store = [
+                {
+                    name: 'Iron',
+                    amount: 5,
+                    max: 5
+                },
+                {
+                    name: 'Gold',
+                    amount: 10,
+                    max: 10
+                },
+                {
+                    name: 'Doxtrit',
+                    amount: 0,
+                    max: 3
+                },
+                {
+                    name: 'Pyresium',
+                    amount: 12,
+                    max: 12
+                },
+                {
+                    name: 'Perrius',
+                    amount: 8,
+                    max: 8
+                }
+            ];
+        } else {
+            this.store = [
+                {
+                    name: 'Iron',
+                    amount: 0,
+                    max: 5
+                },
+                {
+                    name: 'Gold',
+                    amount: 0,
+                    max: 10
+                },
+                {
+                    name: 'Doxtrit',
+                    amount: 0,
+                    max: 3
+                },
+                {
+                    name: 'Pyresium',
+                    amount: 0,
+                    max: 12
+                },
+                {
+                    name: 'Perrius',
+                    amount: 0,
+                    max: 8
+                }
+            ];
+        }
+
+
 
         this.loadCockpit();
     }

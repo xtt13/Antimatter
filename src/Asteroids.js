@@ -151,18 +151,12 @@ export default class {
 
                 asteroidInstance.isBlocker = true;
 
-                //Any subsequent changes to position / rotation / scaling will then be ignore:
-                // asteroidInstance.freezeWorldMatrix();
 
-                // asteroidInstance.checkCollisions = true;
-                // asteroidInstance.physicsImpostor = new BABYLON.PhysicsImpostor(asteroidInstance, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 0, friction: 0, restitution: 0.3 });
-
-                // asteroidInstance.rotationSpeed = Math.random() * 0.03;
-                // asteroidInstance.rotationDirection = Math.ceil(Math.random() * 6);
-                // asteroidInstance.isTargetable = true;
-
-                // console.log(this.baseObject);
-                this.initTargetableActions(asteroidInstance, asteroidInstance.customOutline);
+                if (__DEV__) {
+                    this.initTargetableActions(asteroidInstance, asteroidInstance.customOutline);
+                }
+        
+                
 
                 this.asteroids.push(asteroidInstance);
 

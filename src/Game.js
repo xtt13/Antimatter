@@ -350,7 +350,7 @@ export default class {
 
 					this.asteroidsMoving.push(asteroid);
 
-					this.inputManager.airSpeed = -0.5;
+					this.inputManager.airSpeed = 0;
 					let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
 					this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
 
@@ -470,15 +470,17 @@ export default class {
 
 			// }
 
-			if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationBottom, true)) {
 
-				console.log('COLLISION !!!');
+			// THIS ONE
+			// if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationBottom, true)) {
 
-				this.inputManager.airSpeed = -0.5;
-				let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
-				this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
+			// 	console.log('COLLISION !!!');
 
-			}
+			// 	this.inputManager.airSpeed = -0.5;
+			// 	let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
+			// 	this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
+
+			// }
 
 			// if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationTop, true)) {
 

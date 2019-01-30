@@ -29,9 +29,8 @@ export default class {
 
         this.text = [
 
-            `Hello, I'm your bord computer! In your mission you'll have to mine all relevant asteroids in this orbit. You'll find the necessary information in your log by pressing the Tab-Key. It's probably the best idea to start with an orbit scan.
-            You can either control your ship by pressing the W, A, S, D keys, or with a XBOX360 controller.
-            Change your view by pressing the Key Number 1, or 2.`,
+            `Hello, I'm your bord computer! My job is to guide you through your mission. In your mission you'll have to mine all relevant asteroids in this orbit. You'll find the necessary information in your log by pressing the Tab-Key. You can control your ship by pressing the W, A, S, D keys and sideways with the Q and A-Keys. The spaceship can be accelerated with the X-Key and decelerated with the Y-Key.
+            The mininglaser can be switched on with the Space-Key. Avoid colliding with the asteroids! This will result in damages.`,
 
             `All materials are transmitted to the jumpgate. Construction has started.`,
 
