@@ -16,12 +16,12 @@ export default class {
         this.store = [
             {
                 name: 'Iron',
-                amount: 0,
+                amount: 5,
                 max: 5
             },
             {
                 name: 'Gold',
-                amount: 0,
+                amount: 10,
                 max: 10
             },
             {
@@ -31,12 +31,12 @@ export default class {
             },
             {
                 name: 'Pyresium',
-                amount: 0,
+                amount: 12,
                 max: 12
             },
             {
                 name: 'Perrius',
-                amount: 0,
+                amount: 8,
                 max: 8
             }
         ];
@@ -258,7 +258,11 @@ export default class {
                 hemisphericLight.intensity = 0;
                 hemisphericLight.dispose();
 
+                // FadeOut Music
+                game.MusicManager.fadeInMusic();
+
                 inputManager.enableKeys();
+
                 game.arc.ship.isVisible = true;
                 game.arc.moveShip();
 
@@ -290,12 +294,50 @@ export default class {
     }
 
     newOrbit() {
-        this.storeSound = new BABYLON.Sound("storeSound", "assets/audio/sound/neworbit.mp3", this.scene, null,
+
+        this.neworbitSound = new BABYLON.Sound("neworbitSound", "assets/audio/sound/neworbit.mp3", this.scene, null,
             {
                 loop: false,
                 volume: 1,
                 autoplay: true
             });
+
+        // UI Box
+        this.game.GUIClass.uiCommandText(this.neworbitSound, 4);
+
+        let distanceSwitch = true;
+        this.scene.registerBeforeRender(() => {
+            if (BABYLON.Vector3.Distance(this.cockpit.position, this.game.arc.ship.position) < 2000) {
+                if (distanceSwitch) {
+                    distanceSwitch = false;
+
+                    this.finalmessage = new BABYLON.Sound("finalmessage", "assets/audio/sound/finalmessage.mp3", this.scene, null,
+                        {
+                            loop: false,
+                            volume: 1,
+                            autoplay: true
+                        });
+
+                    // UI Box
+                    this.game.GUIClass.uiCommandText(this.finalmessage, 5);
+
+                    setTimeout(() => {
+                        this.game.cameraManager.fadeOut();
+
+                        setTimeout(() => {
+                            this.createEndText();
+                        }, 3000);
+                    }, 10000);
+                }
+
+            }
+        });
+
+
+    }
+
+    createEndText() {
+
     }
 
 
@@ -529,8 +571,13 @@ void main(void) {
                                         );
 
                                     } else {
-                                        
+
                                         // Enough Tons mined
+                                        this.alreadymined = new BABYLON.Sound("alreadymined", "assets/audio/sound/alreadymined.mp3", this.scene, null,
+                                            {
+                                                volume: 1,
+                                                autoplay: true
+                                            });
 
                                         this.transferParticles.stop();
                                         this.stopMining();
@@ -550,7 +597,7 @@ void main(void) {
 
                                         // let mesh = this.scene.getMeshByName(asteroid.name);
 
-                                        
+
 
                                         this.game.asteroids.asteroids.splice(this.game.asteroids.asteroids.indexOf(asteroid), 1);
                                         asteroid.dispose();
@@ -604,6 +651,7 @@ void main(void) {
 
         if (finalCheck) {
 
+            // Disable Asteroid Screen
             this.game.GUIClass.disableAsteroidScreen();
 
             // Voice Command
@@ -614,6 +662,9 @@ void main(void) {
                     volume: 1,
                     autoplay: true
                 });
+
+            // UI Box
+            this.game.GUIClass.uiCommandText(this.transmissioncommand, 1);
 
             // Building Sound
 
@@ -630,12 +681,21 @@ void main(void) {
 
             // After 80s
             setTimeout(() => {
+
                 // View Rings (Set Timeout)
                 this.game.jumpGate.viewjumpGateRings();
 
                 this.setFinalSpot();
 
                 // Fly Instructions Point
+                this.custructioncompleted = new BABYLON.Sound("custructioncompleted", "assets/audio/sound/custructioncompleted.mp3", this.scene, null,
+                    {
+                        volume: 1,
+                        autoplay: true
+                    });
+
+                // UI Box
+                this.game.GUIClass.uiCommandText(this.custructioncompleted, 2);
 
 
             }, 83000);
@@ -682,6 +742,7 @@ void main(void) {
 
                     this.game.inputManager.disableKeys();
 
+
                     var tempQuat = BABYLON.Quaternion.Identity();
                     var slerpAmount = 0.05;
 
@@ -704,6 +765,17 @@ void main(void) {
 
                     setTimeout(() => {
                         this.game.inputManager.jumpGateStartApproval = true;
+
+                        this.instructionJumpGate = new BABYLON.Sound("instructionJumpGate", "assets/audio/sound/initjumpgate.mp3", this.scene, null,
+                            {
+                                volume: 1,
+                                autoplay: true
+                            }
+                        );
+
+                        // UI Box
+                        this.game.GUIClass.uiCommandText(this.instructionJumpGate, 3);
+
                     }, 2000);
 
                     // (ENTER-Key Start) Instructions

@@ -33,7 +33,6 @@ export default class {
     fadeOutMusic() {
         let musicVolume = 0.5;
         let fadeOutInterval = setInterval(() => {
-            this.music.volume
 
             // Fade Out Shake Sound
             this.music.setVolume(musicVolume);
@@ -42,6 +41,21 @@ export default class {
             if (musicVolume > 0) musicVolume -= 0.01;
             if (musicVolume <= 0){
                 clearInterval(fadeOutInterval);
+            }
+        }, 50);
+    }
+
+    fadeInMusic() {
+        let musicVolume = 0;
+        let fadeInInterval = setInterval(() => {
+
+            // Fade Out Shake Sound
+            this.music.setVolume(musicVolume);
+
+            // Incr. Var
+            if (musicVolume < 0.5) musicVolume += 0.01;
+            if (musicVolume >= 0.5){
+                clearInterval(fadeInInterval);
             }
         }, 50);
     }

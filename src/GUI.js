@@ -14,8 +14,48 @@ export default class {
 
         this.asteroidScreenEnabled = false;
 
+        this.showGUISound = new BABYLON.Sound("showGUISound", "assets/audio/sound/popup.mp3", this.scene, null,
+            {
+                loop: false,
+                volume: 0.5
+            }
+        );
+
+        this.removeGUISound = new BABYLON.Sound("removeGUISound", "assets/audio/sound/popaway.mp3", this.scene, null,
+        {
+            loop: false,
+            volume: 0.5
+        });
+
+        this.text = [
+
+            `Hello, I'm your bord computer! In your mission you'll have to mine all relevant asteroids in this orbit. You'll find the necessary information in your log by pressing the Tab-Key. It's probably the best idea to start with an orbit scan.
+            You can either control your ship by pressing the W, A, S, D keys, or with a XBOX360 controller.
+            Change your view by pressing the Key Number 1, or 2.`,
+
+            `All materials are transmitted to the jumpgate. Construction has started.`,
+
+            `The construction work is completed. Get to the mark for further instructions.`,
+
+            `The coordinates of the new solar system have been transmitted. All you have to do now, is to activate the jumpgate by pressing the Enter-Key.`,
+
+            `Orbit of Proxima Centauri B detected. The arc is entering the orbit.`,
+
+            `Docking maneuvers initiated. Your mission has been completed successfully. Good Bye!`
+
+        ];
+
+        let n = document.createElement('div');
+        n.setAttribute('class', 'scanlines ui-block');
+        n.innerHTML = '';
+        n.style.display = 'none';
+        document.body.appendChild(n);
+
         // Show Textbox
-        // this.createIntroScreen();
+        setTimeout(() => {
+            this.createIntroScreen();
+        }, 5000);
+
     }
 
     markAsteroids() {
@@ -27,14 +67,6 @@ export default class {
     }
 
     createIntroScreen() {
-        var n = document.createElement('div');
-        n.setAttribute('class', 'scanlines ui-block');
-
-        let content = `Hello, I'm your bord computer! In your mission you'll have to mine all relevant asteroids in this orbit. You'll find the necessary information in your log by pressing the Tab-Key. It's probably the best idea to start with an orbit scan.
-
-            You can either control your ship by pressing the W, A, S, D keys, or with a XBOX360 controller.
-            Change your view by pressing the Key Number 1, or 2.`;
-
 
         let boardIntro = new BABYLON.Sound("bordintro", "assets/audio/sound/bordintro.mp3", this.scene, null,
             {
@@ -44,24 +76,44 @@ export default class {
                 autoplay: true
             })
 
-        n.innerHTML = '';
+        this.uiCommandText(boardIntro, 0);
 
-        document.body.appendChild(n);
+
+    }
+
+    uiCommandText(sound, index) {
+
+        this.showGUISound.play();
+
+        let content = this.text[index];
 
         let counter = 0;
         let uibox = document.querySelector('.scanlines');
+        uibox.innerHTML = '';
+        uibox.style.display = 'block';
 
         // Interval for Key by Key
         let textInterval = setInterval(() => {
+
             uibox.textContent += `${content[counter]}`;
+
             counter++;
+
             if (counter > (content.length - 1)) {
+
                 clearInterval(textInterval);
-                setTimeout(() => {
-                    n.style.display = 'none';
-                }, 10000);
+
+                sound.onended = () => {
+                    setTimeout(() => {
+                        this.removeGUISound.play();
+                        uibox.style.display = 'none';
+                    }, 3000);
+                };
+
             }
+
         }, 50);
+
 
 
     }
@@ -88,7 +140,7 @@ export default class {
         this.labels.push(label);
     }
 
-    createGUIData(){
+    createGUIData() {
         let string = '';
 
         let store = this.cockpit.store;
@@ -97,7 +149,7 @@ export default class {
             const element = store[i];
 
             let classValue;
-            if(element.amount == element.max){
+            if (element.amount == element.max) {
                 classValue = " class='full' ";
             } else {
                 classValue = '';
@@ -109,16 +161,16 @@ export default class {
         return string;
     }
 
-    updateGUI(){
-        
-        if(this.asteroidScreenEnabled){
+    updateGUI() {
+
+        if (this.asteroidScreenEnabled) {
             let screen = document.querySelector('.asteroidsUI');
             screen.innerHTML = this.createGUIData();
         }
     }
 
     enableAsteroidScreen() {
-        if(this.asteroidScreenEnabled) return;
+        if (this.asteroidScreenEnabled) return;
 
         this.asteroidScreenEnabled = true;
 
@@ -131,30 +183,19 @@ export default class {
 
         document.body.appendChild(n);
 
-        this.showGUISound = new BABYLON.Sound("showGUISound", "assets/audio/sound/popup.mp3", this.scene, null,
-        {
-            loop: false,
-            volume: 0.5,
-            autoplay: true
-        }
-    );
+        this.showGUISound.play();
 
     }
 
-    disableAsteroidScreen(){
+    disableAsteroidScreen() {
 
-        if(!this.asteroidScreenEnabled) return;
+        if (!this.asteroidScreenEnabled) return;
 
         this.asteroidScreenEnabled = false;
         let elem = document.querySelector('.asteroidsUI');
         elem.parentNode.removeChild(elem);
 
-        this.removeGUISound = new BABYLON.Sound("removeGUISound", "assets/audio/sound/popaway.mp3", this.scene, null,
-        {
-            loop: false,
-            volume: 0.5,
-            autoplay: true
-        });
+        this.removeGUISound.play();
 
     }
 
