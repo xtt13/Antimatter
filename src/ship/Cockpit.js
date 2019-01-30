@@ -16,12 +16,12 @@ export default class {
         this.store = [
             {
                 name: 'Iron',
-                amount: 5,
+                amount: 0,
                 max: 5
             },
             {
                 name: 'Gold',
-                amount: 10,
+                amount: 0,
                 max: 10
             },
             {
@@ -31,12 +31,12 @@ export default class {
             },
             {
                 name: 'Pyresium',
-                amount: 12,
+                amount: 0,
                 max: 12
             },
             {
                 name: 'Perrius',
-                amount: 8,
+                amount: 0,
                 max: 8
             }
         ];
@@ -85,9 +85,6 @@ export default class {
 
             this.createLaser();
 
-            // this.setFinalSpot();
-
-
             //  Scale Value
             var spaceScale = 50.0;
 
@@ -100,6 +97,12 @@ export default class {
             this.checkpoint = BABYLON.MeshBuilder.CreateSphere("checkpoint", { segments: 8, diameter: 500, diameterX: 500 }, this.scene);
             this.checkpoint.position = new BABYLON.Vector3(-3000, 0, 9000);
             this.checkpoint.isVisible = false;
+
+            // Create a Transfer particle system
+            this.transferParticles = new BABYLON.ParticleSystem("particles", 2000, this.scene);
+
+            // Texture of each Transfer Particle
+            this.transferParticles.particleTexture = new BABYLON.Texture("./assets/textures/laser/flare.png", this.scene);
 
 
 
@@ -131,7 +134,6 @@ export default class {
         //     }
         // }, 10);
 
-        game.lensFlareSystem.isEnabled = false;
         this.enableCheckpointRotation = false;
 
 
@@ -172,7 +174,6 @@ export default class {
 
         this.cylinder.material = starfieldMaterial;
         this.cylinder.material.alpha = 0;
-        console.log(starfieldMaterial);
 
         // Shake Camera (Sound, Loop)
         cameraManager.shake(true, true);
@@ -188,6 +189,7 @@ export default class {
         }, 60);
 
         setTimeout(() => {
+
             // Remove Orbit Meshes
             this.wormholePreperations(game);
 
@@ -259,6 +261,10 @@ export default class {
                 inputManager.enableKeys();
                 game.arc.ship.isVisible = true;
                 game.arc.moveShip();
+
+                setTimeout(() => {
+                    this.newOrbit();
+                }, 5000);
             }, 10000);
 
 
@@ -281,6 +287,15 @@ export default class {
         }, 3000);
 
 
+    }
+
+    newOrbit() {
+        this.storeSound = new BABYLON.Sound("storeSound", "assets/audio/sound/neworbit.mp3", this.scene, null,
+            {
+                loop: false,
+                volume: 1,
+                autoplay: true
+            });
     }
 
 
@@ -480,14 +495,21 @@ void main(void) {
                             // If current Store Type matches Asteroid Rock Type
                             if (element.name == rock) {
 
-                                // Can I still store enough?
-                                if (element.amount < element.max) {
+                                // Is there still more than nothing of the asteroid
+                                if (this.game.asteroids.data[rockKey].amount > 0) {
 
-                                    // Is there still more than nothing of the asteroid
-                                    if (this.game.asteroids.data[rockKey].amount > 0) {
+                                    // Can I still store enough?
+                                    if (element.amount < element.max) {
+
+
+                                        // Start Particle Transfer
+                                        this.transferStone();
 
                                         // Remove 1t of rock
                                         this.game.asteroids.data[rockKey].amount -= 1;
+
+                                        // Update Label
+                                        this.game.asteroids.updateLabel(asteroid.label, asteroid.type.name, this.game.asteroids.data[rockKey].amount);
 
                                         // Add 1t to the storage
                                         this.store[i].amount += 1;
@@ -507,25 +529,14 @@ void main(void) {
                                         );
 
                                     } else {
-                                        // Destroy Asteroid
-                                        // console.log('DISPOSE ASTEROID');
+                                        
+                                        // Enough Tons mined
 
-                                        // let mesh = this.scene.getMeshByName(asteroid.name);
-                                        // mesh.dispose();
-
-                                        this.collisionSound = new BABYLON.Sound("collisionSound", "assets/audio/sound/collision.mp3", this.scene, null,
-                                            {
-                                                volume: 0.5,
-                                                autoplay: true
-                                            }
-                                        );
-
+                                        this.transferParticles.stop();
                                         this.stopMining();
 
-                                        this.game.asteroids.removeMiningLabel(asteroid);
+                                        this.game.asteroids.removeLabel(asteroid.label);
                                         this.game.asteroids.removeCustomOutline(asteroid);
-
-                                        this.game.asteroids.asteroids.splice(this.game.asteroids.asteroids.indexOf(asteroid), 1);
 
                                         clearInterval(miningInterval);
                                         break;
@@ -538,7 +549,12 @@ void main(void) {
                                         // console.log('DISPOSE ASTEROID');
 
                                         // let mesh = this.scene.getMeshByName(asteroid.name);
-                                        // mesh.dispose();
+
+                                        
+
+                                        this.game.asteroids.asteroids.splice(this.game.asteroids.asteroids.indexOf(asteroid), 1);
+                                        asteroid.dispose();
+
 
                                         this.collisionSound = new BABYLON.Sound("collisionSound", "assets/audio/sound/collision.mp3", this.scene, null,
                                             {
@@ -549,12 +565,12 @@ void main(void) {
 
                                     }
 
+
+                                    this.transferParticles.stop();
                                     this.stopMining();
 
-                                    this.game.asteroids.removeMiningLabel(asteroid);
+                                    this.game.asteroids.removeLabel(asteroid.label);
                                     this.game.asteroids.removeCustomOutline(asteroid);
-
-                                    this.game.asteroids.asteroids.splice(this.game.asteroids.asteroids.indexOf(asteroid), 1);
 
                                     clearInterval(miningInterval);
                                     break;
@@ -656,8 +672,6 @@ void main(void) {
         this.scene.registerBeforeRender(() => {
 
             if (this.cockpit.intersectsMesh(this.checkpoint, true)) {
-
-
 
                 this.game.inputManager.airSpeed = 0;
                 let newVal = this.game.SoundManager.engineSound._playbackRate -= 0.5;
@@ -791,28 +805,22 @@ void main(void) {
 
         // Start the particle system
         this.particleSystemHit.start();
-        this.transferStone();
+
     }
 
     transferStone() {
 
-        // Create a particle system
-        this.tranferParticles = new BABYLON.ParticleSystem("particles", 2000, this.scene);
-
-        //Texture of each particle
-        this.tranferParticles.particleTexture = new BABYLON.Texture("./assets/textures/laser/flare.png", this.scene);
-
         // Where the particles come from
-        this.tranferParticles.emitter = this.laserMesh; // the starting object, the emitter
-        this.tranferParticles.minEmitBox = new BABYLON.Vector3(0, 0, 0); // Starting all from
-        this.tranferParticles.maxEmitBox = new BABYLON.Vector3(0, 0, 0); // To...
+        this.transferParticles.emitter = this.laserMesh; // the starting object, the emitter
+        this.transferParticles.minEmitBox = new BABYLON.Vector3(0, 0, 0); // Starting all from
+        this.transferParticles.maxEmitBox = new BABYLON.Vector3(0, 0, 0); // To...
 
-        this.tranferParticles.minSize = 15;
-        this.tranferParticles.maxSize = 15;
+        this.transferParticles.minSize = 15;
+        this.transferParticles.maxSize = 15;
 
-        this.tranferParticles.emitRate = 4;
+        this.transferParticles.emitRate = 4;
 
-        this.tranferParticles.maxLifeTime = 2;
+        this.transferParticles.maxLifeTime = 2;
 
         // Direction of each particle after it has been emitted
         var baseImpactReactionDirection = this.laserMesh.position.subtract(this.cockpit.position).normalize().scale(5);
@@ -821,10 +829,10 @@ void main(void) {
         // baseImpactReactionDirection.y *= -1;
         // baseImpactReactionDirection.z *= -1;
 
-        this.tranferParticles.direction1 = baseImpactReactionDirection;
+        this.transferParticles.direction1 = baseImpactReactionDirection;
 
         // Start the particle system
-        this.tranferParticles.start();
+        this.transferParticles.start();
 
     }
 
@@ -832,16 +840,17 @@ void main(void) {
 
         if (this.particleSystemHit) {
             this.particleSystemHit.stop();
-            this.tranferParticles.stop();
         }
+
+        this.transferParticles.stop();
 
 
         if (this.laserSound) {
             this.laserSound.stop();
         }
 
-        if (!this.currentlyMining) return;
-        this.currentlyMining = false;
+        // if (!this.currentlyMining) return;
+        // this.currentlyMining = false;
 
 
 

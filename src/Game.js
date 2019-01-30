@@ -313,6 +313,8 @@ export default class {
 			for (let i = 0; i < this.asteroids.asteroids.length; i++) {
 				let asteroid = this.asteroids.asteroids[i];
 
+				var label = null;
+
 				if(this.cockpit.laserMesh.intersectsMesh(asteroid, true) && !asteroid.currentlyMining){
 					console.log('INTERSECTION');
 
@@ -321,6 +323,7 @@ export default class {
 					asteroid.currentlyMining = true;
 
 					this.asteroids.addMiningLabel(asteroid);
+
 					this.asteroids.addCustomOutline(asteroid);
 
 					this.cockpit.startMining(asteroid);
@@ -334,7 +337,8 @@ export default class {
 
 						console.log('Stop');
 
-						this.asteroids.removeMiningLabel(asteroid);
+						this.asteroids.removeLabel(asteroid.label);
+						
 						this.asteroids.removeCustomOutline(asteroid);
 
 						this.cockpit.stopMining();
@@ -441,7 +445,6 @@ export default class {
 
 			// if (this.cockpit.cockpit.intersectsMesh(this.jumpGate.jumpGate, true)) {
 
-			// 	// console.log('COLLISION !!!');
 
 			// 	// this.inputManager.airSpeed = -0.5;
 
@@ -467,37 +470,17 @@ export default class {
 
 			// }
 
-			// if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationBottom, true)) {
+			if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationBottom, true)) {
 
-			// 	console.log('COLLISION !!!');
+				console.log('COLLISION !!!');
 
-			// 	this.inputManager.airSpeed = -0.5;
-			// 	let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
-			// 	this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
+				this.inputManager.airSpeed = -0.5;
+				let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
+				this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
 
-			// }
+			}
 
 			// if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationTop, true)) {
-
-			// 	console.log('COLLISION !!!');
-
-			// 	this.inputManager.airSpeed = -0.5;
-			// 	let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
-			// 	this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
-
-			// }
-
-			// if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationRing, true)) {
-
-			// 	console.log('COLLISION !!!');
-
-			// 	this.inputManager.airSpeed = -0.5;
-			// 	let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
-			// 	this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
-
-			// }
-
-			// if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationMiddle, true)) {
 
 			// 	console.log('COLLISION !!!');
 

@@ -15,21 +15,13 @@ export default class {
         this.scanning = false;
 
         this.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui1");
-        this.advancedTexture.renderScale = 1.0;
-        this.advancedTexture.hardwareScalingLevel = 0.5;
+        // this.advancedTexture.renderScale = 1.0;
+        // this.advancedTexture.hardwareScalingLevel = 0.5;
 
         // this.numberOfAsteroid = 300;
         this.outlineScalingValue = 2;
         this.min = 1;
         this.max = 30;
-
-        // this.types = [
-        //     'Iron 5 t',
-        //     'Gold 10 t',
-        //     'Doxtrit 3 t',
-        //     'Pyresium 12 t',
-        //     'Perrius 8 t'
-        // ];
 
         this.types = [
             {
@@ -189,6 +181,10 @@ export default class {
         }
     }
 
+    updateLabel(label, name, amount){
+        label.children[0].text = name + ' ' + amount + 't';
+    }
+
     addLabel(mesh, amount) {
         var label = new GUI.Rectangle("label for " + mesh.type.name);
 
@@ -242,7 +238,8 @@ export default class {
             }
         }
 
-        this.addLabel(mesh, rockStorage);
+        let label = this.addLabel(mesh, rockStorage);
+        mesh.label = label;
 
         let beepSound = new BABYLON.Sound("beepSound", "assets/audio/sound/beep.mp3", this.scene, null,
             {
@@ -254,9 +251,6 @@ export default class {
 
     }
 
-    removeMiningLabel(mesh) {
-        this.removeLabel(mesh);
-    }
 
     initTargetableActions(target, customOutline) {
         target.actionManager = new BABYLON.ActionManager(this.scene);
