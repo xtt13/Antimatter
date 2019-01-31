@@ -37,7 +37,7 @@ export default class {
 
         loadPlanetTexture.onSuccess = (task) => {
 
-            this.planetMaterial.diffuseTexture = task.texture;
+            // this.planetMaterial.diffuseTexture = task.texture;
         }
 
         loadPlanetTexture.onError = function (task, message, exception) {
@@ -49,7 +49,7 @@ export default class {
         this.planetMaterial.diffuseColor = new BABYLON.Color3(0.8, 1, 0.6);
         this.planetMaterial.emissiveColor = new BABYLON.Color3(0.15, 0.05, 0.05);
 
-        // this.planetMaterial.diffuseTexture = new BABYLON.Texture("./assets/textures/planets/Planet_Beta_Hydri.jpg", this.scene);
+        this.planetMaterial.diffuseTexture = new BABYLON.Texture("./assets/textures/planets/centauri.png", this.scene);
 
 
         this.planet = BABYLON.MeshBuilder.CreateSphere("planet", {

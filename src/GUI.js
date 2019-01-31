@@ -31,7 +31,7 @@ export default class {
         this.text = [
 
             `Hello, I'm your bord computer! My job is to guide you through your mission. In your mission you'll have to mine all relevant asteroids in this orbit. You'll find the necessary information in your log by pressing the Tab-Key. You can control your ship by pressing the W, A, S, D keys and sideways with the Q and A-Keys. The spaceship can be accelerated with the X-Key and decelerated with the Y-Key.
-            The mininglaser can be switched on with the Space-Key. Avoid colliding with the asteroids! This will result in damages.`,
+            The mininglaser can be switched on with the Space-Key. Avoid colliding with asteroids! This will result in damages.`,
 
             `All materials are transmitted to the jumpgate. Construction has started.`,
 
@@ -53,6 +53,7 @@ export default class {
 
         // Show Textbox
         setTimeout(() => {
+            console.log(this.game.SoundManager.engineSound._playbackRate);
             this.createIntroScreen();
         }, 5000);
 
@@ -102,17 +103,16 @@ export default class {
             if (counter > (content.length - 1)) {
 
                 clearInterval(textInterval);
-
-                sound.onended = () => {
-                    setTimeout(() => {
-                        this.removeGUISound.play();
-                        uibox.style.display = 'none';
-                    }, 3000);
-                };
-
             }
 
         }, 50);
+
+        sound.onended = () => {
+            setTimeout(() => {
+                this.removeGUISound.play();
+                uibox.style.display = 'none';
+            }, 3000);
+        };
 
 
 
@@ -197,6 +197,15 @@ export default class {
 
         this.removeGUISound.play();
 
+    }
+
+    createEndText(){
+        var n = document.createElement('div');
+        n.setAttribute('class', 'endText');
+
+        n.innerHTML = "End";
+
+        document.body.appendChild(n);
     }
 
 

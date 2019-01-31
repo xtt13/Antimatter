@@ -350,8 +350,17 @@ export default class {
 
 					this.asteroidsMoving.push(asteroid);
 
+					console.log(this.SoundManager.engineSound._playbackRate);
+
 					this.inputManager.airSpeed = 0;
-					let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
+
+					let newVal;
+					if(this.SoundManager.engineSound._playbackRate > 1){
+						newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
+					} else {
+						newVal = 1;
+					}
+					
 					this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
 
 					this.inputManager.disableKeys();

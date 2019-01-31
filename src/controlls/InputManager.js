@@ -183,7 +183,6 @@ export default class {
     }
 
     isMobileDevice() {
-        return true;
         return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
     }
 
@@ -198,16 +197,20 @@ export default class {
             var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
             var panel = new BABYLON.GUI.StackPanel();
+
             panel.width = "250px";
             //panel.height = "250px";
+
             panel.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
             panel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
+
             advancedTexture.addControl(panel);
 
             var header = new BABYLON.GUI.TextBlock();
             header.text = "Y-rotation: 0 deg";
             header.height = "250px";
             header.color = "white";
+
             panel.addControl(header);
 
             var slider = new BABYLON.GUI.Slider();
@@ -220,7 +223,9 @@ export default class {
             slider.onValueChangedObservable.add((value) => {
                 this.airSpeed = value;
             });
+
             console.log(slider);
+
             panel.addControl(slider);
         }
     }
@@ -279,12 +284,7 @@ export default class {
 
             var code = e.keyCode ? e.keyCode : e.which;
 
-            // Fullscreen 1-Key
-            if (code === 49) {
-                this.launchFullscreen();
-            }
-
-            // Tab-Key
+            // Tab-Key - Ressources Menu
             if (code === 9) {
                 if (this.asteroidUIenabled) {
                     this.game.GUIClass.disableAsteroidScreen();
@@ -295,65 +295,46 @@ export default class {
                 }
             }
 
+            // Enter Key - Start Jumpgate
             if (code === 13) {
 
                 if (this.jumpGateStartApproval) {
                     this.jumpGateStartApproval = false;
 
                     this.game.lensFlareSystem.isEnabled = false;
+                    this.game.sunMesh.isVisible = false;
 
                     this.game.jumpGate.startJumpGate();
+
+                    // setTimeout(() => {
+                    //     setInterval(() => {
+                    //         var elapsed = this.engine.getDeltaTime() / 1000;
+
+                    //         for (let i = 0; i < this.cockpitParts.length; i++) {
+                    //             this.cockpitParts[i].translate(BABYLON.Axis.Z, elapsed + this.airSpeed, BABYLON.Space.GLOBAL);
+                    //         }
+
+                    //         this.airSpeed += (this.accValue + 0.3);
+
+                    //     }, 100);
+                    // }, 6000);
                 }
             }
 
-            if (code === 50) {
-                // SWITCH TO FOLLOW CAM 2-Key
 
-                // this.ship.ship.position = this.game.cockpit.cockpit.position;
-                // this.ship.ship.rotation = this.game.cockpit.cockpit.rotation;
+            // if (code == 186) {
+            //     console.log('detach camera');
+            //     this.game.cameraManager.camera.lockedTarget = null;
 
-                // this.ship.ship.isVisible = true;
-                // this.game.cockpit.cockpit.isVisible = false;
+            //     // Parameters: alpha, beta, radius, target position, scene
+            //     // this.game.cameraManager.camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0, 0, 10, this.game.ship.ship, this.scene);
 
-                // this.cameraManager.followCamera(this.ship.ship);
-
-                console.log(this.game.cockpit.cockpit.position);
-            }
-
-            if (code === 51) {
-                // SWITCH TO COCKPIT CAMERA 3-Key
-                // this.cameraManager.cockpitCamera();
-            }
-
-            // Scan Asteroids P-Key
-            if (code === 80) {
-                this.game.asteroids.scanAsteroids();
-            }
-
-            // FadeIn Camera C-Key
-            if (code === 67) {
-                this.game.cameraManager.fadeIn();
-            }
-
-            // FadeOut Camera V-Key
-            if (code === 86) {
-                this.game.cameraManager.fadeOut();
-            }
-
-            if (code == 186) {
-                console.log('detach camera');
-                this.game.cameraManager.camera.lockedTarget = null;
-
-                // Parameters: alpha, beta, radius, target position, scene
-                // this.game.cameraManager.camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0, 0, 10, this.game.ship.ship, this.scene);
-
-                // This attaches the camera to the canvas
-                // this.game.cameraManager.camera.attachControl(this.game.canvas, true);
-            }
+            //     // This attaches the camera to the canvas
+            //     // this.game.cameraManager.camera.attachControl(this.game.canvas, true);
+            // }
 
             // Space Key - Mining
             if (code == 32) {
-                console.log('Start Mining');
                 if (!this.laserEnabled) {
                     this.laserEnabled = true;
                     this.cockpit.startLaser();
@@ -370,44 +351,6 @@ export default class {
                 this.game.cockpit.createSpaceTunnel(false, this.cameraManager, this, this.game);
             }
 
-            // Shake L-Key
-            if (code == 76) {
-                this.game.jumpGate.startJumpGate();
-                setTimeout(() => {
-                    // this.game.cameraManager.shake(true);
-                    // setInterval(() => {
-                    //     var elapsed = this.engine.getDeltaTime() / 1000;
-                    //     for (let i = 0; i < this.cockpitParts.length; i++) {
-                    //         this.cockpitParts[i].translate(BABYLON.Axis.Z, elapsed + this.airSpeed, BABYLON.Space.GLOBAL);
-                    //     }
-                    //     this.airSpeed += (this.accValue + 0.3);
-
-                    // }, 100);
-                }, 6000);
-
-                setTimeout(() => {
-                    // this.game.cameraManager.fadeOut();
-
-                    setTimeout(() => {
-
-                        for (let i = 0; i < this.cockpitParts.length; i++) {
-                            // this.cockpitParts[i].rotation = new BABYLON.Vector3(11, 0, 0);
-                        }
-
-                        // this.game.cockpit.createSpaceTunnel();
-                        // this.game.cameraManager.fadeIn();
-
-                        setTimeout(() => {
-                            // this.game.cameraManager.fadeOut();
-                        }, 7000);
-                    }, 3000);
-
-                }, 9000);
-            }
-
-            if (code == 187) {
-                console.log(this.game.cockpit.cockpit.position);
-            }
         };
     }
 
@@ -482,8 +425,6 @@ export default class {
 
     cockpitControlls(engine) {
         var elapsed = engine.getDeltaTime() / 1000;
-
-
 
         //==========================================================
 

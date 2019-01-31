@@ -17,7 +17,7 @@
     <meta http-equiv="Expires" content="0" />
 
     <link rel="manifest" href="manifest.json">
-    
+
     <script src="https://cdn.babylonjs.com/babylon.worker.js"></script>
 
     <!-- <script src="https://cdn.babylonjs.com/oimo.js"></script> -->
@@ -162,7 +162,8 @@
 
         .qualityOptions {
             position: absolute;
-            list-style: none; display: flex;
+            list-style: none;
+            display: flex;
             font-family: "Futura", Arial, sans-serif;
             letter-spacing: 2px;
             font-size: 15px;
@@ -245,6 +246,32 @@
             background-size: 100% 4px;
             -webkit-animation: scanlines 1s steps(60) infinite;
             animation: scanlines 1s steps(60) infinite;
+        }
+
+        .endText {
+            position: absolute;
+            font-size: 50px;
+            color: white;
+            font-family: 'Solaris';
+            animation: letterspacinganim 10s ease-out forwards normal;
+            animation-delay: 1s;
+            opacity: 0;
+        }
+
+        @keyframes letterspacinganim {
+            0% {
+                letter-spacing: 3px;
+                opacity: 0;
+            }
+
+            /* 30% {
+                letter-spacing: 4px;
+            } */
+
+            100% {
+                letter-spacing: 20px;
+                opacity: 1;
+            }
         }
 
         /* ANIMATE UNIQUE SCANLINE */

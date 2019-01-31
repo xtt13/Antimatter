@@ -115,13 +115,12 @@ export default class {
             }
 
             this.createCockpitParticles();
-
             this.createLaser();
 
             //  Scale Value
             var spaceScale = 50.0;
 
-            // Create Cylinder Mesh
+            // Create Cylinder Mesh for Wormhole
             this.cylinder = BABYLON.Mesh.CreateCylinder("space", 10 * spaceScale, 0, 6 * spaceScale, 20, 20, this.scene);
             this.cylinder.parent = this.cockpit;
             this.cylinder.rotate(BABYLON.Axis.X, Math.PI / 2, BABYLON.Space.LOCAL);
@@ -273,13 +272,13 @@ export default class {
             // }, 10);
 
             //Lighten Light
-            // let lightenInterval = setInterval(() => {
-            //     game.sun.intensity += 5000000;
+            let lightenInterval = setInterval(() => {
+                game.sun.intensity += 5000000;
 
-            //     if (game.sun.intensity >= 1000000000) {
-            //         clearInterval(lightenInterval);
-            //     }
-            // }, 10);
+                if (game.sun.intensity >= 1000000000) {
+                    clearInterval(lightenInterval);
+                }
+            }, 10);
 
             // After 5s => Stop Shake
             setTimeout(() => {
@@ -358,7 +357,7 @@ export default class {
                         this.game.cameraManager.fadeOut();
 
                         setTimeout(() => {
-                            this.createEndText();
+                            this.game.GUIClass.createEndText();
                         }, 3000);
                     }, 10000);
                 }
@@ -366,10 +365,6 @@ export default class {
             }
         });
 
-
-    }
-
-    createEndText() {
 
     }
 
@@ -767,7 +762,14 @@ void main(void) {
             if (this.cockpit.intersectsMesh(this.checkpoint, true)) {
 
                 this.game.inputManager.airSpeed = 0;
-                let newVal = this.game.SoundManager.engineSound._playbackRate -= 0.5;
+
+                let newVal;
+                if(this.game.SoundManager.engineSound._playbackRate > 1){
+                    newVal = this.game.SoundManager.engineSound._playbackRate -= 0.5;
+                } else {
+                    newVal = 1;
+                }
+
                 this.game.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
 
                 if (finalSwitch) {
