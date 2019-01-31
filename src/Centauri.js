@@ -2,10 +2,10 @@ import * as BABYLON from 'babylonjs';
 import config from './config';
 
 export default class {
-    constructor(scene, engine, assetsManager) {
-        this.scene = scene;
-        this.engine = engine;
-        this.assetsManager = assetsManager;
+    constructor(game) {
+        this.scene = game.scene;
+        this.engine = game.engine;
+        this.assetsManager = game.assetsManager;
 
 
         this.planetDiameter = 40000;

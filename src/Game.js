@@ -38,6 +38,7 @@ import Arc from './Arc';
 export default class {
 	constructor() {
 
+		// Get Quality Settings from Local Storage
 		this.qualitySettings = localStorage.getItem('qualitySettings');
 		if (this.qualitySettings == undefined || this.qualitySettings == 'auto') {
 			this.qualitySettings = false;
@@ -45,6 +46,7 @@ export default class {
 			this.qualitySettings = true;
 		}
 
+		// Log Quality Settings
 		console.log('QualitySettings: ' + this.qualitySettings);
 
 		// Get Canvas
@@ -66,6 +68,7 @@ export default class {
 			this.qualitySettings
 		);
 
+		// Set Current State (Game or Menu)
 		this.currentState = config.currentState;
 
 		// Disable Manifest Model Warning
@@ -73,20 +76,15 @@ export default class {
 
 		// Init Scene
 		this.scene = new BABYLON.Scene(this.engine);
+
 		this.scene.clearColor = BABYLON.Color3.Black();
 
-
 		this.scene.autoClear = false; // Color buffer
+
 		this.scene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
 
 		// Backside Shadow Color
 		this.scene.ambientColor = new BABYLON.Color3(0.2, 0.2, 0.2);
-		// this.scene.ambientColor = new BABYLON.Color3(1, 1, 1);
-
-		// this.scene.collisionsEnabled = true;
-		// this.scene.gravity = new BABYLON.Vector3(0, 0, 0);
-		// this.scene.collisionsEnabled = true;
-		// this.scene.enablePhysics(new BABYLON.Vector3(0, -1, 0), new BABYLON.OimoJSPlugin());
 
 		this.scene.workerCollisions = true;
 
@@ -106,38 +104,49 @@ export default class {
 	createScene() {
 
 		this.helper = new Helper(this.scene);
+
 		this.assetsManager = new BABYLON.AssetsManager(this.scene);
 
 		this.MusicManager = new MusicManager(this.scene, this.assetsManager);
+
 		this.SoundManager = new SoundManager(this.scene, this.assetsManager);
 
 		this.ship = new Ship(this.scene, this.assetsManager);
-		this.cockpit = new Cockpit(this.scene, this.assetsManager, this.ship.ship, this.engine, this);
 
-		this.spaceStation = new Spacestation(this.scene, this.engine, this.assetsManager);
-		this.planet = new Planet(this.scene, this.engine, this.assetsManager, "Game");
-		this.centauri = new Centauri(this.scene, this.engine, this.assetsManager);
-		this.arc = new Arc(this.scene, this.engine, this.assetsManager);
-		this.asteroids = new Asteroids(this.scene, this.assetsManager, this.cockpit);
-		this.jumpGate = new JumpGate(this.scene, this.engine, this.assetsManager, this);
+		this.cockpit = new Cockpit(this);
 
-		this.menu = new Menu(this.engine, this.canvas, this.assetsManager, this);
+		this.spaceStation = new Spacestation(this);
 
+		this.planet = new Planet(this, "Game");
+
+		this.centauri = new Centauri(this);
+
+		this.arc = new Arc(this);
+
+		this.asteroids = new Asteroids(this);
+
+		this.jumpGate = new JumpGate(this);
+
+		this.menu = new Menu(this);
+
+		// Log Remaining Assets
 		this.assetsManager.onProgress = (remainingCount, totalCount, task) => {
 			console.log(remainingCount, totalCount, task.name);
 		}
-
 
 		// When all assets are loaded =>
 		this.assetsManager.onFinish = (tasks) => {
 
 			switch (this.currentState) {
 				case "Game":
+
 					// Run Setup
 					this.setup();
 					break;
 
 				case "Menu":
+
+					// Run Menu
 					this.menu.setup();
 					break;
 
@@ -158,7 +167,6 @@ export default class {
 						break;
 
 					default:
-						this.scene.render();
 						break;
 				}
 
@@ -179,29 +187,32 @@ export default class {
 	setup() {
 
 		// Init Camera Manager
-		this.cameraManager = new CameraManager(this.scene, this.canvas, this.ship, this.cockpit, this);
+		this.cameraManager = new CameraManager(this);
 
 		// Init Input Manager
-		this.inputManager = new InputManager(this.scene, this.ship, this.cockpit, this.cameraManager, this);
+		this.inputManager = new InputManager(this);
 
 		// Init PostProcess
-		this.PostProcess = new PostProcesses(this.scene, this.cameraManager.camera);
+		this.PostProcess = new PostProcesses(this);
 
 		// Init GUI
-		this.GUIClass = new GUI(this.scene, this.cameraManager, this.asteroids, this.cockpit, this);
+		this.GUIClass = new GUI(this);
 
 
 
 
 		// Create Box (Mesh) for Skybox
 		if (!config.disableSkybox) {
+
+			// Create Mesh for the skybox
 			this.skybox = BABYLON.Mesh.CreateBox("skyBox", config.skyBoxSize, this.scene);
+
+			// Set Skybox Position
 			this.skybox.position = new BABYLON.Vector3(0, 0, 0);
 
 			// Create Skybox Material
 			this.skyboxMaterial = new BABYLON.StandardMaterial("skyboxMaterial", this.scene);
 			this.skyboxMaterial.backFaceCulling = false;
-			this.skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("assets/textures/skybox/space/space", this.scene);
 
 			// OS and Navigator Detection (Chrome/Mac Texture Limitation Bug)
 			if (navigator.platform.indexOf('Mac') > -1 && navigator.userAgent.indexOf("Chrome") > -1) {
@@ -223,17 +234,6 @@ export default class {
 				// this.skybox.renderingGroupId = 0;
 			}
 		}
-
-		if (config.createSpaceTunnel) {
-			// for (let i = 0; i < this.cockpit.cockpitParts.length; i++) {
-			// 	// console.log('S');
-			// 	this.cockpitParts[i].rotation.x = 11;
-			//     // this.cockpitParts[i].rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
-			// }
-			this.cockpit.createSpaceTunnel(true, this.cameraManager, this.inputManager, this);
-		}
-
-
 
 		// Create Sun Mesh
 		this.sunMesh = BABYLON.MeshBuilder.CreateSphere("checkpoint", {diameter: 1000}, this.scene);

@@ -3,10 +3,11 @@ import * as GUI from 'babylonjs-gui';
 import config from './config';
 
 export default class {
-    constructor(scene, assetsManager, cockpit) {
-        this.scene = scene;
-        this.assetsManager = assetsManager;
-        this.cockpit = cockpit;
+    constructor(game) {
+        this.game = game;
+        this.scene = game.scene;
+        this.assetsManager = game.assetsManager;
+        this.cockpit = game.cockpit;
         // this.baseObject = baseObject.ship;
 
         this.asteroids = [];

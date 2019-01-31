@@ -2,12 +2,13 @@ import * as BABYLON from 'babylonjs';
 import * as GUI from 'babylonjs-gui';
 
 export default class {
-    constructor(scene, camera, asteroids, cockpit, game) {
-        this.scene = scene;
-        this.camera = camera;
-        this.asteroids = asteroids.asteroids;
-        this.cockpit = cockpit;
+    constructor(game) {
         this.game = game;
+        this.scene = game.scene;
+        this.camera = game.camera;
+        this.asteroids = game.asteroids.asteroids;
+        this.cockpit = game.cockpit;
+       
 
         this.advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("ui1");
         this.labels = [];

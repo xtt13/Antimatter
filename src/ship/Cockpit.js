@@ -2,12 +2,12 @@ import * as BABYLON from 'babylonjs';
 import config from './../config';
 
 export default class {
-    constructor(scene, assetsManager, ship, engine, game) {
-        this.scene = scene;
-        this.assetsManager = assetsManager;
-        this.ship = ship;
-        this.engine = engine;
+    constructor(game) {
         this.game = game;
+        this.scene = game.scene;
+        this.assetsManager = game.assetsManager;
+        this.ship = game.ship;
+        this.engine = game.engine;
 
         this.currentlyMining = false;
         this.currentlyMiningSwitch = true;

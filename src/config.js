@@ -6,7 +6,7 @@ export default {
 	// ##################
 	// Current State
 	// ##################
-	currentState: "Menu",
+	currentState: "Game",
 
 	// ##################
 	// Show Debug Layer
@@ -67,7 +67,7 @@ export default {
 	// Camera Config
 	// ##################
 	CameraMaxZ: 100000,
-	gamepadViewCameraSpeed: 0.015,
+	gamepadViewCameraSpeed: 0.03,
 
 	// ##################
 	// Spaceship Controll Config

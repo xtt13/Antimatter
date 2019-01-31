@@ -2,12 +2,13 @@ import * as BABYLON from 'babylonjs';
 import config from './config';
 
 export default class {
-    constructor(scene, canvas, ship, cockpit, game) {
-        this.scene = scene;
-        this.canvas = canvas;
-        this.ship = ship.ship;
-        this.cockpit = cockpit.CockpitParts[0];
+    constructor(game) {
         this.game = game;
+        this.scene = game.scene;
+        this.canvas = game.canvas;
+        this.ship = game.ship.ship;
+        this.cockpit = game.cockpit.CockpitParts[0];
+        
 
         this.cockpitCamera();
         // this.followCamera();
@@ -45,8 +46,8 @@ export default class {
         this.camera = new BABYLON.UniversalCamera("CockpitCamera", new BABYLON.Vector3(0, 20, 0), this.scene);
 
         // Disable Cursorkeys
-        // this.camera.inputs.clear();
-        // this.camera.inputs.addMouse();
+        this.camera.inputs.clear();
+        this.camera.inputs.addMouse();
 
         this.camera.maxZ = config.CameraMaxZ;
         // this.camera.applyGravity = true;

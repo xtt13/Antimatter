@@ -2,9 +2,10 @@ import * as BABYLON from 'babylonjs';
 import config from './config';
 
 export default class {
-    constructor(scene, camera) {
-        this.scene = scene;
-        this.camera = camera;
+    constructor(game) {
+        this.game = game;
+        this.scene = game.scene;
+        this.camera = game.camera;
 
         if (config.disablePostProcess) return;
         this.initPostProcess();

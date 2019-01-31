@@ -3,11 +3,12 @@ import 'babylonjs-procedural-textures';
 import config from './config';
 
 export default class {
-    constructor(scene, engine, assetsManager, game) {
-        this.scene = scene;
-        this.engine = engine;
-        this.assetsManager = assetsManager;
+    constructor(game) {
         this.game = game;
+        this.scene = game.scene;
+        this.engine = game.engine;
+        this.assetsManager = game.assetsManager;
+        
 
         this.speedVar = 0;
         this.position = new BABYLON.Vector3(8000, 0, 8000);

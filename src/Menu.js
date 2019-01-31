@@ -3,12 +3,12 @@ import Planet from './Planet';
 import config from './config';
 
 export default class {
-    constructor(engine, canvas, assetsManager, game) {
-
-        this.assetsManager = assetsManager;
-        this.engine = engine;
-        this.canvas = canvas;
+    constructor(game) {
         this.game = game;
+        this.assetsManager = game.assetsManager;
+        this.engine = game.engine;
+        this.canvas = game.canvas;
+        
 
         this.scene = new BABYLON.Scene(this.engine);
         this.scene.ambientColor = new BABYLON.Color3(0, 0, 0);
