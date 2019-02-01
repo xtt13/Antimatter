@@ -104,6 +104,7 @@ export default class {
         if (config.planetInfiniteDistance && this.type == "Game") {
             this.planet.infiniteDistance = true;
         }
+        
         this.planet.material = this.planetMaterial;
         this.planet.position = new BABYLON.Vector3(this.x, this.y, this.z);
         // this.planet.rotation = new BABYLON.Vector3(20, 0, 0);

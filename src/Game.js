@@ -236,18 +236,18 @@ export default class {
 		}
 
 		// Create Sun Mesh
-		this.sunMesh = BABYLON.MeshBuilder.CreateSphere("checkpoint", {diameter: 1000}, this.scene);
+		this.sunMesh = BABYLON.MeshBuilder.CreateSphere("checkpoint", { diameter: 1000 }, this.scene);
 		this.sunMesh.position = new BABYLON.Vector3(-30000, 0, 50);
 		// this.sunMesh.infiniteDistance = true;
 
 		var sunMeshMat = new BABYLON.StandardMaterial("sunMeshMat", this.scene);
 
-        sunMeshMat.diffuseColor = new BABYLON.Color3(1, 1, 1);
-        sunMeshMat.emissiveColor = new BABYLON.Color3(1, 1, 1);
-        sunMeshMat.specularColor = new BABYLON.Color3(1, 1, 1);
+		sunMeshMat.diffuseColor = new BABYLON.Color3(1, 1, 1);
+		sunMeshMat.emissiveColor = new BABYLON.Color3(1, 1, 1);
+		sunMeshMat.specularColor = new BABYLON.Color3(1, 1, 1);
 
 		this.sunMesh.material = sunMeshMat;
-		
+
 
 		// Create Sun Light
 		this.sun = new BABYLON.PointLight("sun", new BABYLON.Vector3(-30000, 0, 50), this.scene);
@@ -295,7 +295,14 @@ export default class {
 		this.shadowGenerator.blurKernel = 64;
 
 		this.collisionSoundSwitch = true;
+		this.startUpIntro = true;
+
 		this.asteroidsMoving = [];
+
+		// If Collision on Spawn -> Ignore
+		setTimeout(() => {
+			this.startUpIntro = false;
+		}, 10000);
 
 		this.scene.registerBeforeRender(() => {
 
@@ -315,7 +322,7 @@ export default class {
 
 				var label = null;
 
-				if(this.cockpit.laserMesh.intersectsMesh(asteroid, true) && !asteroid.currentlyMining){
+				if (this.cockpit.laserMesh.intersectsMesh(asteroid, true) && !asteroid.currentlyMining) {
 					console.log('INTERSECTION');
 
 					this.cockpit.stopLaser();
@@ -332,13 +339,13 @@ export default class {
 
 				} else {
 
-					if(!this.cockpit.laserMesh.intersectsMesh(asteroid, true) && asteroid.currentlyMining){
+					if (!this.cockpit.laserMesh.intersectsMesh(asteroid, true) && asteroid.currentlyMining) {
 						asteroid.currentlyMining = false;
 
 						console.log('Stop');
 
 						this.asteroids.removeLabel(asteroid.label);
-						
+
 						this.asteroids.removeCustomOutline(asteroid);
 
 						this.cockpit.stopMining();
@@ -350,101 +357,103 @@ export default class {
 
 					this.asteroidsMoving.push(asteroid);
 
-					console.log(this.SoundManager.engineSound._playbackRate);
+					// If Startup Time is gone
+					if (!this.startUpIntro) {
+						this.inputManager.airSpeed = 0;
 
-					this.inputManager.airSpeed = 0;
+						let newVal;
+						if (this.SoundManager.engineSound._playbackRate > 1) {
+							newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
+						} else {
+							newVal = 1;
+						}
 
-					let newVal;
-					if(this.SoundManager.engineSound._playbackRate > 1){
-						newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
-					} else {
-						newVal = 1;
-					}
-					
-					this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
+						this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
 
-					this.inputManager.disableKeys();
+						this.inputManager.disableKeys();
 
-					if (this.collisionSoundSwitch) {
-						this.collisionSoundSwitch = false;
-						this.collisionSound = new BABYLON.Sound("collisionSound", "assets/audio/sound/collision.mp3", this.scene, null,
-							{
-								volume: 0.5,
-								autoplay: true
-							}
-						);
+						if (this.collisionSoundSwitch) {
+							this.collisionSoundSwitch = false;
+							this.collisionSound = new BABYLON.Sound("collisionSound", "assets/audio/sound/collision.mp3", this.scene, null,
+								{
+									volume: 0.5,
+									autoplay: true
+								}
+							);
 
-						this.alarmSound = new BABYLON.Sound("alarmSound", "assets/audio/sound/alarm.mp3", this.scene, null,
-						{
-							playbackRate: 1,
-							volume: 0.3,
-							loop: true,
-							autoplay: true
-						})
+							this.alarmSound = new BABYLON.Sound("alarmSound", "assets/audio/sound/alarm.mp3", this.scene, null,
+								{
+									playbackRate: 1,
+									volume: 0.3,
+									loop: true,
+									autoplay: true
+								})
 
-						setTimeout(() => {
-							this.boardComputerDamages = new BABYLON.Sound("boardComputerDamages", "assets/audio/sound/boardComputerDamages.mp3", this.scene, null,
-							{
-								playbackRate: 1,
-								volume: 1,
-								autoplay: true
-							})
-						}, 3000);
-
-						let hudAInterval = setInterval(() => {
-							if(this.cockpit.hudA.material.pointsCloud == false){
-								this.cockpit.hudA.material.pointsCloud = true;
-							} else {
-								this.cockpit.hudA.material.pointsCloud = false;
-							}
-						}, 50);
-
-						let hudBInterval = setInterval(() => {
-							if(this.cockpit.hudB.material.alpha == 0){
-								this.cockpit.hudB.material.alpha = 1;
-							} else {
-								this.cockpit.hudB.material.alpha = 0;
-							}
-						}, 80);
-
-						setTimeout(() => {
-							clearInterval(hudAInterval);
-							clearInterval(hudBInterval);
-
-							this.alarmSound.stop();
-
-							this.cockpit.hudA.material.pointsCloud = true;
-							this.cockpit.hudB.material.alpha = 0;
-							
-							this.bootUp = new BABYLON.Sound("bootUp", "assets/audio/sound/bootup.mp3", this.scene, null,
-							{
-								playbackRate: 1,
-								volume: 0.5,
-								autoplay: true
-							});
 							setTimeout(() => {
-								let hudBIntervalAlpha = setInterval(() => {
-									if(this.cockpit.hudB.material.alpha < 1){
-										this.cockpit.hudB.material.alpha += 0.005;
-									} else {
-										clearInterval(hudBIntervalAlpha);
-										this.cockpit.hudA.material.pointsCloud = false;
-									}
-								}, 10);
-
-								setTimeout(() => {
-									this.inputManager.enableKeys();
-								}, 2000);
-
+								this.boardComputerDamages = new BABYLON.Sound("boardComputerDamages", "assets/audio/sound/boardComputerDamages.mp3", this.scene, null,
+									{
+										playbackRate: 1,
+										volume: 1,
+										autoplay: true
+									})
 							}, 3000);
-						}, 5000);
 
-						// this.cameraManager.shake(false, false, 100);
+							let hudAInterval = setInterval(() => {
+								if (this.cockpit.hudA.material.pointsCloud == false) {
+									this.cockpit.hudA.material.pointsCloud = true;
+								} else {
+									this.cockpit.hudA.material.pointsCloud = false;
+								}
+							}, 50);
 
-						this.collisionSound.onended = () => {
-							this.collisionSoundSwitch = true;
-						};
+							let hudBInterval = setInterval(() => {
+								if (this.cockpit.hudB.material.alpha == 0) {
+									this.cockpit.hudB.material.alpha = 1;
+								} else {
+									this.cockpit.hudB.material.alpha = 0;
+								}
+							}, 80);
+
+							setTimeout(() => {
+								clearInterval(hudAInterval);
+								clearInterval(hudBInterval);
+
+								this.alarmSound.stop();
+
+								this.cockpit.hudA.material.pointsCloud = true;
+								this.cockpit.hudB.material.alpha = 0;
+
+								this.bootUp = new BABYLON.Sound("bootUp", "assets/audio/sound/bootup.mp3", this.scene, null,
+									{
+										playbackRate: 1,
+										volume: 0.5,
+										autoplay: true
+									});
+								setTimeout(() => {
+									let hudBIntervalAlpha = setInterval(() => {
+										if (this.cockpit.hudB.material.alpha < 1) {
+											this.cockpit.hudB.material.alpha += 0.005;
+										} else {
+											clearInterval(hudBIntervalAlpha);
+											this.cockpit.hudA.material.pointsCloud = false;
+										}
+									}, 10);
+
+									setTimeout(() => {
+										this.inputManager.enableKeys();
+									}, 2000);
+
+								}, 3000);
+							}, 5000);
+
+							// this.cameraManager.shake(false, false, 100);
+
+							this.collisionSound.onended = () => {
+								this.collisionSoundSwitch = true;
+							};
+						}
 					}
+
 
 				}
 

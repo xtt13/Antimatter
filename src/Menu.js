@@ -5,9 +5,11 @@ import config from './config';
 export default class {
     constructor(game) {
         this.game = game;
+
         this.assetsManager = game.assetsManager;
         this.engine = game.engine;
         this.canvas = game.canvas;
+       
         
 
         this.scene = new BABYLON.Scene(this.engine);
@@ -70,7 +72,7 @@ export default class {
             // this.skybox.renderingGroupId = 0;
         }
 
-        this.planet = new Planet(this.scene, this.engine, this.assetsManager, "Menu");
+        this.planet = new Planet(this.game, "Menu");
 
         this.createLogo();
 
