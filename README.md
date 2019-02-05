@@ -24,6 +24,23 @@ Soon - **Still in development**
 
 > **This game is part of my bachelor-thesis. It will be available in April 2019**
 
+## Installation (For Development)
+Clone Project:
+```sh
+https://github.com/xtt13/Antimatter
+```
+
+Install Dependencies:
+```sh
+npm install
+```
+
+Start Server:
+```sh
+npm run dev
+```
+
+
 ## Credits
 
 ### Assets: 
