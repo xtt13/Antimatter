@@ -24,10 +24,10 @@ Soon - **Still in development**
 
 > **This game is part of my bachelor-thesis. It will be available in April 2019**
 
-## Installation (For Development)
+## Installation
 Clone Project:
 ```sh
-https://github.com/xtt13/Antimatter
+git clone https://github.com/xtt13/Antimatter
 ```
 
 Install Dependencies:
