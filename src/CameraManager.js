@@ -46,7 +46,9 @@ export default class {
         this.camera = new BABYLON.UniversalCamera("CockpitCamera", new BABYLON.Vector3(0, 20, 0), this.scene);
 
         // Disable Cursorkeys
-        this.camera.inputs.clear();
+        if(!config.trailerRecording){
+            this.camera.inputs.clear();
+        }
         this.camera.inputs.addMouse();
 
         this.camera.maxZ = config.CameraMaxZ;

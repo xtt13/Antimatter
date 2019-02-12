@@ -6,12 +6,17 @@ export default {
 	// ##################
 	// Current State
 	// ##################
-	currentState: "Menu",
+	currentState: "Game",
 
 	// ##################
 	// Show Debug Layer
 	// ##################
 	showDebugLayer: false,
+
+	// ##################
+	// Enable for Trailer Recording
+	// ##################
+	trailerRecording: true,
 
 	// ##################
 	// Diable Music

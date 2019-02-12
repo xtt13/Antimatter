@@ -53,7 +53,6 @@ export default class {
 
         // Show Textbox
         setTimeout(() => {
-            console.log(this.game.SoundManager.engineSound._playbackRate);
             this.createIntroScreen();
         }, 5000);
 
@@ -188,7 +187,6 @@ export default class {
     }
 
     disableAsteroidScreen() {
-
         if (!this.asteroidScreenEnabled) return;
 
         this.asteroidScreenEnabled = false;

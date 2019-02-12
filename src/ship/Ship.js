@@ -1,9 +1,10 @@
 import * as BABYLON from 'babylonjs';
 
 export default class {
-    constructor(scene, assetsManager) {
-        this.scene = scene;
-        this.assetsManager = assetsManager;
+    constructor(game) {
+        this.game = game;
+        this.scene = game.scene;
+        this.assetsManager = game.assetsManager;
         
         this.loadValcon();
         
@@ -19,6 +20,8 @@ export default class {
             this.ship.rotation.y = 7;
             this.ship.rotation.x = 5.8;
             this.ship.receiveShadows = true;
+
+            // this.ship.parent = this.game.cockpit.cockpit;
             
             // // var reflectionTexture = new BABYLON.CubeTexture("assets/textures/stars", scene);
             // this.ship.material.albedoColor = new BABYLON.Color3.FromHexString("#f00001");

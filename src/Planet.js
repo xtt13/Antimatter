@@ -30,7 +30,7 @@ export default class {
                 break;
 
             default:
-                break;
+                throw new Error('Unknown State');
         }
 
 

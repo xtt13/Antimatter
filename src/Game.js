@@ -111,7 +111,7 @@ export default class {
 
 		this.SoundManager = new SoundManager(this.scene, this.assetsManager);
 
-		this.ship = new Ship(this.scene, this.assetsManager);
+		this.ship = new Ship(this);
 
 		this.cockpit = new Cockpit(this);
 
@@ -151,7 +151,7 @@ export default class {
 					break;
 
 				default:
-					break;
+					throw new Error('Unknown State');
 			}
 
 
@@ -167,6 +167,7 @@ export default class {
 						break;
 
 					default:
+						throw new Error('No default scene!');
 						break;
 				}
 
@@ -302,7 +303,7 @@ export default class {
 		// If Collision on Spawn -> Ignore
 		setTimeout(() => {
 			this.startUpIntro = false;
-		}, 10000);
+		}, 8000);
 
 		this.scene.registerBeforeRender(() => {
 

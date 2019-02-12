@@ -193,7 +193,7 @@ export default class {
         }
 
         // Create Texture
-        var starfieldPT = new BABYLON.StarfieldProceduralTexture("starfieldPT", spaceTunnelQuality, this.scene);
+        var starfieldPT = new BABYLON.StarfieldProceduralTexture("starfieldPT", 2048, this.scene);
 
         // Create Material
         var starfieldMaterial = new BABYLON.StandardMaterial("starfield", this.scene);
@@ -319,7 +319,7 @@ export default class {
 
         setTimeout(() => {
             game.centauri.planet.isVisible = true;
-            // game.centauri.athmosphere.isVisible = true;
+            game.centauri.atmosphere.isVisible = true;
         }, 3000);
 
 
@@ -764,7 +764,7 @@ void main(void) {
                 this.game.inputManager.airSpeed = 0;
 
                 let newVal;
-                if(this.game.SoundManager.engineSound._playbackRate > 1){
+                if (this.game.SoundManager.engineSound._playbackRate > 1) {
                     newVal = this.game.SoundManager.engineSound._playbackRate -= 0.5;
                 } else {
                     newVal = 1;
@@ -1040,7 +1040,7 @@ void main(void) {
                 break;
 
             default:
-                break;
+                throw new Error('Unknown Type');
         }
     }
 
@@ -1207,4 +1207,38 @@ void main(void) {
         return laser;
     }
 
+    createAsteroidExplosion(position) {
+        let asteroidParticleArr = [];
+
+        let num = 15;
+        let min = 1;
+        let max = 10;
+
+        for (let i = 0; i < num.length; i++) {
+            const asteroidParticle = num[i];
+
+            // Create random XYZ Values
+            var rndRotX = Math.floor(Math.random() * (max - min + 1) + this.min);
+            var rndRotY = Math.floor(Math.random() * (max - min + 1) + this.min);
+            var rndRotZ = Math.floor(Math.random() * (max - min + 1) + this.min);
+
+            // Set random XYZ Rotation
+            asteroidParticle.rotation = new BABYLON.Vector3(
+                rndRotX,
+                rndRotY,
+                rndRotZ
+            );
+
+            // Set Random Scaling
+            var rndNumber = Math.floor(Math.random() * (max - min + 1) + min);
+            asteroidParticle.scaling = new BABYLON.Vector3(
+                rndNumber,
+                rndNumber,
+                rndNumber
+            );
+
+            asteroidParticleArr.push(asteroidParticle);
+        }
+
+    }
 }
