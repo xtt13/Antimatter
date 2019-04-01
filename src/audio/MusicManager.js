@@ -12,21 +12,6 @@ export default class {
 
 
     createMusic() {
-
-        // this.music = new BABYLON.Sound("Music", "assets/audio/music/hypoxia.mp3", this.scene, null, { loop: true, autoplay: true });
-
-        // var loadMusic = this.assetsManager.addBinaryFileTask("loadMusic", "assets/audio/music/hypoxia.mp3");
-        // loadMusic.onSuccess = function (task) {
-        //     console.log('done', task);
-        //     // this.music = new BABYLON.Sound("Music", task.data[0], this.scene, null, { loop: true, autoplay: true });
-
-        //     this.music = new BABYLON.Sound("Music", task.data, this.scene, null, { loop: true, autoplay: true });
-
-
-
-
-        // }
-
         this.music = new BABYLON.Sound("Music", "assets/audio/music/music.mp3", this.scene, null, { volume: 0.5, loop: true, autoplay: true });
     }
 
@@ -37,7 +22,7 @@ export default class {
             // Fade Out Shake Sound
             this.music.setVolume(musicVolume);
 
-            // Decr. Var
+            // Decrease Var
             if (musicVolume > 0) musicVolume -= 0.01;
             if (musicVolume <= 0){
                 clearInterval(fadeOutInterval);
@@ -52,7 +37,7 @@ export default class {
             // Fade Out Shake Sound
             this.music.setVolume(musicVolume);
 
-            // Incr. Var
+            // Increase Var
             if (musicVolume < 0.5) musicVolume += 0.01;
             if (musicVolume >= 0.5){
                 clearInterval(fadeInInterval);

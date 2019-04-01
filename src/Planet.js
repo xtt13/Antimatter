@@ -9,11 +9,6 @@ export default class {
         this.assetsManager = game.assetsManager;
         this.type = type;
 
-        // this.planetDiameter = 2;
-        // this.planet.planet.position.x = 0;
-        // this.planet.planet.position.y = 1;
-        // this.planet.planet.position.z = 0;
-
         switch (type) {
             case "Menu":
                 this.planetDiameter = 8;
@@ -33,22 +28,7 @@ export default class {
                 throw new Error('Unknown State');
         }
 
-
-
-        // // - Zu Mir, + Weg von mir
-        // this.x = 25000;
-
-        // // - Nach Unten , + Nach Oben
-        // this.y = -35000;
-
-        // // + Nach Link, - Nach Rechts
-        // this.z = 0;
-
-
-
         this.segments = 128;
-
-
 
         if (config.disablePlanet) return;
         this.loadPlanet();
@@ -56,7 +36,7 @@ export default class {
 
     loadPlanet() {
         this.planetMaterial = new BABYLON.StandardMaterial('planetMaterial', this.scene);
-        // this.planetMaterial.specularPower = 2048;
+
         // Remove Light Reflection
         this.planetMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
         this.planetMaterial.diffuseColor = new BABYLON.Color3(0.8, 1, 0.6);
@@ -67,8 +47,6 @@ export default class {
             this.planetMaterial.diffuseTexture = new BABYLON.Texture("./assets/textures/planets/8k_mars.jpg", this.scene);
         }
 
-        // var loadPlanetTexture = this.assetsManager.addTextureTask("planetTexture", "/assets/textures/planets/2k_mars.jpg");
-
         if (this.isMobileDevice()) {
             console.log('mob');
             var loadPlanetTexture = this.assetsManager.addTextureTask("loadPlanetTexture", "./assets/textures/planets/2k_mars.jpg");
@@ -76,29 +54,17 @@ export default class {
             var loadPlanetTexture = this.assetsManager.addTextureTask("loadPlanetTexture", "./assets/textures/planets/8k_mars.jpg");
         }
 
-        // var loadPlanetBumpTexture = this.assetsManager.addTextureTask("bumpTexture", "/assets/textures/planets/earthUV.jpg");
-
         loadPlanetTexture.onSuccess = (task) => {
             this.planetMaterial.diffuseTexture = task.texture;
         }
-
-        // loadPlanetBumpTexture.onSuccess = (task) => {
-        //     this.planetMaterial.bumpTexture = task.texture;
-        //     this.planetMaterial.bumpTexture.level = 2;
-        // }
 
         loadPlanetTexture.onError = function (task, message, exception) {
             console.log(message, exception);
         }
 
-        // loadPlanetBumpTexture.onError = function (task, message, exception) {
-        //     console.log(message, exception);
-        // }
-
         this.planet = BABYLON.MeshBuilder.CreateSphere("planet", {
             segments: this.segments,
             diameter: this.planetDiameter,
-            // diameterX: this.planetDiameter
         }, this.scene);
 
         if (config.planetInfiniteDistance && this.type == "Game") {
@@ -107,7 +73,6 @@ export default class {
         
         this.planet.material = this.planetMaterial;
         this.planet.position = new BABYLON.Vector3(this.x, this.y, this.z);
-        // this.planet.rotation = new BABYLON.Vector3(20, 0, 0);
 
         this.planet.collisionsEnabled = true;
         this.planet.checkCollisions = true;
@@ -133,7 +98,6 @@ export default class {
         this.atmosphere = BABYLON.MeshBuilder.CreateSphere("athmosphere", {
             segments: this.segments,
             diameter: this.planetDiameter,
-            // diameterX: this.planetDiameter
         }, this.scene);
 
         if (config.planetInfiniteDistance && this.type == "Game") {
@@ -142,15 +106,6 @@ export default class {
         this.atmosphere.position = this.planet.position;
         this.atmosphere.material = fresnelMaterial;
         this.atmosphere.isBlocker = true;
-
-
-
-        // var gizmoManager = new BABYLON.GizmoManager(this.scene);
-        // gizmoManager.positionGizmoEnabled = true;
-        // gizmoManager.rotationGizmoEnabled = true;
-        // gizmoManager.scaleGizmoEnabled = true;
-        // gizmoManager.boundingBoxGizmoEnabled = true;
-        // gizmoManager.attachableMeshes = [this.planet, this.atmosphere];
 
         this.engine.runRenderLoop(() => {
             if (this.type == "Menu") {

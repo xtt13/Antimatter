@@ -14,7 +14,7 @@ export default {
 	showDebugLayer: false,
 
 	// ##################
-	// Enable for Trailer Recording
+	// Enable Settins for Trailer Recording
 	// ##################
 	trailerRecording: true,
 

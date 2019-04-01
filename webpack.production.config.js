@@ -14,20 +14,13 @@ module.exports = {
   watch: false,
   mode: 'production',
   plugins: [
-
-    // // webpack.optimize.CommonsChunkPlugin has been removed, please use config.optimization.splitChunks instead.
-    // new webpack.optimize.CommonsChunkPlugin({
-    //     name: 'vendor',
-    //     filename: 'vendor.bundle.js'
-    // }),
-
+    
     new webpack.DefinePlugin({
       __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'false'))
     }),
 
     new HtmlWebpackPlugin(
       {
-        // filename: '../index.html',
         template: './src/template.html',
         minify: {
           removeAttributeQuotes: false,

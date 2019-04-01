@@ -19,9 +19,6 @@ export default class {
                 autoplay: true
             }
         );
-
-        // this.hangarAlarm2 = new BABYLON.Sound("hangarAlarm2", "assets/audio/sound/hangarAlarm.mp3", this.scene, null, { loop: true, autoplay: true });
-
     }
 
 }

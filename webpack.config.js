@@ -16,12 +16,6 @@ module.exports = {
     mode: 'development',
     // cache: false,
     plugins: [
-
-        // // webpack.optimize.CommonsChunkPlugin has been removed, please use config.optimization.splitChunks instead.
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     name: 'vendor',
-        //     filename: 'vendor.bundle.js'
-        // }),
         
         new webpack.DefinePlugin({
             __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true'))
@@ -30,10 +24,7 @@ module.exports = {
 
         new HtmlWebpackPlugin(
             {
-                // filename: '../index.html',
                 template: './src/template.html',
-                // chunks: ['vendor', 'bundle'],
-                // chunksSortMode: 'manual',
                 minify: {
                     removeAttributeQuotes: false,
                     collapseWhitespace: false,

@@ -6,7 +6,10 @@ export default class {
     constructor(scene) {
         this.scene = scene;
 
+        // Uncomment for FPS display
         // this.showFPS();
+
+        // Uncomment for WorldAxis display
         // this.showWorldAxis(3000);
 
 
@@ -18,21 +21,6 @@ export default class {
                 initialTab: 3
             });
         }
-
-        // this.scene.debugLayer.show({
-        //     popup:false, 
-        //     initialTab : 1, 
-        //     parentElement:null,
-        //     newColors: {
-        //         backgroundColor: '#eee',
-        //         backgroundColorLighter: '#fff',
-        //         backgroundColorLighter2: '#fff',
-        //         backgroundColorLighter3: '#fff',
-        //         color: '#333',
-        //         colorTop:'red', 
-        //         colorBottom:'blue'
-        //     }
-        // });
 
     }
 
@@ -85,7 +73,6 @@ export default class {
             }
 
             getFps();
-
 
             return n;
         }

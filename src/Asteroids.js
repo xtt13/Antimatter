@@ -66,24 +66,11 @@ export default class {
 
     createAsteroids() {
         var loadAsteroid = this.assetsManager.addMeshTask("loadAsteroid", "Asteroid", "./assets/models/asteroids/", "asteroid.babylon");
-        // var loadBumpMap = this.assetsManager.addTextureTask("loadBumpMap", "./assets/models/asteroids/asteroid_normalmap.jpg");
 
         loadAsteroid.onSuccess = (task) => {
 
             // Create Blueprint Asteroid
             var asteroid = this.scene.getMeshByName("Asteroid");
-
-            // After Texture Loading
-            // loadBumpMap.onSuccess = (task) => {
-            // asteroid.material.bumpTexture = task.texture;
-            // }
-
-            // asteroid.material = null;
-
-            // asteroid.material.backFaceCulling = false;
-
-            // The specular highlight often reflects the color of the light source
-            // asteroid.material.specularColor = new BABYLON.Color3(1, 1, 1);
 
             asteroid.isTargetable = true;
             asteroid.receiveShadows = true;
@@ -97,10 +84,7 @@ export default class {
             asteroid.customOutline.material.specularColor = new BABYLON.Color3(0, 1, 1);
             asteroid.customOutline.material.alpha = 1;
 
-
-
             asteroid.isTargetable = true;
-            // this.initTargetableActions(asteroid, this.customOutline, this.baseObject);
 
             // Create numberOfAsteroids
             for (var i = 0; i < this.numberOfAsteroid; i++) {
@@ -152,43 +136,31 @@ export default class {
 
                 asteroidInstance.isBlocker = true;
 
-
                 if (__DEV__) {
                     this.initTargetableActions(asteroidInstance, asteroidInstance.customOutline);
                 }
-        
-                
 
                 this.asteroids.push(asteroidInstance);
 
-
-
-
             }
 
-
-            // var allAsteroids = BABYLON.Mesh.MergeMeshes(this.asteroids);  
-
             loadAsteroid.onError = function (task, message, exception) {
-                // console.log(message, exception);
+                console.log(message, exception);
             }
 
         }
     }
 
-    updateLabel(label, name, amount){
+    updateLabel(label, name, amount) {
         label.children[0].text = name + ' ' + amount + 't';
     }
 
     addLabel(mesh, amount) {
         var label = new GUI.Rectangle("label for " + mesh.type.name);
 
-        // label.background = "black"
         label.height = "35px";
-        // label.alpha = 0.8;
         label.width = "170px";
         label.padding = "10px";
-        // label.cornerRadius = 3;
         label.fontFamily = "Orbitron";
         label.fontSize = '20px';
         label.thickness = 2;
@@ -203,7 +175,6 @@ export default class {
         text.text = mesh.type.name + ' ' + amount + 't';
         text.color = "cyan";
         label.addControl(text);
-
 
         return label;
     }
@@ -259,8 +230,6 @@ export default class {
 
                 customOutline.parent = mesh;
 
-
-
                 let rockStorage;
                 for (let i = 0; i < this.data.length; i++) {
                     let element = this.data[i];
@@ -272,17 +241,6 @@ export default class {
 
                 }
 
-                console.log('Rocktype: ' + mesh.type.name + ', Amount: ' + rockStorage);
-
-
-                // customOutline.position = mesh.position;
-                // customOutline.scaling = new BABYLON.Vector3(
-                //     mesh.scaling.x + scalingValue,
-                //     mesh.scaling.y + scalingValue,
-                //     mesh.scaling.z + scalingValue
-                // );
-
-                // customOutline.rotation = mesh.rotation;
                 customOutline.isVisible = true;
 
                 label = this.addLabel(target, rockStorage);
@@ -294,7 +252,6 @@ export default class {
                         loop: false,
                         autoplay: true
                     });
-
             })
         );
 
@@ -372,9 +329,5 @@ export default class {
         this.asteroids = [];
 
     }
-
-
-
-
 
 }

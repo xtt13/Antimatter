@@ -25,21 +25,8 @@ export default class {
             this.ship.rotation.y = -7.8;
             this.ship.rotation.x = 4.8;
             this.ship.receiveShadows = true;
-
             this.ship.isVisible = false;
-            // this.moveShip();
-
             this.ship.isBlocker = true;
-
-            // var gizmoManager = new BABYLON.GizmoManager(this.scene);
-            // gizmoManager.positionGizmoEnabled = true;
-            // gizmoManager.rotationGizmoEnabled = true;
-            // gizmoManager.scaleGizmoEnabled = true;
-            // gizmoManager.boundingBoxGizmoEnabled = true;
-            // gizmoManager.attachableMeshes = [this.ship];
-
-            // this.moveShip();
-            // this.ship.isVisible = true;
 
         }
 

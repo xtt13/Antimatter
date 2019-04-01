@@ -5,9 +5,8 @@ export default class {
         this.game = game;
         this.scene = game.scene;
         this.assetsManager = game.assetsManager;
-        
+
         this.loadValcon();
-        
     }
 
     loadValcon() {
@@ -16,13 +15,13 @@ export default class {
         loadSpaceship.onSuccess = (task) => {
 
             this.ship = task.loadedMeshes[0];
-            this.ship.position = new BABYLON.Vector3(5498, 4524, 4423);
-            this.ship.rotation.y = 7;
-            this.ship.rotation.x = 5.8;
+            // this.ship.position = new BABYLON.Vector3(5498, 4524, 4423);
+            // this.ship.rotation.y = 7;
+            // this.ship.rotation.x = 5.8;
             this.ship.receiveShadows = true;
-
+            // this.ship.position = this.game.cockpit.cockpit.position;
             // this.ship.parent = this.game.cockpit.cockpit;
-            
+
             // // var reflectionTexture = new BABYLON.CubeTexture("assets/textures/stars", scene);
             // this.ship.material.albedoColor = new BABYLON.Color3.FromHexString("#f00001");
             // // ship.material.reflectionTexture = reflectionTexture;

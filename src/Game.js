@@ -64,7 +64,6 @@ export default class {
 			},
 
 			// Adapt to Device Ratio
-			// config.forceBestQuality
 			this.qualitySettings
 		);
 
@@ -79,9 +78,9 @@ export default class {
 
 		this.scene.clearColor = BABYLON.Color3.Black();
 
-		this.scene.autoClear = false; // Color buffer
+		this.scene.autoClear = false;
 
-		this.scene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
+		this.scene.autoClearDepthAndStencil = false;
 
 		// Backside Shadow Color
 		this.scene.ambientColor = new BABYLON.Color3(0.2, 0.2, 0.2);
@@ -111,9 +110,9 @@ export default class {
 
 		this.SoundManager = new SoundManager(this.scene, this.assetsManager);
 
-		this.ship = new Ship(this);
-
 		this.cockpit = new Cockpit(this);
+
+		this.ship = new Ship(this);
 
 		this.spaceStation = new Spacestation(this);
 
@@ -232,14 +231,12 @@ export default class {
 
 			if (config.skyBoxInfiniteDistance) {
 				this.skybox.infiniteDistance = true;
-				// this.skybox.renderingGroupId = 0;
 			}
 		}
 
 		// Create Sun Mesh
 		this.sunMesh = BABYLON.MeshBuilder.CreateSphere("checkpoint", { diameter: 1000 }, this.scene);
 		this.sunMesh.position = new BABYLON.Vector3(-30000, 0, 50);
-		// this.sunMesh.infiniteDistance = true;
 
 		var sunMeshMat = new BABYLON.StandardMaterial("sunMeshMat", this.scene);
 
@@ -259,6 +256,7 @@ export default class {
 		this.sun.shadowMaxZ = 1800000;
 		this.sun.excludedMeshes = [this.cockpit.cylinder];
 
+		// Uncomment for VolumetricLightScatteringPostProcess
 		// var godrays = new BABYLON.VolumetricLightScatteringPostProcess('godrays', 1.0, this.cameraManager.camera, this.sun, 100, BABYLON.Texture.BILINEAR_SAMPLINGMODE, this.engine, false);
 
 		// Create Lensflares
@@ -278,16 +276,9 @@ export default class {
 		this.shadowGenerator = new BABYLON.ShadowGenerator(1024, this.sun);
 		this.shadowGenerator.setDarkness(0.5);
 
-
-		// this.shadowGenerator.getShadowMap().renderList.push(this.cockpit.cockpit);
-		// this.shadowGenerator.getShadowMap().renderList.push(this.jumpGate.jumpGate);
-
 		this.shadowGenerator.getShadowMap().renderList.push(this.spaceStation.StationBottom);
 		this.shadowGenerator.getShadowMap().renderList.push(this.spaceStation.StationTop);
-		// this.shadowGenerator.getShadowMap().renderList.push(this.spaceStation.StationRing);
 		this.shadowGenerator.getShadowMap().renderList.push(this.spaceStation.StationMiddle);
-
-
 
 		// Better Blur => More Costs
 		// this.shadowGenerator.useBlurExponentialShadowMap = true;
@@ -311,11 +302,6 @@ export default class {
 				let element = this.asteroidsMoving[i];
 				element.translate(BABYLON.Axis.Y, 0.04, BABYLON.Space.WORLD);
 				element.rotate(BABYLON.Axis.X, 0.003, BABYLON.Space.WORLD);
-
-				// setTimeout(() => {
-				// 	console.log('splice');
-				// 	this.asteroidsMoving.splice(this.asteroidsMoving.indexOf(element), 1 );
-				// }, 15000);
 			}
 
 			for (let i = 0; i < this.asteroids.asteroids.length; i++) {
@@ -324,7 +310,6 @@ export default class {
 				var label = null;
 
 				if (this.cockpit.laserMesh.intersectsMesh(asteroid, true) && !asteroid.currentlyMining) {
-					console.log('INTERSECTION');
 
 					this.cockpit.stopLaser();
 
@@ -342,8 +327,6 @@ export default class {
 
 					if (!this.cockpit.laserMesh.intersectsMesh(asteroid, true) && asteroid.currentlyMining) {
 						asteroid.currentlyMining = false;
-
-						console.log('Stop');
 
 						this.asteroids.removeLabel(asteroid.label);
 
@@ -430,6 +413,7 @@ export default class {
 										volume: 0.5,
 										autoplay: true
 									});
+
 								setTimeout(() => {
 									let hudBIntervalAlpha = setInterval(() => {
 										if (this.cockpit.hudB.material.alpha < 1) {
@@ -461,65 +445,14 @@ export default class {
 
 			}
 
-
-			// if (this.cockpit.cockpit.intersectsMesh(this.jumpGate.jumpGate, true)) {
-
-
-			// 	// this.inputManager.airSpeed = -0.5;
-
-			// 	// let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
-			// 	// this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
-
-
-
-
-			// 	// this.cockpit.explode(this.cockpit.cockpit.position);
-
-			// 	// for (let i = 0; i < this.cockpit.cockpitParts.length; i++) {
-			// 	// 	this.cockpit.cockpitParts[i].translate(BABYLON.Axis.Z, 0 + this.airSpeed, BABYLON.Space.GLOBAL);
-			// 	// }
-
-			// 	// let expl = new BABYLON.ParticleHelper.CreateAsync("explosion", this.scene).then((set) => {
-			// 	// 	// set.systems.forEach(s => {
-			// 	// 	// 	s.disposeOnStop = true;
-			// 	// 	// });
-			// 	// 	console.log(set);
-			// 	// 	set.start();
-			// 	// });
-
-			// }
-
-
-			// THIS ONE
-			// if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationBottom, true)) {
-
-			// 	console.log('COLLISION !!!');
-
-			// 	this.inputManager.airSpeed = -0.5;
-			// 	let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
-			// 	this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
-
-			// }
-
-			// if (this.cockpit.cockpit.intersectsMesh(this.spaceStation.StationTop, true)) {
-
-			// 	console.log('COLLISION !!!');
-
-			// 	this.inputManager.airSpeed = -0.5;
-			// 	let newVal = this.SoundManager.engineSound._playbackRate -= 0.5;
-			// 	this.SoundManager.engineSound.updateOptions({ playbackRate: newVal });
-
-			// }
-
 		});
 
 		this.engine.runRenderLoop(() => {
 
 			// Check if Keys are pressed
 			this.inputManager.checkKeys(this.engine);
+			
 		});
 
-		// Enable Octree
-		// this.scene.createOrUpdateSelectionOctree();
 	}
 }

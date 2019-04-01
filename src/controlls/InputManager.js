@@ -52,8 +52,6 @@ export default class {
             {
                 playbackRate: 0.5,
                 volume: 0.1
-                // loop: true,
-                // autoplay: true
             }
         );
 
@@ -75,7 +73,6 @@ export default class {
 
             // this.cameraManager.camera.inputs.add(new BABYLON.FreeCameraGamepadInput());
             // this.cameraManager.camera.inputs.attached.gamepad.gamepadAngularSensibility = 250;
-
             // this.cameraManager.camera.inputs.addGamepad();
 
             this.scene.registerBeforeRender(() => {
@@ -140,10 +137,6 @@ export default class {
                 // ========================
                 // ========================
 
-
-                // ========================
-                // ========================
-
                 if (gamepad.leftStick.y > 0.3) {
                     this.turnSpeedFrontBack -= 0.0005;
                 } else if (gamepad.leftStick.y < -0.3) {
@@ -199,7 +192,6 @@ export default class {
             var panel = new BABYLON.GUI.StackPanel();
 
             panel.width = "250px";
-            //panel.height = "250px";
 
             panel.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
             panel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
@@ -224,8 +216,6 @@ export default class {
                 this.airSpeed = value;
             });
 
-            console.log(slider);
-
             panel.addControl(slider);
         }
     }
@@ -242,14 +232,12 @@ export default class {
             //beta: rotation around x axis
             if (event.beta < -5) {
                 for (let i = 0; i < this.cockpitParts.length; i++) {
-                    // console.log('A');
                     this.cockpitParts[i].rotate(BABYLON.Axis.Z, -this.turnSpeed, BABYLON.Space.LOCAL);
                 }
             }
 
             if (event.beta > 5) {
                 for (let i = 0; i < this.cockpitParts.length; i++) {
-                    // console.log('A');
                     this.cockpitParts[i].rotate(BABYLON.Axis.Z, this.turnSpeed, BABYLON.Space.LOCAL);
                 }
             }
@@ -259,15 +247,10 @@ export default class {
 
 
             }
-
-            // console.log(event.alpha, event.beta, event.gamma);
-            console.log(event.beta);
         });
     }
 
     initControll() {
-
-        // window.myobj = this.keys;
 
         this.keys.handleKeyDown = (event) => {
             this.keysDown[event.keyCode] = true;
@@ -306,32 +289,12 @@ export default class {
 
                     this.game.jumpGate.startJumpGate();
 
-                    // setTimeout(() => {
-                    //     setInterval(() => {
-                    //         var elapsed = this.engine.getDeltaTime() / 1000;
-
-                    //         for (let i = 0; i < this.cockpitParts.length; i++) {
-                    //             this.cockpitParts[i].translate(BABYLON.Axis.Z, elapsed + this.airSpeed, BABYLON.Space.GLOBAL);
-                    //         }
-
-                    //         this.airSpeed += (this.accValue + 0.3);
-
-                    //     }, 100);
-                    // }, 6000);
                 }
             }
 
-
-            // if (code == 186) {
-            //     console.log('detach camera');
-            //     this.game.cameraManager.camera.lockedTarget = null;
-
-            //     // Parameters: alpha, beta, radius, target position, scene
-            //     // this.game.cameraManager.camera = new BABYLON.ArcRotateCamera("ArcRotateCamera", 0, 0, 10, this.game.ship.ship, this.scene);
-
-            //     // This attaches the camera to the canvas
-            //     // this.game.cameraManager.camera.attachControl(this.game.canvas, true);
-            // }
+            if(code == 50){
+                this.game.cameraManager.followCamera();
+            }
 
             // Space Key - Mining
             if (code == 32) {
@@ -389,18 +352,11 @@ export default class {
                     this.ship.engineSystem1.start();
                 }
 
-                // let handleValue = (this.airSpeed / this.maxSpeed) * 10;
-                // this.cockpitParts[3].translate(BABYLON.Axis.Z, handleValue, BABYLON.Space.GLOBAL);
-
-
                 this.airSpeed += this.accValue;
+
                 let newVal = this.engineSound._playbackRate += 0.01;
-                this.engineSound.updateOptions({ playbackRate: newVal });
 
-                // console.log(this.engineSound._playbackRate);
-                // console.log(this.airSpeed);     
-
-                // if(this.airSpeed > 3) this.game.rattling = 77;
+                this.engineSound.updateOptions({ playbackRate: newVal }); 
 
             } else {
 
@@ -416,10 +372,6 @@ export default class {
         } else {
             this.spaceshipControlls(engine);
         }
-
-        // this.cockpitControlls(engine);
-        // this.spaceshipControlls(engine);
-
 
     }
 
@@ -540,7 +492,6 @@ export default class {
         if (this.turnSpeedQE < 0) this.turnSpeedQE += 0.00005;
 
         //==========================================================
-
         //==========================================================
 
         for (let i = 0; i < this.cockpitParts.length; i++) {
@@ -555,35 +506,35 @@ export default class {
 
         if (this.keysDown[83]) {
             // S, rotate in the negative direction about the x axis
-            this.ship.ship.rotate(BABYLON.Axis.X, this.turnSpeed, BABYLON.Space.LOCAL);
+            this.ship.ship.rotate(BABYLON.Axis.X, (this.turnSpeed * 2), BABYLON.Space.LOCAL);
         }
 
         if (this.keysDown[87]) {
             // W, rotate in the positive direction about the x axis
-            this.ship.ship.rotate(BABYLON.Axis.X, -this.turnSpeed, BABYLON.Space.LOCAL);
+            this.ship.ship.rotate(BABYLON.Axis.X, (-this.turnSpeed * 2), BABYLON.Space.LOCAL);
         }
 
         if (this.keysDown[68]) {
             // D, rotate in the positive direction about the z axis
-            this.ship.ship.rotate(BABYLON.Axis.Z, this.turnSpeed, BABYLON.Space.LOCAL);
+            this.ship.ship.rotate(BABYLON.Axis.Z, (this.turnSpeed * 2), BABYLON.Space.LOCAL);
         }
 
         if (this.keysDown[65]) {
             // A, rotate in the negative direction about the z axis
-            this.ship.ship.rotate(BABYLON.Axis.Z, -this.turnSpeed, BABYLON.Space.LOCAL);
+            this.ship.ship.rotate(BABYLON.Axis.Z, (-this.turnSpeed * 2), BABYLON.Space.LOCAL);
         }
 
         if (this.keysDown[69]) {
             // Q rotate left
-            this.ship.ship.rotate(BABYLON.Axis.Y, this.turnSpeed, BABYLON.Space.LOCAL);
+            this.ship.ship.rotate(BABYLON.Axis.Y, (this.turnSpeed * 2), BABYLON.Space.LOCAL);
         }
 
         if (this.keysDown[81]) {
             // E, rotate right
-            this.ship.ship.rotate(BABYLON.Axis.Y, -this.turnSpeed, BABYLON.Space.LOCAL);
+            this.ship.ship.rotate(BABYLON.Axis.Y, (-this.turnSpeed * 2), BABYLON.Space.LOCAL);
         }
 
-        this.ship.ship.translate(BABYLON.Axis.Z, elapsed - this.airSpeed, BABYLON.Space.GLOBAL);
+        this.ship.ship.translate(BABYLON.Axis.Z, elapsed - (this.airSpeed * 2), BABYLON.Space.GLOBAL);
 
     }
 

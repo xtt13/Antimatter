@@ -16,17 +16,6 @@ export default class {
 
         this.segments = 128;
 
-
-        // // - Zu Mir, + Weg von mir
-        // this.x = 25000;
-
-        // // - Nach Unten , + Nach Oben
-        // this.y = -35000;
-
-        // // + Nach Link, - Nach Rechts
-        // this.z = 0;
-
-
         this.loadPlanet();
 
     }
@@ -36,7 +25,6 @@ export default class {
         var loadPlanetTexture = this.assetsManager.addTextureTask("loadCentauriTexture", "./assets/textures/planets/centauri.png");
 
         loadPlanetTexture.onSuccess = (task) => {
-
             // this.planetMaterial.diffuseTexture = task.texture;
         }
 
@@ -55,7 +43,6 @@ export default class {
         this.planet = BABYLON.MeshBuilder.CreateSphere("planet", {
             segments: this.segments,
             diameter: this.planetDiameter,
-            // diameterX: this.planetDiameter
         }, this.scene);
 
 
@@ -92,7 +79,6 @@ export default class {
         this.atmosphere = BABYLON.MeshBuilder.CreateSphere("athmosphere", {
             segments: this.segments,
             diameter: this.planetDiameter,
-            // diameterX: this.planetDiameter
         }, this.scene);
 
         if (config.planetInfiniteDistance && this.type == "Game") {
@@ -102,14 +88,6 @@ export default class {
         this.atmosphere.material = fresnelMaterial;
         this.atmosphere.isBlocker = true;
         this.atmosphere.isVisible = false;
-
-
-        // var gizmoManager = new BABYLON.GizmoManager(this.scene);
-        // gizmoManager.positionGizmoEnabled = true;
-        // gizmoManager.rotationGizmoEnabled = true;
-        // gizmoManager.scaleGizmoEnabled = true;
-        // gizmoManager.boundingBoxGizmoEnabled = true;
-        // gizmoManager.attachableMeshes = [this.planet, this.atmosphere];
 
         this.engine.runRenderLoop(() => {
             this.planet.rotate(BABYLON.Axis.Y, -0.0001, BABYLON.Space.LOCAL);
